@@ -16,6 +16,7 @@ namespace FrameAdvance.Models
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Username { get; set; }
 
         [Required]
