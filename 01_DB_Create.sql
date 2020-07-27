@@ -116,16 +116,16 @@ GO
 ALTER TABLE [UserGame] ADD FOREIGN KEY ([SkillLevelId]) REFERENCES [SkillLevel] ([Id])
 GO
 
-ALTER TABLE [UserGame] ADD FOREIGN KEY ([GameId]) REFERENCES [Games] ([Id])
+ALTER TABLE [UserGame] ADD FOREIGN KEY ([GameId]) REFERENCES [Game] ([Id])
 GO
 
 ALTER TABLE [UserGame] ADD FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])
 GO
 
-ALTER TABLE [Characters] ADD FOREIGN KEY ([GameId]) REFERENCES [Games] ([Id])
+ALTER TABLE [Character] ADD FOREIGN KEY ([GameId]) REFERENCES [Game] ([Id])
 GO
 
-ALTER TABLE [ReviewPost] ADD FOREIGN KEY ([GameId]) REFERENCES [Games] ([Id])
+ALTER TABLE [ReviewPost] ADD FOREIGN KEY ([GameId]) REFERENCES [Game] ([Id])
 GO
 
 ALTER TABLE [Comment] ADD FOREIGN KEY ([ReviewPostId]) REFERENCES [ReviewPost] ([Id])
