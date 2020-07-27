@@ -229,5 +229,5 @@ insert into Character ([ID], [Name], [GameId]) VALUES (46, 'Trunks', 2);
 insert into Character ([ID], [Name], [GameId]) VALUES (47, 'Vegeta (Super Saiyan)', 2);
 insert into Character ([ID], [Name], [GameId]) VALUES (48, 'Vegeta (SSGSS)', 2);
 insert into Character ([ID], [Name], [GameId]) VALUES (49, 'Yamcha', 2);
-insert into Character ([ID], [Name], [GameId]) VALUES (36, 'Goku (SSGSS)', 2);
+insert into Character ([ID], [Name], [GameId]) VALUES (50, 'Goku (SSGSS)', 2);
 set identity_insert [Character] off
