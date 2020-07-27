@@ -29,6 +29,10 @@ namespace FrameAdvance.Models
 
         public UserProfile UserProfile { get; set; }
 
+        public int GameId { get; set; }
+
+        public Game Game { get; set; }
+
         public List<Comment> Comments { get; set; }
 
         public List<Timestamp> Timestamps { get; set; }

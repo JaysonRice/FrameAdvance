@@ -13,6 +13,6 @@ namespace FrameAdvance.Models
         [MaxLength(50)]
         public string Name { get; set; }
         [Required]
-        public string GameId { get; set; }
+        public int GameId { get; set; }
     }
 }

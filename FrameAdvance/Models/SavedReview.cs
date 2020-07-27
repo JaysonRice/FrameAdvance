@@ -10,10 +10,10 @@ namespace FrameAdvance.Models
     {
         public int Id { get; set; }
         [Required]
-        public string UserProfileId { get; set; }
+        public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
         [Required]
-        public string ReviewPostId { get; set; }
+        public int ReviewPostId { get; set; }
         public ReviewPost ReviewPost { get; set; }
     }
 }
