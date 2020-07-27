@@ -41,7 +41,7 @@ GO
 
 CREATE TABLE [Timestamp] (
   [Id] integer IDENTITY PRIMARY KEY NOT NULL,
-  [Timestamp] integer NOT NULL,
+  [Time] integer NOT NULL,
   [ReviewPostId] integer NOT NULL,
   [Notes] nvarchar(255)
 )
@@ -162,8 +162,8 @@ insert into ReviewPost (Id, Title, CreateDateTime, VideoLocation, [Private], Use
 set identity_insert [ReviewPost] off
 
 set identity_insert [Timestamp] on
-insert into Timestamp (Id, [Timestamp], ReviewPostId, Notes) values (1, 894, 1, 'If You want to shield stop vs Marth, make sure to angle your shield so you don''t get poked bu his big moves.');
-insert into Timestamp (Id, [Timestamp], ReviewPostId, Notes) values (2, 491, 2, 'Play more patient in this situation with the life lead. No reason to get opened up by projectiles when it''s just a mirror match.');
+insert into Timestamp (Id, [Time], ReviewPostId, Notes) values (1, 894, 1, 'If You want to shield stop vs Marth, make sure to angle your shield so you don''t get poked bu his big moves.');
+insert into Timestamp (Id, [Time], ReviewPostId, Notes) values (2, 491, 2, 'Play more patient in this situation with the life lead. No reason to get opened up by projectiles when it''s just a mirror match.');
 set identity_insert [Timestamp] off
 
 set identity_insert [SavedReview] on
