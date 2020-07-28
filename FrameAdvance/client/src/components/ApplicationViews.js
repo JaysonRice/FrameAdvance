@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
-
+import HomePage from "./reviewPosts/HomePage";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -13,7 +13,7 @@ export default function ApplicationViews() {
         <main>
             <Switch>
                 <Route path="/" exact>
-                    {isLoggedIn ? <p> Hello logged in user. </p> : <Redirect to="/login" />}
+                    {isLoggedIn ? <p> <HomePage /> </p> : <Redirect to="/login" />}
                 </Route>
 
 

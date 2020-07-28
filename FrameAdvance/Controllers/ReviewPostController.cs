@@ -7,7 +7,7 @@ using FrameAdvance.Repositories;
 
 namespace FrameAdvance.Controllers
 {
-    [Authorize]
+   
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewPostController : ControllerBase

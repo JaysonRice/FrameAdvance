@@ -24,7 +24,7 @@ namespace FrameAdvance.Repositories
         private List<Game> GetAll()
         {
             return _context.Game
-                .OrderBy(g => g.Name)
+                .OrderBy(g => g.Title)
                 .ToList();
         }
 

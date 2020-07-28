@@ -22,8 +22,6 @@ namespace FrameAdvance.Models
         [Required]
         public DateTime CreateDateTime { get; set; }
 
-        public DateTime? PublishDateTime { get; set; }
-
         [Required]
         public int UserProfileId { get; set; }
 
