@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrameAdvance.Models
 {
@@ -10,12 +11,12 @@ namespace FrameAdvance.Models
         [StringLength(28, MinimumLength = 28)]
         public string FirebaseUserId { get; set; }
 
-
         [Required]
         [MaxLength(255)]
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Username { get; set; }
 
         [Required]
@@ -23,5 +24,8 @@ namespace FrameAdvance.Models
 
         public UserType UserType { get; set; }
 
+        public List<SavedReview> SavedReviews { get; set; } = new List<SavedReview>();
+
+        public List<UserGame> UserGames { get; set; } = new List<UserGame>();
     }
 }
