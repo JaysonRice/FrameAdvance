@@ -1,17 +1,41 @@
 import React, { useState } from "react"
 import {
     Card, CardBody,
-    Button
+    Button,
+    CardFooter,
+    CardImg
 } from 'reactstrap';
 
 export default ({ reviewPost }) => {
+
+    let formatedDate = null;
+    let unformatedDate = null;
+
+    if (reviewPost.createDateTime != null) {
+        unformatedDate = reviewPost.createDateTime.split("T")[0];
+        const [year, month, day] = unformatedDate.split("-");
+        formatedDate = month + "/" + day + "/" + year;
+    }
+
     return (
         <>
             <div className="reviewPost">
-                <Card style={{ width: '15rem', }}>
-                    <CardBody className="reviewPostBody">
+                <Card >
+                    <CardBody body outline color="info" className="reviewPostBody">
                         <div className="reviewPostMain">
-                            <h4>{reviewPost.title}</h4>
+
+                            <div className="reviewPostInfo">
+                                <h5>{reviewPost.title}</h5>
+                                <div>
+                                    <p>{reviewPost.game.title}</p>
+                                    <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
+                                </div>
+                            </div>
+
+                            <div className="reviewPostImage">
+                                <CardImg src={reviewPost.game.imageLocation} alt={reviewPost.game.title} />
+                            </div>
+
                         </div>
                     </CardBody>
                 </Card>

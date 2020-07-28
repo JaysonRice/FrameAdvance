@@ -19,14 +19,12 @@ const ReviewPostList = () => {
 
     return (
         <>
-            <div className="reviewPostContainer">
-                {
-                    reviewPosts.map(post => {
+            {
+                reviewPosts.map(post => {
 
-                        return <ReviewPost key={post.id} reviewPost={post} />
-                    })
-                }
-            </div>
+                    return <ReviewPost key={post.id} reviewPost={post} />
+                })
+            }
         </>
     )
 }
