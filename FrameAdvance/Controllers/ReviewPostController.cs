@@ -32,7 +32,7 @@ namespace FrameAdvance.Controllers
             return Ok(_reviewPostRepository.GetByGameId(gameId));
         }
 
-        
+
         [HttpGet("getbyuser/{id}")]
         public IActionResult GetPostByUser(int id)
         {
