@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewPostList from './ReviewPostList';
 import "../css/ReviewPost.css"
+import { MyGameList } from '../games/MyGameList';
 
 function HomePage() {
     return (
@@ -9,7 +10,7 @@ function HomePage() {
                 <ReviewPostList />
             </div>
             <div className="myGamesContainer">
-                {/* <MyGames /> */}
+                <MyGameList />
             </div>
         </div>
     );

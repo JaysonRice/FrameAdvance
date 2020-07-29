@@ -16,5 +16,8 @@ namespace FrameAdvance.Models
         public string ImageLocation { get; set; }
 
         public bool IsActive { get; set; }
+
+        public List<UserGame> UserGames { get; set; } = new List<UserGame>();
+
     }
 }

@@ -35,5 +35,7 @@ namespace FrameAdvance.Models
 
         public List<Timestamp> Timestamps { get; set; }
 
+        public List<ReviewPostCharacter> ReviewPostCharacters { get; set; }
+
     }
 }

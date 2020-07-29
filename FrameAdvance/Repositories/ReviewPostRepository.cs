@@ -23,6 +23,8 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.Private == false)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();
@@ -33,6 +35,8 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.UserProfileId == id)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();
@@ -43,6 +47,8 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .ThenInclude(up => up.UserType)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
                            .ThenInclude(c => c.UserProfile)
                            .Select(p => new ReviewPost
@@ -54,6 +60,7 @@ namespace FrameAdvance.Repositories
                                UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
+                               ReviewPostCharacters = p.ReviewPostCharacters
                            })
                            .FirstOrDefault(p => p.Id == id);
         }
@@ -63,9 +70,9 @@ namespace FrameAdvance.Repositories
         {
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
-                           .ThenInclude(up => up.UserType)
-                           .Include(p => p.Comments)
-                           .ThenInclude(c => c.UserProfile)
+                           .Include(p => p.Game)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.GameId == gameId)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();

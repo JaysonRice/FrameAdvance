@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using FrameAdvance.Data;
 using FrameAdvance.Models;
 using FrameAdvance.Repositories;
+using System.Security.Claims;
 
 namespace FrameAdvance.Controllers
 {
@@ -12,9 +13,16 @@ namespace FrameAdvance.Controllers
     public class GameController : ControllerBase
     {
         private readonly GameRepository _gameRepository;
+        private readonly UserProfileRepository _userProfileRepository;
         public GameController(ApplicationDbContext context)
         {
             _gameRepository = new GameRepository(context);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_gameRepository.GetAll());
         }
 
         [HttpPost]
@@ -42,5 +50,6 @@ namespace FrameAdvance.Controllers
             _gameRepository.Delete(id);
             return NoContent();
         }
+
     }
 }

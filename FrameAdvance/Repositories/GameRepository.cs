@@ -21,12 +21,29 @@ namespace FrameAdvance.Repositories
             return _context.Game.FirstOrDefault(g => g.Id == id);
         }
 
-        private List<Game> GetAll()
+        public List<Game> GetAll()
         {
             return _context.Game
+                .Include(g => g.UserGames)
+                .ThenInclude(ug => ug.UserProfile)
+                .Include(g => g.UserGames)
+                .ThenInclude(ug => ug.SkillLevel)
                 .OrderBy(g => g.Title)
                 .ToList();
         }
+
+        public List<ReviewPost> postversion(int id)
+        {
+            return _context.ReviewPost
+                           .Include(p => p.UserProfile)
+                           .Include(p => p.Game)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
+                           .Where(p => p.UserProfileId == id)
+                           .OrderByDescending(p => p.CreateDateTime)
+                           .ToList();
+        }
+
 
         public void Add(Game game)
         {

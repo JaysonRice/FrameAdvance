@@ -44,7 +44,7 @@ export const GameProvider = (props) => {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(Game)
+                body: JSON.stringify(game)
             }).then(getAllGames));
 
     const deleteGame = (id) => {
