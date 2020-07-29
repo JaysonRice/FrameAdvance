@@ -1,6 +1,7 @@
 .homeContainer{
     display: flex;
     justify-content: space-evenly;
+    margin-top: 1rem;
 }
 
 .reviewPostContainer{
@@ -24,12 +25,12 @@
 
 .reviewPostInfo {
     text-align: center;
-    flex-basis: 63%;
+    flex-basis: 66%;
     align-self: center;
 }
 
 .reviewPostImage {
-    flex-basis: 35%;
+    flex-basis: 25%;
 }
 
 
