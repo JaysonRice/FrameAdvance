@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewPostList from './ReviewPostList';
 import "../css/ReviewPost.css"
+import "../css/MyGames.css"
 import { MyGameList } from '../games/MyGameList';
 
 function HomePage() {

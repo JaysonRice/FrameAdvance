@@ -9,6 +9,7 @@ export const GameProvider = (props) => {
 
     const { getToken } = useContext(UserProfileContext);
     const [games, setGames] = useState([]);
+    const [skillLevels, setSkillLevels] = useState([]);
 
     const getAllGames = () =>
         getToken().then((token) =>
@@ -19,6 +20,16 @@ export const GameProvider = (props) => {
                 }
             }).then(resp => resp.json())
                 .then(setGames));
+
+    const getAllSkillLevels = () =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/skills`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(resp => resp.json())
+                .then(setSkillLevels));
 
     const addGame = (game) =>
         getToken().then((token) =>
@@ -74,8 +85,40 @@ export const GameProvider = (props) => {
             .then((res) => res.json())
     }
 
+    const addGameToUser = (userGame) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/addgame`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userGame),
+            }).then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                else { throw new Error("Unauthorized"); }
+            }));
+
+    const removeGameFromUser = (id) => {
+        return getToken().then((token) =>
+            fetch(`${apiUrl}/removegame/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((resp) => {
+                if (resp.ok) {
+                    return;
+                }
+                else { throw new Error("Failed to delete post.") }
+            })
+        );
+    };
+
     return (
-        <GameContext.Provider value={{ games, getAllGames, addGame, updateGame, deleteGame, getGameById }}>
+        <GameContext.Provider value={{ games, skillLevels, getAllGames, getAllSkillLevels, addGame, updateGame, deleteGame, getGameById, addGameToUser, removeGameFromUser }}>
             {props.children}
         </GameContext.Provider>
     );

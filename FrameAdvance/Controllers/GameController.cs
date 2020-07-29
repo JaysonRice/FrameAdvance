@@ -25,6 +25,12 @@ namespace FrameAdvance.Controllers
             return Ok(_gameRepository.GetAll());
         }
 
+        [HttpGet("skills")]
+        public IActionResult GetAllSkills()
+        {
+            return Ok(_gameRepository.GetAllSkillLevels());
+        }
+
         [HttpPost]
         public IActionResult Post(Game game)
         {
@@ -50,6 +56,22 @@ namespace FrameAdvance.Controllers
             _gameRepository.Delete(id);
             return NoContent();
         }
+
+        //Controller methods for UserGames
+        [HttpPost("addgame")]
+        public IActionResult Post(UserGame userGame)
+        {
+            _gameRepository.AddUserGame(userGame);
+            return CreatedAtAction("Get", new { id = userGame.Id }, userGame);
+        }
+
+        [HttpDelete("removegame/{id}")]
+        public IActionResult DeletePostTag(int id)
+        {
+            _gameRepository.RemoveUserGame(id);
+            return NoContent();
+        }
+
 
     }
 }

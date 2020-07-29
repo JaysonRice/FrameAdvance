@@ -31,12 +31,12 @@ export const MyGame = ({ game }) => {
 
     if (!!game.userGames.find(ug => ug.userProfileId === userProfileId)) {
         return (
-            <Card className="categoryCard">
+            <Card className="gameCard">
                 <CardBody>
-                    <div className="categoryCardBody">
+                    <div className="gameCardBody">
                         <h6>{game.title}</h6>
-                        <div className="duh">
-                            <p>{game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}</p>
+                        <div className={game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}>
+                            <p >{game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}</p>
                         </div>
                     </div>
                 </CardBody>

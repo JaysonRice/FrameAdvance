@@ -32,16 +32,11 @@ namespace FrameAdvance.Repositories
                 .ToList();
         }
 
-        public List<ReviewPost> postversion(int id)
+        public List<SkillLevel> GetAllSkillLevels()
         {
-            return _context.ReviewPost
-                           .Include(p => p.UserProfile)
-                           .Include(p => p.Game)
-                           .Include(p => p.ReviewPostCharacters)
-                           .ThenInclude(pc => pc.Character)
-                           .Where(p => p.UserProfileId == id)
-                           .OrderByDescending(p => p.CreateDateTime)
-                           .ToList();
+            return _context.SkillLevel
+                .OrderBy(s => s.Id)
+                .ToList();
         }
 
 
@@ -63,5 +58,28 @@ namespace FrameAdvance.Repositories
             _context.Game.Remove(game);
             _context.SaveChanges();
         }
+
+
+        //UserGame repo methods start here
+
+        private UserGame GetUserGameById(int id)
+        {
+            return _context.UserGame
+                           .FirstOrDefault(ug => ug.Id == id);
+        }
+
+        public void AddUserGame(UserGame userGame)
+        {
+            _context.UserGame.Add(userGame);
+            _context.SaveChanges();
+        }
+
+        public void RemoveUserGame(int id)
+        {
+            var userGame = GetUserGameById(id);
+            _context.UserGame.Remove(userGame);
+            _context.SaveChanges();
+        }
+
     }
 }

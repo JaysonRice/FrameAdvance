@@ -9,8 +9,7 @@
 }
 
 .myGamesContainer{
-    flex-basis: 18%;
-    border: solid black 2px; 
+    flex-basis: 18%; 
 }
 
 /* Each individual post in the list */
