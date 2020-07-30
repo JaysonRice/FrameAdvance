@@ -23,6 +23,8 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .ThenInclude(g => g.UserGames)
+                           .ThenInclude(ug => ug.SkillLevel)
                            .Include(p => p.ReviewPostCharacters)
                            .ThenInclude(pc => pc.Character)
                            .Where(p => p.Private == false)
@@ -45,6 +47,7 @@ namespace FrameAdvance.Repositories
         public ReviewPost GetById(int id)
         {
             return _context.ReviewPost
+                           .Include(p => p.Game)
                            .Include(p => p.UserProfile)
                            .ThenInclude(up => up.UserType)
                            .Include(p => p.ReviewPostCharacters)
@@ -60,7 +63,8 @@ namespace FrameAdvance.Repositories
                                UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
-                               ReviewPostCharacters = p.ReviewPostCharacters
+                               ReviewPostCharacters = p.ReviewPostCharacters,
+                               Game = p.Game
                            })
                            .FirstOrDefault(p => p.Id == id);
         }

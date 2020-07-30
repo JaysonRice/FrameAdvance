@@ -1,14 +1,16 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Card, CardBody, Button, Modal, ModalHeader, ModalBody, Label } from "reactstrap";
 import { GameContext } from "../../providers/GameProvider";
+import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
 export const MyGame = ({ game }) => {
 
     const { removeGameFromUser, skillLevels, updateUserGame, } = useContext(GameContext)
+    const { getAllReviewPosts } = useContext(ReviewPostContext);
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const skillLevel = useRef()
-    const [formState, setformState] = useState();
 
+    const [formState, setformState] = useState();
     const handleUserInput = (e) => {
         const updatedState = { ...formState };
         updatedState[e.target.id] = e.target.value;
@@ -24,7 +26,7 @@ export const MyGame = ({ game }) => {
             userProfileId: +userProfileId,
             skillLevelId: +skillLevel.current.value,
             gameId: +game.id
-        }).then(toggleEdit)
+        }).then(getAllReviewPosts()).then(toggleEdit)
     }
 
     if (!!game.userGames.find(ug => ug.userProfileId === userProfileId)) {

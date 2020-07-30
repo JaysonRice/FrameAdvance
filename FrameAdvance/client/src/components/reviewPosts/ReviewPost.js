@@ -29,6 +29,9 @@ export default ({ reviewPost }) => {
                                 <div>
                                     <p>{reviewPost.game.title}</p>
                                     <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
+                                    <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
+                                        <p>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</p>
+                                    </div>
                                 </div>
                             </div>
 
