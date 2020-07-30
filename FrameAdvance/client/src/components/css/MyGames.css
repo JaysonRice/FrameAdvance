@@ -1,3 +1,14 @@
+.myGamesHeader{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.gameCard{
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
 .gameCardBody {
     display: flex;
     justify-content: space-between;

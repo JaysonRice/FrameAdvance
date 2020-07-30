@@ -25,13 +25,14 @@ export const MyGameList = () => {
 
     return (
         <section>
-            <h2>My Games</h2>
+            <div className="myGamesHeader">
+                <h4>My Games</h4>
+                <Button color="primary" outline onClick={toggle}>+</Button>
+            </div>
             <div className="gamesContainer">
                 {games.map(g =>
                     <MyGame key={g.id} game={g} />)}
             </div>
-
-            <Button color="primary" onClick={toggle}>Add Game</Button>
 
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>

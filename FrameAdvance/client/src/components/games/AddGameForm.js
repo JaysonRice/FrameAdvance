@@ -84,21 +84,4 @@ export const AddGameForm = ({ toggler }) => {
             </button>
         </form>
     )
-
-
-    //     return (
-    //         <div className="gameHeader">
-
-    //             <button type="submit"
-    //                 onClick={
-    //                     evt => {
-    //                         evt.preventDefault() // Prevent browser from submitting the form
-    //                         setGameInput(true)
-    //                     }
-    //                 }
-    //                 className="btn btn-primary">
-    //                 Add a Game
-    // </button>
-    //         </div>
-    // )
 }

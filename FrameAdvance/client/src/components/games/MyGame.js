@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Card, CardBody, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Card, CardBody, Button, Modal, ModalHeader, ModalBody, Label } from "reactstrap";
 import { GameContext } from "../../providers/GameProvider";
 
 export const MyGame = ({ game }) => {
@@ -30,14 +30,13 @@ export const MyGame = ({ game }) => {
     if (!!game.userGames.find(ug => ug.userProfileId === userProfileId)) {
         return (
             <Card className="gameCard">
-                <CardBody>
+                <CardBody onClick={toggleEdit}>
                     <div className="gameCardBody">
                         <h6>{game.title}</h6>
                         <div className={game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}>
                             <p >{game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}</p>
                         </div>
                     </div>
-                    <Button color="primary" onClick={toggleEdit}>Edit</Button>
 
                     <Modal isOpen={editModal} toggle={toggleEdit}>
                         <ModalHeader toggle={toggleEdit}>
@@ -45,6 +44,7 @@ export const MyGame = ({ game }) => {
                         </ModalHeader>
                         <ModalBody >
                             <div className="form-group">
+                                <Label>Skill Level: </Label>
                                 <select
                                     id="userGameId"
                                     ref={skillLevel}

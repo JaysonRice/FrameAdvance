@@ -11,6 +11,7 @@ namespace FrameAdvance.Repositories
     public class GameRepository
     {
         private readonly ApplicationDbContext _context;
+             private readonly UserProfileRepository _userProfileRepository;
         public GameRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -32,12 +33,23 @@ namespace FrameAdvance.Repositories
                 .ToList();
         }
 
+        //public List<Game> GetAllGamesIDontPlay()
+        //{
+        //    return _context.Game
+        //        .Include(g => g.UserGames)
+        //        .ThenInclude(ug => ug.UserProfile)
+        //        .Where(g.UserGames == )
+        //        .OrderBy(g => g.Title)
+        //        .ToList();
+        //}
+
         public List<SkillLevel> GetAllSkillLevels()
         {
             return _context.SkillLevel
                 .OrderBy(s => s.Id)
                 .ToList();
         }
+
 
 
         public void Add(Game game)
@@ -62,11 +74,12 @@ namespace FrameAdvance.Repositories
 
         //UserGame repo methods start here
 
-        private UserGame GetUserGameById(int id)
+        public UserGame GetUserGameById(int id)
         {
             return _context.UserGame
                            .FirstOrDefault(ug => ug.Id == id);
         }
+
 
         public void AddUserGame(UserGame userGame)
         {
