@@ -19,14 +19,14 @@ export const AddGameForm = ({ toggler }) => {
     }, []);
 
     const constructNewGame = () => {
-        if (game.current.value !== "" && skillLevel.current.value !== "") {
-
+        if (game.current.value !== "0" && skillLevel.current.value !== "0") {
             addGameToUser({
                 userProfileId: +userProfileId,
                 gameId: +game.current.value,
                 skillLevelId: +skillLevel.current.value
             }).then(toggler)
         }
+        else (toggler())
     }
 
     return (

@@ -4,17 +4,10 @@ import { GameContext } from "../../providers/GameProvider";
 
 export const MyGame = ({ game }) => {
 
-    const { removeGameFromUser, skillLevels, getAllSkillLevels, updateUserGame, } = useContext(GameContext)
+    const { removeGameFromUser, skillLevels, updateUserGame, } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const skillLevel = useRef()
     const [formState, setformState] = useState();
-
-    useEffect(() => {
-        getAllSkillLevels();
-    }, []);
-
-    // const [modal, setModal] = useState(false)
-    // const toggle = () => setModal(!modal)
 
     const handleUserInput = (e) => {
         const updatedState = { ...formState };
@@ -33,14 +26,6 @@ export const MyGame = ({ game }) => {
             gameId: +game.id
         }).then(toggleEdit)
     }
-
-    // const catDelete = () => {
-    //     updateCategory({
-    //         id: category.id,
-    //         name: category.name,
-    //         active: !category.active
-    //     }).then(toggle)
-    // }
 
     if (!!game.userGames.find(ug => ug.userProfileId === userProfileId)) {
         return (
@@ -81,11 +66,11 @@ export const MyGame = ({ game }) => {
                                         onClick={
                                             evt => {
                                                 evt.preventDefault() // Prevent browser from submitting the form
-                                                toggleEdit()
+                                                removeGameFromUser(+game.userGames.find(ug => ug.userProfileId === userProfileId).id).then(toggleEdit)
                                             }
                                         }
-                                        className="btn btn-secondary">
-                                        Cancel
+                                        className="btn btn-danger">
+                                        Delete Game
             </button>
                                     <button type="submit"
                                         onClick={
@@ -103,8 +88,6 @@ export const MyGame = ({ game }) => {
                     </Modal>
                 </CardBody>
             </Card >
-
-
 
         )
 

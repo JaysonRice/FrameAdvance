@@ -99,7 +99,8 @@ export const GameProvider = (props) => {
                     return resp.json();
                 }
                 else { throw new Error("Unauthorized"); }
-            }));
+            }).then(getAllGames)
+        );
 
     const updateUserGame = (userGame) =>
         getToken().then((token) =>
@@ -121,7 +122,7 @@ export const GameProvider = (props) => {
                 }
             }).then((resp) => {
                 if (resp.ok) {
-                    return;
+                    getAllGames();
                 }
                 else { throw new Error("Failed to delete post.") }
             })
