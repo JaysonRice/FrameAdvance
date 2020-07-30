@@ -9,6 +9,7 @@ export const GameProvider = (props) => {
 
     const { getToken } = useContext(UserProfileContext);
     const [games, setGames] = useState([]);
+    const [gamesIPlay, setGamesIPlay] = useState([]);
     const [skillLevels, setSkillLevels] = useState([]);
 
     const getAllGames = () =>
@@ -20,6 +21,16 @@ export const GameProvider = (props) => {
                 }
             }).then(resp => resp.json())
                 .then(setGames));
+
+    const getAllGamesIPlay = () =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/gamesiplay`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(resp => resp.json())
+                .then(setGamesIPlay));
 
     const getAllSkillLevels = () =>
         getToken().then((token) =>
@@ -130,7 +141,11 @@ export const GameProvider = (props) => {
     };
 
     return (
-        <GameContext.Provider value={{ games, skillLevels, getAllGames, getAllSkillLevels, addGame, updateGame, deleteGame, getGameById, addGameToUser, updateUserGame, removeGameFromUser }}>
+        <GameContext.Provider value={{
+            games, skillLevels, gamesIPlay, getAllGames,
+            getAllGamesIPlay, getAllSkillLevels, addGame, updateGame, deleteGame,
+            getGameById, addGameToUser, updateUserGame, removeGameFromUser
+        }}>
             {props.children}
         </GameContext.Provider>
     );

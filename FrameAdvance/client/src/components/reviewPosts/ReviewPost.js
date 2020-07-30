@@ -27,10 +27,10 @@ export default ({ reviewPost }) => {
                             <div className="reviewPostInfo">
                                 <h5>{reviewPost.title}</h5>
                                 <div>
-                                    <p>{reviewPost.game.title}</p>
+                                    <div>{reviewPost.game.title}</div>
                                     <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
                                     <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
-                                        <p>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</p>
+                                        <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
                                     </div>
                                 </div>
                             </div>

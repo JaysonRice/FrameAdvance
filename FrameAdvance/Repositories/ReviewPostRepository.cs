@@ -37,6 +37,8 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .ThenInclude(g => g.UserGames)
+                           .ThenInclude(ug => ug.SkillLevel)
                            .Include(p => p.ReviewPostCharacters)
                            .ThenInclude(pc => pc.Character)
                            .Where(p => p.UserProfileId == id)

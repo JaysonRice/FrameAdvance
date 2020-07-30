@@ -1,5 +1,6 @@
 ﻿using FrameAdvance.Data;
 using FrameAdvance.Models;
+using FrameAdvance.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace FrameAdvance.Repositories
     public class GameRepository
     {
         private readonly ApplicationDbContext _context;
-             private readonly UserProfileRepository _userProfileRepository;
+        private readonly UserProfileRepository _userProfileRepository;
         public GameRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -25,23 +26,25 @@ namespace FrameAdvance.Repositories
         public List<Game> GetAll()
         {
             return _context.Game
-                .Include(g => g.UserGames)
-                .ThenInclude(ug => ug.UserProfile)
-                .Include(g => g.UserGames)
-                .ThenInclude(ug => ug.SkillLevel)
                 .OrderBy(g => g.Title)
                 .ToList();
         }
 
-        //public List<Game> GetAllGamesIDontPlay()
-        //{
-        //    return _context.Game
-        //        .Include(g => g.UserGames)
-        //        .ThenInclude(ug => ug.UserProfile)
-        //        .Where(g.UserGames == )
-        //        .OrderBy(g => g.Title)
-        //        .ToList();
-        //}
+        public List<GameSkillLevel> GamesIPlay(int userId)
+        {
+            return _context.UserGame
+                .Where(g => g.UserProfileId == userId)
+                .Include(g => g.Game)
+                .Include(g => g.SkillLevel)
+                .OrderBy(g => g.Game.Title)
+                .Select(g => new GameSkillLevel()
+                {
+                    Id = g.Id,
+                    SkillLevel = g.SkillLevel,
+                    Game = g.Game
+                })
+                .ToList();
+        }
 
         public List<SkillLevel> GetAllSkillLevels()
         {
@@ -49,8 +52,6 @@ namespace FrameAdvance.Repositories
                 .OrderBy(s => s.Id)
                 .ToList();
         }
-
-
 
         public void Add(Game game)
         {
@@ -79,7 +80,6 @@ namespace FrameAdvance.Repositories
             return _context.UserGame
                            .FirstOrDefault(ug => ug.Id == id);
         }
-
 
         public void AddUserGame(UserGame userGame)
         {

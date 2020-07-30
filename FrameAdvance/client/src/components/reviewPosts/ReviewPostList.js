@@ -5,8 +5,6 @@ import ReviewPost from "./ReviewPost"
 
 const ReviewPostList = () => {
 
-    const currentUserId = JSON.parse(sessionStorage.getItem("userProfile")).id;
-
     const { reviewPosts, getAllReviewPosts } = useContext(ReviewPostContext);
 
     useEffect(() => {
@@ -21,7 +19,6 @@ const ReviewPostList = () => {
         <>
             {
                 reviewPosts.map(post => {
-
                     return <ReviewPost key={post.id} reviewPost={post} />
                 })
             }

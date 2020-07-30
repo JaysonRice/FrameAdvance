@@ -14,7 +14,7 @@
     justify-content: space-between;
 }
 
-.Beginner > p {
+.Beginner > div {
     border: cornflowerblue 1px solid;
     background-color: lightskyblue;
     border-radius: 0.5rem;
@@ -24,7 +24,7 @@
     font-style: italic;
 }
 
-.Intermediate > p{
+.Intermediate > div {
     border: darkolivegreen 1px solid;
     background-color: rgb(106, 207, 106);
     border-radius: 0.5rem;
@@ -34,7 +34,7 @@
     font-style: italic;
 }
 
-.Advanced  > p {
+.Advanced  > div {
     border: goldenrod 1px solid;
     background-color: rgb(255, 219, 17);
     border-radius: 0.5rem;
@@ -44,7 +44,7 @@
     font-style: italic;
 }
 
-.Expert  > p {
+.Expert  > div {
     border: red 1px solid;
     background-color: lightpink;
     border-radius: 0.5rem;

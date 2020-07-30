@@ -3,7 +3,7 @@ import { Card, CardBody, Button, Modal, ModalHeader, ModalBody, Label } from "re
 import { GameContext } from "../../providers/GameProvider";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
-export const MyGame = ({ game }) => {
+export const MyGame = ({ myGame }) => {
 
     const { removeGameFromUser, skillLevels, updateUserGame, } = useContext(GameContext)
     const { getAllReviewPosts } = useContext(ReviewPostContext);
@@ -22,80 +22,75 @@ export const MyGame = ({ game }) => {
 
     const skillUpdate = () => {
         updateUserGame({
-            id: +game.userGames.find(ug => ug.userProfileId === userProfileId).id,
+            id: myGame.id,
             userProfileId: +userProfileId,
             skillLevelId: +skillLevel.current.value,
-            gameId: +game.id
+            gameId: +myGame.game.id
         }).then(getAllReviewPosts()).then(toggleEdit)
     }
 
-    if (!!game.userGames.find(ug => ug.userProfileId === userProfileId)) {
-        return (
-            <Card className="gameCard">
-                <CardBody onClick={toggleEdit}>
-                    <div className="gameCardBody">
-                        <h6>{game.title}</h6>
-                        <div className={game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}>
-                            <p >{game.userGames.find(ug => ug.userProfileId === userProfileId).skillLevel.name}</p>
-                        </div>
+    return (
+        <Card className="gameCard">
+            <CardBody onClick={toggleEdit}>
+                <div className="gameCardBody">
+                    <h6>{myGame.game.title}</h6>
+                    <div className={myGame.skillLevel.name}>
+                        <div>{myGame.skillLevel.name}</div>
                     </div>
+                </div>
 
-                    <Modal isOpen={editModal} toggle={toggleEdit}>
-                        <ModalHeader toggle={toggleEdit}>
-                            Edit {game.title}
-                        </ModalHeader>
-                        <ModalBody >
-                            <div className="form-group">
-                                <Label>Skill Level: </Label>
-                                <select
-                                    id="userGameId"
-                                    ref={skillLevel}
-                                    defaultValue="1"
-                                    onChange={handleUserInput}
-                                >
+                <Modal isOpen={editModal} toggle={toggleEdit}>
+                    <ModalHeader toggle={toggleEdit}>
+                        Edit {myGame.title}
+                    </ModalHeader>
+                    <ModalBody >
+                        <div className="form-group">
+                            <Label>Skill Level: </Label>
+                            <select
+                                id="userGameId"
+                                ref={skillLevel}
+                                defaultValue={myGame.skillLevel.id}
+                                onChange={handleUserInput}
+                            >
 
-                                    {skillLevels.map((s) => {
-                                        return (
-                                            <option key={s.id} value={s.id}>
-                                                {s.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                                {skillLevels.map((s) => {
+                                    return (
+                                        <option key={s.id} value={s.id}>
+                                            {s.name}
+                                        </option>
+                                    );
+                                })}
+                            </select>
 
-                                <div className="categoryModalBody">
-                                    <button type="submit"
-                                        onClick={
-                                            evt => {
-                                                evt.preventDefault() // Prevent browser from submitting the form
-                                                removeGameFromUser(+game.userGames.find(ug => ug.userProfileId === userProfileId).id).then(toggleEdit)
-                                            }
+                            <div className="categoryModalBody">
+                                <button type="submit"
+                                    onClick={
+                                        evt => {
+                                            evt.preventDefault() // Prevent browser from submitting the form
+                                            removeGameFromUser(myGame.id).then(toggleEdit)
                                         }
-                                        className="btn btn-danger">
-                                        Delete Game
+                                    }
+                                    className="btn btn-danger">
+                                    Delete Game
             </button>
-                                    <button type="submit"
-                                        onClick={
-                                            evt => {
-                                                evt.preventDefault() // Prevent browser from submitting the form
-                                                skillUpdate()
-                                            }
+                                <button type="submit"
+                                    onClick={
+                                        evt => {
+                                            evt.preventDefault() // Prevent browser from submitting the form
+                                            skillUpdate()
                                         }
-                                        className="btn btn-primary">
-                                        Save Changes
+                                    }
+                                    className="btn btn-primary">
+                                    Save Changes
             </button>
-                                </div>
                             </div>
-                        </ModalBody>
-                    </Modal>
-                </CardBody>
-            </Card >
+                        </div>
+                    </ModalBody>
+                </Modal>
+            </CardBody>
+        </Card >
 
-        )
-
-    } else {
-        return null
-    }
+    )
 
 }
 

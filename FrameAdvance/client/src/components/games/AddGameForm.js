@@ -43,7 +43,7 @@ export const AddGameForm = ({ toggler }) => {
                         className="form-control"
                     >
                         <option value="0">Select a game</option>
-                        {games.map(e => (
+                        {games.filter(game => !game.userGames.length).map(e => (
                             <option key={e.id} value={e.id}>
                                 {e.title}
                             </option>

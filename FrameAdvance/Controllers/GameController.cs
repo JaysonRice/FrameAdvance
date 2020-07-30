@@ -26,6 +26,13 @@ namespace FrameAdvance.Controllers
             return Ok(_gameRepository.GetAll());
         }
 
+        [HttpGet("gamesiplay")]
+        public IActionResult GetGamesIPlay()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_gameRepository.GamesIPlay(currentUserProfile.Id));
+        }
+
         [HttpGet("skills")]
         public IActionResult GetAllSkills()
         {
@@ -103,6 +110,7 @@ namespace FrameAdvance.Controllers
             {
                 return Unauthorized();
             }
+
             if (id != userGame.Id)
             {
                 return BadRequest();
