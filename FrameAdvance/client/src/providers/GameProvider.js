@@ -101,6 +101,17 @@ export const GameProvider = (props) => {
                 else { throw new Error("Unauthorized"); }
             }));
 
+    const updateUserGame = (userGame) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/editusergame/${userGame.id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userGame)
+            }).then(getAllGames));
+
     const removeGameFromUser = (id) => {
         return getToken().then((token) =>
             fetch(`${apiUrl}/removegame/${id}`, {
@@ -118,7 +129,7 @@ export const GameProvider = (props) => {
     };
 
     return (
-        <GameContext.Provider value={{ games, skillLevels, getAllGames, getAllSkillLevels, addGame, updateGame, deleteGame, getGameById, addGameToUser, removeGameFromUser }}>
+        <GameContext.Provider value={{ games, skillLevels, getAllGames, getAllSkillLevels, addGame, updateGame, deleteGame, getGameById, addGameToUser, updateUserGame, removeGameFromUser }}>
             {props.children}
         </GameContext.Provider>
     );

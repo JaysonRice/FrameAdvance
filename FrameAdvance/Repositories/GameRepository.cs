@@ -74,6 +74,12 @@ namespace FrameAdvance.Repositories
             _context.SaveChanges();
         }
 
+        public void UpdateUserGame(UserGame userGame)
+        {
+            _context.Entry(userGame).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
         public void RemoveUserGame(int id)
         {
             var userGame = GetUserGameById(id);

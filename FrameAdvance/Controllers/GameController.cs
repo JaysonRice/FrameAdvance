@@ -65,6 +65,18 @@ namespace FrameAdvance.Controllers
             return CreatedAtAction("Get", new { id = userGame.Id }, userGame);
         }
 
+        [HttpPut("editusergame/{id}")]
+        public IActionResult Put(int id, UserGame userGame)
+        {
+            if (id != userGame.Id)
+            {
+                return BadRequest();
+            }
+
+            _gameRepository.UpdateUserGame(userGame);
+            return NoContent();
+        }
+
         [HttpDelete("removegame/{id}")]
         public IActionResult DeletePostTag(int id)
         {

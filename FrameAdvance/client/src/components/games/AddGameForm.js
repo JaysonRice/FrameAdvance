@@ -4,7 +4,7 @@ import { GameContext } from "../../providers/GameProvider";
 
 
 export const AddGameForm = ({ toggler }) => {
-    const { games, skillLevels, getAllSkillLevels, getAllGames, addGameToUser, removeGameFromUser } = useContext(GameContext)
+    const { games, skillLevels, getAllSkillLevels, getAllGames, addGameToUser } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
     const game = useRef()
