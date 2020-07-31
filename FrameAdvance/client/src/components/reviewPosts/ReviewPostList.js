@@ -5,10 +5,10 @@ import ReviewPost from "./ReviewPost"
 
 const ReviewPostList = () => {
 
-    const { reviewPosts, getAllReviewPosts } = useContext(ReviewPostContext);
+    const { reviewPosts, getAllPostList } = useContext(ReviewPostContext);
 
     useEffect(() => {
-        getAllReviewPosts()
+        getAllPostList()
     }, []);
 
     if (!reviewPosts) {

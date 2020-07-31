@@ -10,6 +10,7 @@ export const GameProvider = (props) => {
     const { getToken } = useContext(UserProfileContext);
     const [games, setGames] = useState([]);
     const [gamesIPlay, setGamesIPlay] = useState([]);
+    const [gamesIDontPlay, setGamesIDontPlay] = useState([]);
     const [skillLevels, setSkillLevels] = useState([]);
 
     const getAllGames = () =>
@@ -31,6 +32,16 @@ export const GameProvider = (props) => {
                 }
             }).then(resp => resp.json())
                 .then(setGamesIPlay));
+
+    const getAllGamesIDontPlay = () =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/gamesidontplay`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(resp => resp.json())
+                .then(setGamesIDontPlay));
 
     const getAllSkillLevels = () =>
         getToken().then((token) =>
@@ -110,7 +121,7 @@ export const GameProvider = (props) => {
                     return resp.json();
                 }
                 else { throw new Error("Unauthorized"); }
-            }).then(getAllGames)
+            }).then(getAllGamesIPlay)
         );
 
     const updateUserGame = (userGame) =>
@@ -122,7 +133,7 @@ export const GameProvider = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(userGame)
-            }).then(getAllGames));
+            }).then(getAllGamesIPlay));
 
     const removeGameFromUser = (id) => {
         return getToken().then((token) =>
@@ -133,7 +144,7 @@ export const GameProvider = (props) => {
                 }
             }).then((resp) => {
                 if (resp.ok) {
-                    getAllGames();
+                    getAllGamesIPlay();
                 }
                 else { throw new Error("Failed to delete post.") }
             })
@@ -142,8 +153,8 @@ export const GameProvider = (props) => {
 
     return (
         <GameContext.Provider value={{
-            games, skillLevels, gamesIPlay, getAllGames,
-            getAllGamesIPlay, getAllSkillLevels, addGame, updateGame, deleteGame,
+            games, skillLevels, gamesIPlay, gamesIDontPlay, getAllGames, getAllGamesIPlay,
+            getAllGamesIDontPlay, getAllSkillLevels, addGame, updateGame, deleteGame,
             getGameById, addGameToUser, updateUserGame, removeGameFromUser
         }}>
             {props.children}

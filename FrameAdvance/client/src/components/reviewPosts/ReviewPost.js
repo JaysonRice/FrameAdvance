@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import {
     Card, CardBody,
-    Button,
-    CardFooter,
     CardImg
 } from 'reactstrap';
 
@@ -29,9 +27,15 @@ export default ({ reviewPost }) => {
                                 <div>
                                     <div>{reviewPost.game.title}</div>
                                     <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
-                                    <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
-                                        <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
-                                    </div>
+
+                                    {!reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id)
+                                        ? (
+                                            ""
+                                        ) : (
+                                            <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
+                                                <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
+                                            </div>
+                                        )}
                                 </div>
                             </div>
 

@@ -12,7 +12,6 @@ namespace FrameAdvance.Repositories
     public class GameRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserProfileRepository _userProfileRepository;
         public GameRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -43,6 +42,25 @@ namespace FrameAdvance.Repositories
                     SkillLevel = g.SkillLevel,
                     Game = g.Game
                 })
+                .ToList();
+        }
+
+        public List<GameSkillLevel> GamesIDontPlay(int userId)
+        {
+            var gamesIPlay = GamesIPlay(userId);
+
+            return _context.UserGame
+                .Where(g => g.UserProfileId != userId)
+                .Include(g => g.Game)
+                .Include(g => g.SkillLevel)
+                .OrderBy(g => g.Game.Title)
+                .Select(g => new GameSkillLevel()
+                {
+                    Id = g.Id,
+                    Game = g.Game,
+                    SkillLevel = g.SkillLevel
+                })
+                .Distinct()
                 .ToList();
         }
 

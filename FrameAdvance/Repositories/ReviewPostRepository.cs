@@ -1,5 +1,6 @@
 ﻿using FrameAdvance.Data;
 using FrameAdvance.Models;
+using FrameAdvance.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,29 @@ namespace FrameAdvance.Repositories
                            .Where(p => p.Private == false)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();
+        }
+
+        public List<ReviewPostView> GetAllPostList()
+        {
+            return _context.ReviewPost
+                 .Include(p => p.UserProfile)
+                 .Include(p => p.Game)
+                 .ThenInclude(g => g.UserGames)
+                 .ThenInclude(ug => ug.SkillLevel)
+                 .Include(p => p.ReviewPostCharacters)
+                 .ThenInclude(pc => pc.Character)
+                 .OrderByDescending(p => p.CreateDateTime)
+                 .Select(p => new ReviewPostView()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    CreateDateTime = p.CreateDateTime,
+                    UserProfile = p.UserProfile,
+                    UserGames = p.Game.UserGames,
+                    Game = p.Game,
+                    ReviewPostCharacters = p.ReviewPostCharacters
+                })
+                .ToList();
         }
 
         public List<ReviewPost> GetByUserProfileId(int id)

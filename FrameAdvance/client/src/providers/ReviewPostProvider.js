@@ -21,6 +21,16 @@ export const ReviewPostProvider = (props) => {
             }).then((res) => res.json())
                 .then(setReviewPosts));
 
+    const getAllPostList = () =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/postlist`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((res) => res.json())
+                .then(setReviewPosts));
+
     const addReviewPost = (reviewPost) =>
         getToken().then((token) =>
             fetch(apiUrl, {
@@ -121,7 +131,7 @@ export const ReviewPostProvider = (props) => {
 
 
     return (
-        <ReviewPostContext.Provider value={{ reviewPosts, getAllReviewPosts, addReviewPost, getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById, editReviewPost }}>
+        <ReviewPostContext.Provider value={{ reviewPosts, getAllReviewPosts, getAllPostList, addReviewPost, getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById, editReviewPost }}>
             {props.children}
         </ReviewPostContext.Provider>
     );

@@ -4,6 +4,8 @@ using FrameAdvance.Data;
 using FrameAdvance.Models;
 using FrameAdvance.Repositories;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Internal;
+using FrameAdvance.Models.ViewModels;
 
 namespace FrameAdvance.Controllers
 {
@@ -31,6 +33,13 @@ namespace FrameAdvance.Controllers
         {
             var currentUserProfile = GetCurrentUserProfile();
             return Ok(_gameRepository.GamesIPlay(currentUserProfile.Id));
+        }
+
+        [HttpGet("gamesidontplay")]
+        public IActionResult GetGamesIDontPlay()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(_gameRepository.GamesIDontPlay(currentUserProfile.Id));
         }
 
         [HttpGet("skills")]

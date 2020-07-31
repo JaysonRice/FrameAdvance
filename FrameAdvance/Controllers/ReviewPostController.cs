@@ -26,6 +26,13 @@ namespace FrameAdvance.Controllers
             return Ok(_reviewPostRepository.GetAll());
         }
 
+        [HttpGet("postlist")]
+        public IActionResult GetPostList()
+        {
+
+            return Ok(_reviewPostRepository.GetAllPostList());
+        }
+
         [HttpGet("getbygame/{id}")]
         public IActionResult GetPostsByGame(int gameId)
         {

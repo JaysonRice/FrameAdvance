@@ -17,9 +17,10 @@ namespace FrameAdvance.Models.ViewModels
         public UserProfile UserProfile { get; set; }
 
         public Game Game { get; set; }
-  
+
+        public List<UserGame> UserGames { get; set; }
+
         public List<ReviewPostCharacter>? ReviewPostCharacters { get; set; }
-        public SkillLevel SkillLevel { get; set; }
 
     }
 }

@@ -4,14 +4,14 @@ import { GameContext } from "../../providers/GameProvider";
 
 
 export const AddGameForm = ({ toggler }) => {
-    const { games, skillLevels, getAllSkillLevels, getAllGames, addGameToUser } = useContext(GameContext)
+    const { gamesIDontPlay, skillLevels, getAllSkillLevels, getAllGamesIDontPlay, addGameToUser } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
     const game = useRef()
     const skillLevel = useRef()
 
     useEffect(() => {
-        getAllGames();
+        getAllGamesIDontPlay();
     }, []);
 
     useEffect(() => {
@@ -19,6 +19,7 @@ export const AddGameForm = ({ toggler }) => {
     }, []);
 
     const constructNewGame = () => {
+        debugger
         if (game.current.value !== "0" && skillLevel.current.value !== "0") {
             addGameToUser({
                 userProfileId: +userProfileId,
@@ -43,9 +44,9 @@ export const AddGameForm = ({ toggler }) => {
                         className="form-control"
                     >
                         <option value="0">Select a game</option>
-                        {games.filter(game => !game.userGames.length).map(e => (
-                            <option key={e.id} value={e.id}>
-                                {e.title}
+                        {gamesIDontPlay.map(e => (
+                            <option key={e.id} value={e.game.id}>
+                                {e.game.title}
                             </option>
                         ))}
                     </select>

@@ -12,6 +12,5 @@ namespace FrameAdvance.Models.ViewModels
         public Game Game { get; set; }
 
         public SkillLevel SkillLevel { get; set; }
-
     }
 }

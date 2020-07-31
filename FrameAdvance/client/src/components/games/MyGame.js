@@ -6,7 +6,7 @@ import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 export const MyGame = ({ myGame }) => {
 
     const { removeGameFromUser, skillLevels, updateUserGame, } = useContext(GameContext)
-    const { getAllReviewPosts } = useContext(ReviewPostContext);
+    const { getAllPostList } = useContext(ReviewPostContext);
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const skillLevel = useRef()
 
@@ -26,7 +26,7 @@ export const MyGame = ({ myGame }) => {
             userProfileId: +userProfileId,
             skillLevelId: +skillLevel.current.value,
             gameId: +myGame.game.id
-        }).then(getAllReviewPosts()).then(toggleEdit)
+        }).then(getAllPostList()).then(toggleEdit)
     }
 
     return (
