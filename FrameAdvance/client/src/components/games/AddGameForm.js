@@ -14,9 +14,9 @@ export const AddGameForm = ({ toggler }) => {
     }, []);
 
     // Why don't this work?
-    const gamesIDontPlay = games.filter(oneGame => oneGame.id !== gamesIPlay.forEach(singleGame => {
-        return singleGame.game.id
-    }))
+    // const gamesIDontPlay = games.filter(oneGame => oneGame.id !== gamesIPlay.forEach(singleGame => {
+    //     return singleGame.game.id
+    // }))
 
     const constructNewGame = () => {
         if (game.current.value !== "0" && skillLevel.current.value !== "0") {
@@ -30,7 +30,7 @@ export const AddGameForm = ({ toggler }) => {
     }
 
 
-    if (!gamesIDontPlay) {
+    if (!games) {
         return null
     }
 
@@ -47,7 +47,7 @@ export const AddGameForm = ({ toggler }) => {
                         className="form-control"
                     >
                         <option value="0">Select a game</option>
-                        {gamesIDontPlay.map(e => (
+                        {games.map(e => (
                             <option key={e.id} value={e.id}>
                                 {e.title}
                             </option>
