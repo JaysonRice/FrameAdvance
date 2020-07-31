@@ -22,8 +22,6 @@ namespace FrameAdvance.Models
         [Required]
         public DateTime CreateDateTime { get; set; }
 
-        public DateTime? PublishDateTime { get; set; }
-
         [Required]
         public int UserProfileId { get; set; }
 
@@ -36,6 +34,8 @@ namespace FrameAdvance.Models
         public List<Comment> Comments { get; set; }
 
         public List<Timestamp> Timestamps { get; set; }
+
+        public List<ReviewPostCharacter> ReviewPostCharacters { get; set; }
 
     }
 }

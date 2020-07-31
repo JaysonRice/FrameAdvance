@@ -1,5 +1,6 @@
 ﻿using FrameAdvance.Data;
 using FrameAdvance.Models;
+using FrameAdvance.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,36 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .ThenInclude(g => g.UserGames)
+                           .ThenInclude(ug => ug.SkillLevel)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.Private == false)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();
+        }
+
+        public List<ReviewPostView> GetAllPostList()
+        {
+            return _context.ReviewPost
+                 .Include(p => p.UserProfile)
+                 .Include(p => p.Game)
+                 .ThenInclude(g => g.UserGames)
+                 .ThenInclude(ug => ug.SkillLevel)
+                 .Include(p => p.ReviewPostCharacters)
+                 .ThenInclude(pc => pc.Character)
+                 .OrderByDescending(p => p.CreateDateTime)
+                 .Select(p => new ReviewPostView()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    CreateDateTime = p.CreateDateTime,
+                    UserProfile = p.UserProfile,
+                    UserGames = p.Game.UserGames,
+                    Game = p.Game,
+                    ReviewPostCharacters = p.ReviewPostCharacters
+                })
+                .ToList();
         }
 
         public List<ReviewPost> GetByUserProfileId(int id)
@@ -33,6 +61,10 @@ namespace FrameAdvance.Repositories
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
                            .Include(p => p.Game)
+                           .ThenInclude(g => g.UserGames)
+                           .ThenInclude(ug => ug.SkillLevel)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.UserProfileId == id)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();
@@ -41,8 +73,11 @@ namespace FrameAdvance.Repositories
         public ReviewPost GetById(int id)
         {
             return _context.ReviewPost
+                           .Include(p => p.Game)
                            .Include(p => p.UserProfile)
                            .ThenInclude(up => up.UserType)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
                            .ThenInclude(c => c.UserProfile)
                            .Select(p => new ReviewPost
@@ -54,6 +89,8 @@ namespace FrameAdvance.Repositories
                                UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
+                               ReviewPostCharacters = p.ReviewPostCharacters,
+                               Game = p.Game
                            })
                            .FirstOrDefault(p => p.Id == id);
         }
@@ -63,9 +100,9 @@ namespace FrameAdvance.Repositories
         {
             return _context.ReviewPost
                            .Include(p => p.UserProfile)
-                           .ThenInclude(up => up.UserType)
-                           .Include(p => p.Comments)
-                           .ThenInclude(c => c.UserProfile)
+                           .Include(p => p.Game)
+                           .Include(p => p.ReviewPostCharacters)
+                           .ThenInclude(pc => pc.Character)
                            .Where(p => p.GameId == gameId)
                            .OrderByDescending(p => p.CreateDateTime)
                            .ToList();

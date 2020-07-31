@@ -18,6 +18,8 @@ export function UserProfileProvider(props) {
         });
     }, []);
 
+    const getToken = () => firebase.auth().currentUser.getIdToken();
+
     const login = (email, pw) => {
         return firebase.auth().signInWithEmailAndPassword(email, pw)
             .then((signInResponse) => getUserProfile(signInResponse.user.uid))
@@ -43,8 +45,6 @@ export function UserProfileProvider(props) {
                 setIsLoggedIn(true);
             });
     };
-
-    const getToken = () => firebase.auth().currentUser.getIdToken();
 
     const getUserProfile = (firebaseUserId) => {
         return getToken().then((token) =>

@@ -10,7 +10,12 @@ namespace FrameAdvance.Models
     {
         public int Id { get; set; }
         [Required]
-        public string SkillLevelId { get; set; }
+        public int UserProfileId { get; set; }
+        public UserProfile UserProfile { get; set; }
+
+        [Required]
+        public int SkillLevelId { get; set; }
+        public SkillLevel SkillLevel { get; set; }
 
         [Required]
         public int GameId { get; set; }

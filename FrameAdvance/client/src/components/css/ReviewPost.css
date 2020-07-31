@@ -1,0 +1,35 @@
+.homeContainer{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+}
+
+.reviewPostContainer{
+    flex-basis: 67%;
+}
+
+.myGamesContainer{
+    flex-basis: 18%; 
+}
+
+/* Each individual post in the list */
+.reviewPost {
+    margin-bottom: 1rem;
+}
+/* Body of the post in a list */
+.reviewPostMain {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewPostInfo {
+    text-align: center;
+    flex-basis: 66%;
+    align-self: center;
+}
+
+.reviewPostImage {
+    flex-basis: 25%;
+}
+
+

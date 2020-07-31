@@ -1,0 +1,54 @@
+.myGamesHeader{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.gameCard{
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.gameCardBody {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Beginner > div {
+    border: cornflowerblue 1px solid;
+    background-color: lightskyblue;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    display: inline;
+    color: white;
+    font-style: italic;
+}
+
+.Intermediate > div {
+    border: darkolivegreen 1px solid;
+    background-color: rgb(106, 207, 106);
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    display: inline;
+    color: white;
+    font-style: italic;
+}
+
+.Advanced  > div {
+    border: goldenrod 1px solid;
+    background-color: rgb(255, 219, 17);
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    display: inline;
+    color: white;
+    font-style: italic;
+}
+
+.Expert  > div {
+    border: red 1px solid;
+    background-color: lightpink;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    display: inline;
+    color: white;
+}

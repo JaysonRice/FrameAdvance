@@ -11,10 +11,13 @@ namespace FrameAdvance.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(255)]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public string ImageLocation { get; set; }
 
         public bool IsActive { get; set; }
+
+        public List<UserGame> UserGames { get; set; } = new List<UserGame>();
+
     }
 }

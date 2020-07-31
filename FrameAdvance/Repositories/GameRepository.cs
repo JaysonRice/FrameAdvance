@@ -1,5 +1,6 @@
 ﻿using FrameAdvance.Data;
 using FrameAdvance.Models;
+using FrameAdvance.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,52 @@ namespace FrameAdvance.Repositories
             return _context.Game.FirstOrDefault(g => g.Id == id);
         }
 
-        private List<Game> GetAll()
+        public List<Game> GetAll()
         {
             return _context.Game
-                .OrderBy(g => g.Name)
+                .OrderBy(g => g.Title)
+                .ToList();
+        }
+
+        public List<GameSkillLevel> GamesIPlay(int userId)
+        {
+            return _context.UserGame
+                .Where(g => g.UserProfileId == userId)
+                .Include(g => g.Game)
+                .Include(g => g.SkillLevel)
+                .OrderBy(g => g.Game.Title)
+                .Select(g => new GameSkillLevel()
+                {
+                    Id = g.Id,
+                    SkillLevel = g.SkillLevel,
+                    Game = g.Game
+                })
+                .ToList();
+        }
+
+        public List<GameSkillLevel> GamesIDontPlay(int userId)
+        {
+            var gamesIPlay = GamesIPlay(userId);
+
+            return _context.UserGame
+                .Where(g => g.UserProfileId != userId)
+                .Include(g => g.Game)
+                .Include(g => g.SkillLevel)
+                .OrderBy(g => g.Game.Title)
+                .Select(g => new GameSkillLevel()
+                {
+                    Id = g.Id,
+                    Game = g.Game,
+                    SkillLevel = g.SkillLevel
+                })
+                .Distinct()
+                .ToList();
+        }
+
+        public List<SkillLevel> GetAllSkillLevels()
+        {
+            return _context.SkillLevel
+                .OrderBy(s => s.Id)
                 .ToList();
         }
 
@@ -46,5 +89,34 @@ namespace FrameAdvance.Repositories
             _context.Game.Remove(game);
             _context.SaveChanges();
         }
+
+
+        //UserGame repo methods start here
+
+        public UserGame GetUserGameById(int id)
+        {
+            return _context.UserGame
+                           .FirstOrDefault(ug => ug.Id == id);
+        }
+
+        public void AddUserGame(UserGame userGame)
+        {
+            _context.UserGame.Add(userGame);
+            _context.SaveChanges();
+        }
+
+        public void UpdateUserGame(UserGame userGame)
+        {
+            _context.Entry(userGame).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveUserGame(int id)
+        {
+            var userGame = GetUserGameById(id);
+            _context.UserGame.Remove(userGame);
+            _context.SaveChanges();
+        }
+
     }
 }
