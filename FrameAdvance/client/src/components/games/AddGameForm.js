@@ -2,24 +2,23 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { Card, CardBody, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { GameContext } from "../../providers/GameProvider";
 
-
 export const AddGameForm = ({ toggler }) => {
-    const { gamesIDontPlay, skillLevels, getAllSkillLevels, getAllGamesIDontPlay, addGameToUser } = useContext(GameContext)
+    const { games, skillLevels, getAllSkillLevels, addGameToUser, gamesIPlay } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
     const game = useRef()
     const skillLevel = useRef()
 
     useEffect(() => {
-        getAllGamesIDontPlay();
-    }, []);
-
-    useEffect(() => {
         getAllSkillLevels();
     }, []);
 
+    // Why don't this work?
+    const gamesIDontPlay = games.filter(oneGame => oneGame.id !== gamesIPlay.forEach(singleGame => {
+        return singleGame.game.id
+    }))
+
     const constructNewGame = () => {
-        debugger
         if (game.current.value !== "0" && skillLevel.current.value !== "0") {
             addGameToUser({
                 userProfileId: +userProfileId,
@@ -30,9 +29,13 @@ export const AddGameForm = ({ toggler }) => {
         else (toggler())
     }
 
+
+    if (!gamesIDontPlay) {
+        return null
+    }
+
     return (
         <form className="addMyGameForm">
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="game">Game: </label>
@@ -45,8 +48,8 @@ export const AddGameForm = ({ toggler }) => {
                     >
                         <option value="0">Select a game</option>
                         {gamesIDontPlay.map(e => (
-                            <option key={e.id} value={e.game.id}>
-                                {e.game.title}
+                            <option key={e.id} value={e.id}>
+                                {e.title}
                             </option>
                         ))}
                     </select>

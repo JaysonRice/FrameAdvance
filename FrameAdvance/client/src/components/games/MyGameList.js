@@ -6,10 +6,13 @@ import { Modal, Button, ModalHeader, ModalBody } from "reactstrap";
 
 export const MyGameList = () => {
 
-    const { gamesIPlay, getAllGamesIPlay, getAllSkillLevels } = useContext(GameContext)
+    const { gamesIPlay, getAllGamesIPlay, getAllSkillLevels, getAllGames, } = useContext(GameContext)
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
 
+    useEffect(() => {
+        getAllGames();
+    }, []);
 
     useEffect(() => {
         getAllGamesIPlay();
