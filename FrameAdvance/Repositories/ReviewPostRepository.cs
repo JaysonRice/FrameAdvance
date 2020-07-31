@@ -56,39 +56,49 @@ namespace FrameAdvance.Repositories
                 .ToList();
         }
 
-        public List<ReviewPost> GetByUserProfileId(int id)
+        public List<ReviewPostView> GetByUserProfileId(int id)
         {
             return _context.ReviewPost
-                           .Include(p => p.UserProfile)
-                           .Include(p => p.Game)
-                           .ThenInclude(g => g.UserGames)
-                           .ThenInclude(ug => ug.SkillLevel)
-                           .Include(p => p.ReviewPostCharacters)
-                           .ThenInclude(pc => pc.Character)
-                           .Where(p => p.UserProfileId == id)
-                           .OrderByDescending(p => p.CreateDateTime)
-                           .ToList();
+                 .Where(p => p.UserProfileId == id)
+                 .Include(p => p.UserProfile)
+                 .Include(p => p.Game)
+                 .ThenInclude(g => g.UserGames)
+                 .ThenInclude(ug => ug.SkillLevel)
+                 .Include(p => p.ReviewPostCharacters)
+                 .ThenInclude(pc => pc.Character)
+                 .Select(p => new ReviewPostView()
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     CreateDateTime = p.CreateDateTime,
+                     UserProfile = p.UserProfile,
+                     UserGames = p.Game.UserGames,
+                     Game = p.Game,
+                     ReviewPostCharacters = p.ReviewPostCharacters
+                 })
+                .ToList();    
         }
 
         public ReviewPost GetById(int id)
         {
             return _context.ReviewPost
                            .Include(p => p.Game)
+                           .Include(p => p.Timestamps)
                            .Include(p => p.UserProfile)
                            .ThenInclude(up => up.UserType)
                            .Include(p => p.ReviewPostCharacters)
                            .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
-                           .ThenInclude(c => c.UserProfile)
                            .Select(p => new ReviewPost
                            {
                                Id = p.Id,
                                Title = p.Title,
                                CreateDateTime = p.CreateDateTime,
                                Private = p.Private,
-                               UserProfileId = p.UserProfileId,
+                               VideoLocation = p.VideoLocation,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
+                               Timestamps = (List<Timestamp>)p.Timestamps.OrderByDescending(t => t.Time),
                                ReviewPostCharacters = p.ReviewPostCharacters,
                                Game = p.Game
                            })

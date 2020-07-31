@@ -35,7 +35,6 @@ export const PostReviewForm = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        debugger
         formState.private = false
         formState.gameId = +formState.gameId;
         addReviewPost(formState).then((p) => {
