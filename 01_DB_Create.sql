@@ -7,6 +7,7 @@ GO
 USE [FrameAdvance]
 GO
 
+DROP TABLE IF EXISTS [ReviewPostCharacter];
 DROP TABLE IF EXISTS [SavedReview];
 DROP TABLE IF EXISTS [UserGame];
 DROP TABLE IF EXISTS [SkillLevel];
@@ -98,6 +99,13 @@ CREATE TABLE [SavedReview] (
 )
 GO
 
+CREATE TABLE [ReviewPostCharacter] (
+  [Id] integer PRIMARY KEY NOT NULL,
+  [CharacterId] integer NOT NULL,
+  [ReviewPostId] integer NOT NULL
+)
+GO
+
 ALTER TABLE [ReviewPost] ADD FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])
 GO
 
@@ -134,6 +142,11 @@ GO
 ALTER TABLE [Timestamp] ADD FOREIGN KEY ([ReviewPostId]) REFERENCES [ReviewPost] ([Id])
 GO
 
+ALTER TABLE [ReviewPostCharacter] ADD FOREIGN KEY ([ReviewPostId]) REFERENCES [ReviewPost] ([Id])
+GO
+
+ALTER TABLE [ReviewPostCharacter] ADD FOREIGN KEY ([CharacterId]) REFERENCES [Character] ([Id])
+GO
 
 set identity_insert [UserType] on
 insert into UserType (Id, [Name]) VALUES (1, 'Admin'), (2, 'Author');
