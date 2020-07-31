@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import { GameContext } from "../../providers/GameProvider";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
-export const PostForm = () => {
+export const PostReviewForm = () => {
     const { addReviewPost } = useContext(ReviewPostContext);
     const { getAllGames, games } = useContext(GameContext);
 
@@ -35,6 +35,7 @@ export const PostForm = () => {
 
     const submit = (e) => {
         e.preventDefault();
+        debugger
         formState.private = false
         formState.gameId = +formState.gameId;
         addReviewPost(formState).then((p) => {
@@ -48,44 +49,20 @@ export const PostForm = () => {
                 <Card className="col-sm-12 col-lg-6">
                     <CardBody>
                         <Form onSubmit={submit}>
-                            <FormGroup>
-                                <Label for="headerImage">Youtube Link:</Label>
-                                <div>
-                                    <Input
-                                        type="text"
-                                        name="file"
-                                        placeholder="Upload image here"
-                                        onChange={uploadImage}
-                                    />
-                                    {loading ? (
-                                        <h4>Loading...</h4>
-                                    ) : (
-                                            <img src={image} style={{ width: "100px" }} alt=" " />
-                                        )}
-                                </div>
-                            </FormGroup>
 
                             <FormGroup>
                                 <Label for="title">Title</Label>
                                 <Input id="title" onChange={handleUserInput} required />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="youtubeLink">Youtube Link:</Label>
-                                <Input id="youtubeLink" onChange={handleUserInput} required />
+                                <Label for="videoLocation">Youtube Link:</Label>
+                                <Input id="videoLocation" onChange={handleUserInput} required />
                             </FormGroup>
-                            {/* <FormGroup>
-                                <Label for="createDateTime">Publication Date</Label>
-                                <Input
-                                    id="createDateTime"
-                                    type="date"
-                                    onChange={handleUserInput}
-                                />
-                            </FormGroup> */}
                             <FormGroup>
                                 <Label>Game:</Label>
-                                <select id="GameId" required onChange={handleUserInput}>
+                                <select id="gameId" required onChange={handleUserInput}>
                                     <option value=""> Choose Game</option>
-                                    {games.map((c) => {
+                                    {games.map((g) => {
                                         return (
                                             <option key={g.id} value={g.id}>
                                                 {g.title}
@@ -96,7 +73,7 @@ export const PostForm = () => {
                             </FormGroup>
                             <div className="buttonContainer">
                                 <Button color="info" type="submit">
-                                    SUBMIT POST
+                                    Start Review
                 </Button>
                             </div>
                         </Form>
