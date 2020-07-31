@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import {
     Button, CardBody, Form, FormGroup,
     Input, Label, ListGroup, ListGroupItem,
@@ -30,24 +30,25 @@ const ReviewPostDetails = () => {
         setformState(updatedState);
     };
 
-    // Form state for selecting a timestamp 
-    const [timestampFormState, setTimestampFormState] = useState();
-
-    const handleTimestampUserInput = (e) => {
-        const updatedState = { ...timestampFormState };
-        updatedState[e.target.id] = e.target.value;
-        const seconds = (convertedHours * 3600) + (convertedMinutes * 60) + (convertedSeconds)
-        console.log(seconds)
-        debugger
-        setTimestampFormState(seconds);
-    };
+    // Creating the timestamp itself
+    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+    const [hours, setHours] = useState(0);
 
     const saveTimestamp = (e) => {
         e.preventDefault();
+        // Making sure we can't get a value that can't be multiplied
+        let convertedSeconds = parseInt(seconds)
+        let convertedMinutes = parseInt(minutes)
+        let convertedHours = parseInt(hours)
+        if (!convertedSeconds) { convertedSeconds = 0 }
+        if (!convertedMinutes) { convertedMinutes = 0 }
+        if (!convertedHours) { convertedHours = 0 }
+
+        const time = (convertedHours * 3600) + (convertedMinutes * 60) + (convertedSeconds)
+        debugger
         // Not implemented yet
-        addTimestamp(timestampFormState).then((p) => {
-            history.push(`/reviewpost/${p.id}`);
-        });
+        addTimestamp(time).then(getReviewPost(id).then(setReviewPost));
     };
 
     // Use this hook to allow us to programatically redirect users
@@ -135,15 +136,17 @@ const ReviewPostDetails = () => {
                         <div className="timestampInput">
                             <div>
                                 <Label for="hours">Hours</Label>
-                                <Input id="hours" type="number" ref={hours} onChange={handleTimestampUserInput} />
+                                <Input id="hours" name="hours" type="number" onChange={(e) => setHours(e.target.value)} />
                             </div>
                             <div>
-                                <Label for="minutes">Minutes</Label>
-                                <Input id="minutes" type="number" max="59" ref={minutes} onChange={handleTimestampUserInput} />
+                                <fieldset>
+                                    <Label for="minutes">Minutes</Label>
+                                    <Input id="minutes" name="minutes" type="number" max="59" onChange={(e) => setMinutes(e.target.value)} />
+                                </fieldset>
                             </div>
                             <div>
-                                <Label for="hours">Seconds</Label>
-                                <Input id="seconds" type="number" ref={seconds} onChange={handleTimestampUserInput} />
+                                <Label for="seconds">Seconds</Label>
+                                <Input id="seconds" name="seconds" type="number" onChange={(e) => setSeconds(e.target.value)} />
                             </div>
                         </div>
                         <Button color="info" type="submit">
