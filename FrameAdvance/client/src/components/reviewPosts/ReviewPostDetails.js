@@ -9,11 +9,12 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 import { GameContext } from "../../providers/GameProvider";
 import ReactPlayer from "react-player";
+import Timestamp from "./Timestamp"
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
     const { getReviewPost, deleteReviewPostById, editReviewPost, addTimestamp } = useContext(ReviewPostContext);
-    const { games } = useContext(GameContext);
+    const { games, getAllGames } = useContext(GameContext);
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -59,6 +60,10 @@ const ReviewPostDetails = () => {
     }, []);
 
     useEffect(() => {
+        getAllGames();
+    }, []);
+
+    useEffect(() => {
         setformState(reviewPost);
     }, [reviewPost]);
 
@@ -77,7 +82,8 @@ const ReviewPostDetails = () => {
     const updatePost = (e) => {
         e.preventDefault();
         formState.private = false
-        formState.gameId = +formState.gameId;
+        formState.gameId = +formState.gameId
+        formState.userProfileId = +formState.userProfile.id
         editReviewPost(formState.id, formState).then(() => {
             getReviewPost(formState.id).then(setReviewPost).then(toggleModal);
         });
@@ -86,11 +92,11 @@ const ReviewPostDetails = () => {
     const formButtonContainer = () => {
         return (
             <div className="buttonContainer">
-                <Button color="info" type="submit">
-                    EDIT POST
+                <Button color="secondary" type="submit">
+                    Cancel
         </Button>
-                <Button color="warning" onClick={toggleModal}>
-                    CANCEL EDIT
+                <Button color="primary" onClick={toggleModal}>
+                    Save Changes
         </Button>{" "}
             </div>
         );
@@ -153,12 +159,23 @@ const ReviewPostDetails = () => {
                             Create Timestamp
                 </Button>
                     </Form>
+                    {reviewPost.userProfile.id === userProfileId
+                        ? <Button onClick={toggleModal} color="secondary">Edit Post</Button>
+                        : ""}
                 </div>
 
-
-                {/* Put the timestamp input stuff here */}
             </div>
 
+            {/* Timestamps appear here */}
+            <div className="timestampContainer">
+
+                {
+                    reviewPost.timestamps.map(timestamp => {
+                        return <Timestamp key={timestamp.id} timestamp={timestamp} reviewPost={reviewPost} />
+                    })
+                }
+
+            </div>
             {/* 
             {reviewPost.userProfile.id === userProfileId ? (
                     <ListGroupItem>
@@ -190,7 +207,7 @@ const ReviewPostDetails = () => {
 
                                 <FormGroup>
                                     <Label>Game:</Label>
-                                    <select id="gameId" required onChange={handleUserInput}>
+                                    <select id="gameId" required defaultValue={reviewPost.game.id} onChange={handleUserInput}>
                                         <option value=""> Choose Game</option>
                                         {games.map((g) => {
                                             return (
@@ -201,9 +218,7 @@ const ReviewPostDetails = () => {
                                         })}
                                     </select>
                                 </FormGroup>
-                                {reviewPost.userProfileId === userProfileId
-                                    ? formButtonContainer()
-                                    : ""}
+                                {formButtonContainer()}
                             </Form>
                         </CardBody>
                     </ModalBody>
