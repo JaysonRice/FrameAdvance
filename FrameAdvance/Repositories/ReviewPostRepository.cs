@@ -135,12 +135,54 @@ namespace FrameAdvance.Repositories
         {
             var post = GetById(id);
             var savedPostRelationships = GetSavedReviewByReviewPostId(id);
+            var timestamps = GetTimestampsByPostId(id);
+
             if (savedPostRelationships != null)
             {
                 _context.SavedReview.RemoveRange(savedPostRelationships);
             }
 
+            if (timestamps != null)
+            {
+                _context.Timestamp.RemoveRange(timestamps);
+            }
+
             _context.ReviewPost.Remove(post);
+            _context.SaveChanges();
+        }
+
+
+        // Timestamp repo methods start here
+
+        public Timestamp GetTimestampById(int id)
+        {
+            return _context.Timestamp
+                 .FirstOrDefault(t => t.Id == id);
+        }
+
+        public List<Timestamp> GetTimestampsByPostId(int id)
+        {
+            return _context.Timestamp
+                 .Where(t => t.ReviewPostId == id)
+                 .ToList();
+        }
+
+        public void AddTimestamp(Timestamp timestamp)
+        {
+            _context.Timestamp.Add(timestamp);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTimestamp(Timestamp timestamp)
+        {
+            _context.Entry(timestamp).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void DeleteTimestamp(int id)
+        {
+            var timestamp = GetTimestampById(id);
+            _context.Timestamp.Remove(timestamp);
             _context.SaveChanges();
         }
 
@@ -152,11 +194,11 @@ namespace FrameAdvance.Repositories
                            .FirstOrDefault(sr => sr.Id == id);
         }
 
-        public SavedReview GetSavedReviewByReviewPostId(int id)
+        public List<SavedReview> GetSavedReviewByReviewPostId(int id)
         {
             return _context.SavedReview
-                        .FirstOrDefault(sr => sr.ReviewPostId == id);
-
+                        .Where(sr => sr.ReviewPostId == id)
+                        .ToList();
         }
         public void SaveReview(SavedReview savedReview)
         {

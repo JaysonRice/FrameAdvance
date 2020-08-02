@@ -102,6 +102,63 @@ namespace FrameAdvance.Controllers
             return NoContent();
         }
 
+        // Timestamp controller methods start here
+
+        [HttpPost("addtimestamp")]
+        public IActionResult Post(Timestamp timestamp)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+
+            if (currentUserProfile.Id != post.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            _reviewPostRepository.AddTimestamp(timestamp);
+            return CreatedAtAction("Get", new { id = timestamp.Id }, timestamp);
+        }
+
+        [HttpPut("updatetimestamp/{id}")]
+        public IActionResult Put(int id, Timestamp timestamp)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+
+            if (currentUserProfile.Id != post.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            if (id != timestamp.Id)
+            {
+                return BadRequest();
+            }
+
+            _reviewPostRepository.UpdateTimestamp(timestamp);
+            return NoContent();
+        }
+
+        [HttpDelete("deletetimestamp/{id}")]
+        public IActionResult DeleteTimestamp(int id)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            var timestamp = _reviewPostRepository.GetTimestampById(id);
+
+            var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+
+            if (currentUserProfile.Id != post.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            _reviewPostRepository.DeleteTimestamp(id);
+            return NoContent();
+        }
+
+
+        // Saving review controller methods start here
+
         [HttpPost("savereview")]
         public IActionResult Post(SavedReview savedReview)
         {
