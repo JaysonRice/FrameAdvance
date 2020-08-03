@@ -177,16 +177,17 @@ const ReviewPostDetails = () => {
             </div>
 
             {/* Timestamps appear here */}
-            <div className="timestampContainer">
 
-                {
-                    reviewPost.timestamps.map(timestamp => {
-                        return <Timestamp key={timestamp.id} timestamp={timestamp}
-                            currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
-                    })
-                }
 
-            </div>
+            {
+                reviewPost.timestamps.map(timestamp => {
+                    return <Timestamp key={timestamp.id} timestamp={timestamp}
+                        currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
+                })
+            }
+
+
+
             {/* 
             {reviewPost.userProfile.id === userProfileId ? (
                     <ListGroupItem>

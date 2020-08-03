@@ -24,12 +24,13 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
     const [showModal, setShowModal] = useState(false);
     const toggleModal = () => setShowModal(!showModal);
 
-    const updatePost = (e) => {
+    const updateTimestamp = (e) => {
         e.preventDefault();
         formState.reviewPostId = currentReviewPost.id
         formState.time = timestamp.time
+        setNoteAdding(false)
         editTimestamp(formState.id, formState).then(() => {
-            getReviewPost(currentReviewPost.id).then(setReviewPost);
+            getReviewPost(currentReviewPost.id).then((rp) => setReviewPost(rp));
         });
     };
 
@@ -45,21 +46,21 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
 
     const timestampDelete = () => {
         deleteTimestamp(timestamp.id).then(() => {
-            getReviewPost(currentReviewPost.id).then(setReviewPost(currentReviewPost)).then(toggleModal());
+            getReviewPost(currentReviewPost.id).then((rp) => setReviewPost(rp)).then(toggleModal);
         });
     };
 
     const inputNotes = () => {
         return (
             <div className="buttonContainer">
-                <Form onSubmit={updatePost}>
+                <Form onSubmit={updateTimestamp}>
                     <FormGroup>
                         <Label for="notes">Notes:</Label>
                         <Input
                             id="notes"
                             type="textarea"
                             rows="8"
-                            defaultValue=""
+                            defaultValue={timestamp.notes}
                             onChange={handleUserInput}
                         />
                     </FormGroup>
@@ -76,7 +77,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
     return (
         <>
 
-            <div className="reviewPost">
+            <div className="timestampContainer">
                 <Card >
                     <CardBody color="info" className="singleTimestampContainer">
 
@@ -92,7 +93,19 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                                     timestamp.notes === null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
 
                                         ? <Button color="primary" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
-                                        : <div>{timestamp.notes}</div>
+                                        : ""
+                                }
+
+                                {
+                                    timestamp.notes !== null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
+
+                                        ? <div className="timestampNotes">
+                                            <Card >
+                                                <p>{timestamp.notes}</p>
+                                            </Card>
+                                            <Button color="primary" onClick={() => { setNoteAdding(true) }}>Edit Notes</Button>
+                                        </div>
+                                        : ""
                                 }
 
                                 {
@@ -109,7 +122,6 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                                     ? <div> <Button color="danger" onClick={toggleModal} outline>X</Button></div>
                                     : ""
                             }
-
 
                         </div>
                     </CardBody>

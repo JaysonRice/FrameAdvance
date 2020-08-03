@@ -83,7 +83,13 @@ namespace FrameAdvance.Repositories
                 .ToList();    
         }
 
-        public ReviewPost GetById(int id)
+        public ReviewPost CheckPost(int id)
+        {
+            return _context.ReviewPost
+                .FirstOrDefault(p => p.Id == id);
+        }
+
+            public ReviewPost GetById(int id)
         {
             return _context.ReviewPost
                            .Include(p => p.Game)
@@ -103,7 +109,7 @@ namespace FrameAdvance.Repositories
                                UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
-                               Timestamps = (List<Timestamp>)p.Timestamps.OrderByDescending(t => t.Time),
+                               Timestamps = (List<Timestamp>)p.Timestamps.OrderBy(t => t.Time),
                                ReviewPostCharacters = p.ReviewPostCharacters,
                                GameId = p.GameId,
                                Game = p.Game

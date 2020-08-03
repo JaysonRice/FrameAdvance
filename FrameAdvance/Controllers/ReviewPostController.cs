@@ -124,7 +124,7 @@ namespace FrameAdvance.Controllers
         public IActionResult Put(int id, Timestamp timestamp)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+            var post = _reviewPostRepository.CheckPost(timestamp.ReviewPostId);
 
 
             if (currentUserProfile.Id != post.UserProfileId)
