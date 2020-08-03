@@ -52,7 +52,6 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
             <div className="buttonContainer">
                 <Form onSubmit={updateComment}>
                     <FormGroup>
-                        <Label for="content">Notes:</Label>
                         <Input
                             id="content"
                             type="textarea"
@@ -69,7 +68,15 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
         );
     };
 
+    // Logic for reurning the dates in a more readable format
+    let formatedDate = null;
+    let unformatedDate = null;
 
+    if (comment.createDateTime != null) {
+        unformatedDate = comment.createDateTime.split("T")[0];
+        const [year, month, day] = unformatedDate.split("-");
+        formatedDate = month + "/" + day + "/" + year;
+    }
 
     return (
         <>
@@ -77,39 +84,44 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
             <Card className="singleCommentContainer">
                 <CardBody color="info" >
 
-                    <div className="singleCommentDetails">
 
-                        {comment.content}
+                    {/* If the user owns the post, they should be able to delete comments, but not edit them. */}
+                    {
+                        noteAdding === false && currentReviewPost.userProfileId === userProfileId && comment.userProfileId !== userProfileId
 
-                        {/* If the user owns the post, they should be able to delete comments, but not edit them. */}
+                            ? <div className="commentButtonContainer">
+                                <Button className="commentButton" outline color="danger" onClick={toggleModal}>X</Button>
+                            </div>
+                            : ""
+                    }
+                    {/* If the user owns the comment, they should be able to edit or delete it */}
+                    {
+                        comment.userProfileId === userProfileId
 
-                        {
-                            noteAdding === false && currentReviewPost.userProfileId === userProfileId && comment.userProfileId !== userProfileId
+                            ?
+                            <div className="commentButtonContainer">
 
-                                ? <div className="commentNotes">
-                                    <Button outline color="danger" onClick={toggleModal}>X</Button>
-                                </div>
-                                : ""
-                        }
-                        {/* If the user owns the comment, they should be able to edit or delete it */}
-                        {
-                            comment.userProfileId === userProfileId
+                                <Button className="commentButton" color="info" outline onClick={() => { setNoteAdding(true) }}>Edit</Button>
+                                <Button className="commentButton" color="danger" outline onClick={toggleModal}>X</Button>
 
-                                ?
-                                <div className="commentButtons">
-                                    <Button color="info" outline onClick={() => { setNoteAdding(true) }}>Edit</Button>
-                                    <Button color="danger" outline onClick={toggleModal}>X</Button>
-                                </div>
-                                : ""
-                        }
+                            </div>
+                            : ""
+                    }
+                    {
+                        noteAdding === false
+                            ? < div className="singleCommentDetails">
+                                <div>{comment.content}</div>
+                                <small>Posted by: {comment.userProfile.username} on {formatedDate}</small>
+                            </div>
+                            : ""
+                    }
+                    {
+                        noteAdding === true
+                            ? inputContent()
+                            : ""
+                    }
 
-                        {
-                            noteAdding === true
-                                ? inputContent()
-                                : ""
-                        }
 
-                    </div>
                 </CardBody>
             </Card>
 

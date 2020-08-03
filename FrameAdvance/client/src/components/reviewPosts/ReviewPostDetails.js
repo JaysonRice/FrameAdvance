@@ -159,83 +159,77 @@ const ReviewPostDetails = () => {
     }
 
 
-
     return (
-        <div className="postDetailsContainer">
+        <div>
+            <div className="postDetailsContainer">
 
-            <div className="postDetailsHeader">
+                <div className="postDetailsHeader">
 
-                <strong>Posted By:
+                    <strong>Posted By:
                 <Link to={`/user/${reviewPost.userProfile.id}`}>
-                        {reviewPost.userProfile.username}
-                    </Link>
-                </strong>
+                            {reviewPost.userProfile.username}
+                        </Link>
+                    </strong>
 
-                <h2>{reviewPost.title}</h2>
+                    <h2>{reviewPost.title}</h2>
 
-                <small>Posted on: {formatedDate}</small>
+                    <small>Posted on: {formatedDate}</small>
 
-            </div>
-
-            <div className="postDetailsYoutubeLink">
-                <div className="embeddedVideo">
-                    <ReactPlayer
-                        url={reviewPost.videoLocation}
-                        controls={true}
-                    />
                 </div>
 
-                <div className="timestampCreation">
-                    <Form onSubmit={saveTimestamp}>
-                        <div className="timestampInput">
-                            <div>
-                                <Label for="hours">Hours</Label>
-                                <Input id="hours" name="hours" type="number" onChange={(e) => setHours(e.target.value)} />
+                <div className="postDetailsYoutubeLink">
+                    <div className="embeddedVideo">
+                        <ReactPlayer
+                            url={reviewPost.videoLocation}
+                            controls={true}
+                        />
+                    </div>
+
+                    <div className="timestampCreation">
+                        <Form onSubmit={saveTimestamp}>
+                            <div className="timestampInput">
+                                <div>
+                                    <Label for="hours">Hours</Label>
+                                    <Input id="hours" name="hours" type="number" onChange={(e) => setHours(e.target.value)} />
+                                </div>
+                                <div>
+                                    <fieldset>
+                                        <Label for="minutes">Minutes</Label>
+                                        <Input id="minutes" name="minutes" type="number" max="59" onChange={(e) => setMinutes(e.target.value)} />
+                                    </fieldset>
+                                </div>
+                                <div>
+                                    <Label for="seconds">Seconds</Label>
+                                    <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
+                                </div>
                             </div>
-                            <div>
-                                <fieldset>
-                                    <Label for="minutes">Minutes</Label>
-                                    <Input id="minutes" name="minutes" type="number" max="59" onChange={(e) => setMinutes(e.target.value)} />
-                                </fieldset>
-                            </div>
-                            <div>
-                                <Label for="seconds">Seconds</Label>
-                                <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
-                            </div>
-                        </div>
-                        <Button color="info" type="submit">
-                            Create Timestamp
+                            <Button color="info" type="submit">
+                                Create Timestamp
                 </Button>
-                    </Form>
-                    {reviewPost.userProfile.id === userProfileId
-                        ? <Button onClick={toggleModal} color="secondary">Edit Post</Button>
-                        : ""}
+                        </Form>
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button onClick={toggleModal} color="secondary">Edit Post</Button>
+                            : ""}
 
 
-                    {reviewPost.userProfile.id === userProfileId
-                        ? <Button onClick={toggleDelete} color="danger">Delete Post</Button>
-                        : ""}
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button onClick={toggleDelete} color="danger">Delete Post</Button>
+                            : ""}
 
+                    </div>
                 </div>
-            </div>
 
-            {/* Timestamps display here */}
+                {/* Timestamps display here */}
 
-            <div className="timestampContainer">
-                {
-                    reviewPost.timestamps.map(timestamp => {
-                        return <Timestamp key={timestamp.id} timestamp={timestamp}
-                            currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
-                    })
-                }
-            </div>
-            {/* Comments display here */}
-            <div className="commentContainer">
-                {
-                    commentAdding === false
-                        ? <Button color="primary" onClick={() => { setCommentAdding(true) }}>Add a Comment</Button>
-                        : ""
-                }
+                <div className="timestampContainer">
+                    {
+                        reviewPost.timestamps.map(timestamp => {
+                            return <Timestamp key={timestamp.id} timestamp={timestamp}
+                                currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
+                        })
+                    }
+                </div>
+                {/* Comments display here */}
 
                 {
                     commentAdding === true
@@ -243,14 +237,21 @@ const ReviewPostDetails = () => {
                         : ""
                 }
 
-                {
-                    reviewPost.comments.map(comment => {
-                        return <Comment key={comment.id} comment={comment}
-                            currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
-                    })
-                }
-            </div>
-            {/* 
+                <div className="commentContainer">
+                    {
+                        commentAdding === false
+                            ? <Button color="primary" onClick={() => { setCommentAdding(true) }}>Add a Comment</Button>
+                            : ""
+                    }
+
+                    {
+                        reviewPost.comments.map(comment => {
+                            return <Comment key={comment.id} comment={comment}
+                                currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
+                        })
+                    }
+                </div>
+                {/* 
             {reviewPost.userProfile.id === userProfileId ? (
                     <ListGroupItem>
                         <Link to={`/AddCharacter/post/${reviewPost.id}`}>
@@ -261,63 +262,65 @@ const ReviewPostDetails = () => {
                         ""
                     )} */}
 
-            <div>
+                <div>
 
-                <Modal isOpen={showModal} toggle={toggleModal}>
-                    <ModalHeader toggle={toggleModal}>
-                        Edit post: {reviewPost.title}
-                    </ModalHeader>
-                    <ModalBody>
-                        <CardBody>
-                            <Form onSubmit={updatePost}>
-                                <FormGroup>
-                                    <Label for="title">Title</Label>
-                                    <Input
-                                        id="title"
-                                        defaultValue={reviewPost.title}
-                                        onChange={handleUserInput}
-                                        required
-                                    />
-                                </FormGroup>
+                    <Modal isOpen={showModal} toggle={toggleModal}>
+                        <ModalHeader toggle={toggleModal}>
+                            Edit post: {reviewPost.title}
+                        </ModalHeader>
+                        <ModalBody>
+                            <CardBody>
+                                <Form onSubmit={updatePost}>
+                                    <FormGroup>
+                                        <Label for="title">Title</Label>
+                                        <Input
+                                            id="title"
+                                            defaultValue={reviewPost.title}
+                                            onChange={handleUserInput}
+                                            required
+                                        />
+                                    </FormGroup>
 
-                                <FormGroup>
-                                    <Label>Game:</Label>
-                                    <select id="gameId" required defaultValue={reviewPost.game.id} onChange={handleUserInput}>
-                                        <option value=""> Choose Game</option>
-                                        {games.map((g) => {
-                                            return (
-                                                <option key={g.id} value={g.id}>
-                                                    {g.title}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </FormGroup>
-                                <div className="buttonContainer">
-                                    <Button color="secondary" onClick={toggleModal}>
-                                        Cancel
+                                    <FormGroup>
+                                        <Label>Game:</Label>
+                                        <select id="gameId" required defaultValue={reviewPost.game.id} onChange={handleUserInput}>
+                                            <option value=""> Choose Game</option>
+                                            {games.map((g) => {
+                                                return (
+                                                    <option key={g.id} value={g.id}>
+                                                        {g.title}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </FormGroup>
+                                    <div className="buttonContainer">
+                                        <Button color="secondary" onClick={toggleModal}>
+                                            Cancel
         </Button>
-                                    <Button color="primary" type="submit">
-                                        Save Changes
+                                        <Button color="primary" type="submit">
+                                            Save Changes
         </Button>
-                                </div>
-                            </Form>
-                        </CardBody>
-                    </ModalBody>
-                </Modal>
+                                    </div>
+                                </Form>
+                            </CardBody>
+                        </ModalBody>
+                    </Modal>
 
-                <Modal isOpen={showDeleteModal} toggle={toggleDelete}>
-                    <ModalHeader toggle={toggleDelete}>
-                        Delete this post and all its notes?
+                    <Modal isOpen={showDeleteModal} toggle={toggleDelete}>
+                        <ModalHeader toggle={toggleDelete}>
+                            Delete this post and all its notes?
                     </ModalHeader>
-                    <ModalBody>
-                        <Button color="secondary" onClick={toggleDelete}>Cancel</Button>
-                        <Button color="danger" type="submit" onClick={deletePost}>Delete</Button>
-                    </ModalBody>
-                </Modal>
+                        <ModalBody>
+                            <Button color="secondary" onClick={toggleDelete}>Cancel</Button>
+                            <Button color="danger" type="submit" onClick={deletePost}>Delete</Button>
+                        </ModalBody>
+                    </Modal>
 
+                </div >
             </div >
-        </div >
+            <footer className="postFooter">Tip: Press . when paused to advance YouTube videos frame by frame.</footer>
+        </div>
     );
 };
 export default ReviewPostDetails;

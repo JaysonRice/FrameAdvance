@@ -99,6 +99,7 @@ namespace FrameAdvance.Repositories
                            .Include(p => p.ReviewPostCharacters)
                            .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
+                           .ThenInclude(c => c.UserProfile)
                            .Select(p => new ReviewPost
                            {
                                Id = p.Id,

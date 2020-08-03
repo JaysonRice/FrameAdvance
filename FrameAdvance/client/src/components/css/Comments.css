@@ -1,3 +1,20 @@
 .singleCommentContainer{
     margin: 1rem
 }
+
+.singleCommentDetails{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.commentButtonContainer{
+    display: flex;
+    justify-content: flex-end;
+    /* text-align: end; */
+}
+
+.commentButton{
+    margin: .2rem;
+
+}

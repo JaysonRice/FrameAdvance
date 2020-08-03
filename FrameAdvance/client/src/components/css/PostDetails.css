@@ -23,3 +23,11 @@
 .timestampInput{
     display: flex;
 }
+
+.postFooter{
+    background-color: darkslategray;
+    color: floralwhite;
+    margin-top: 2rem;
+    padding: 1rem 0 2rem;
+    text-align: center;
+}
