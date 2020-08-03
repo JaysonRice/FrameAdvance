@@ -49,8 +49,10 @@ namespace FrameAdvance.Repositories
                     Title = p.Title,
                     CreateDateTime = p.CreateDateTime,
                     UserProfile = p.UserProfile,
+                    UserProfileId = p.UserProfileId,
                     UserGames = p.Game.UserGames,
                     Game = p.Game,
+                    GameId = p.GameId,
                     ReviewPostCharacters = p.ReviewPostCharacters
                 })
                 .ToList();
@@ -72,8 +74,10 @@ namespace FrameAdvance.Repositories
                      Title = p.Title,
                      CreateDateTime = p.CreateDateTime,
                      UserProfile = p.UserProfile,
+                     UserProfileId = p.UserProfileId,
                      UserGames = p.Game.UserGames,
                      Game = p.Game,
+                     GameId = p.GameId,
                      ReviewPostCharacters = p.ReviewPostCharacters
                  })
                 .ToList();    
@@ -96,10 +100,12 @@ namespace FrameAdvance.Repositories
                                CreateDateTime = p.CreateDateTime,
                                Private = p.Private,
                                VideoLocation = p.VideoLocation,
+                               UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
                                Timestamps = (List<Timestamp>)p.Timestamps.OrderByDescending(t => t.Time),
                                ReviewPostCharacters = p.ReviewPostCharacters,
+                               GameId = p.GameId,
                                Game = p.Game
                            })
                            .FirstOrDefault(p => p.Id == id);
@@ -164,6 +170,7 @@ namespace FrameAdvance.Repositories
         {
             return _context.Timestamp
                  .Where(t => t.ReviewPostId == id)
+                 .OrderBy(t => t.Time)
                  .ToList();
         }
 

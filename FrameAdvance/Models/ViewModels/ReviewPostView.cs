@@ -14,8 +14,11 @@ namespace FrameAdvance.Models.ViewModels
 
         public DateTime CreateDateTime { get; set; }
 
+        public int UserProfileId { get; set; }
+
         public UserProfile UserProfile { get; set; }
 
+        public int GameId { get; set; }
         public Game Game { get; set; }
 
         public List<UserGame> UserGames { get; set; }

@@ -109,6 +109,7 @@ namespace FrameAdvance.Controllers
         {
             var currentUserProfile = GetCurrentUserProfile();
             var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+            timestamp.Notes = null;
 
             if (currentUserProfile.Id != post.UserProfileId)
             {
@@ -124,6 +125,7 @@ namespace FrameAdvance.Controllers
         {
             var currentUserProfile = GetCurrentUserProfile();
             var post = _reviewPostRepository.GetById(timestamp.ReviewPostId);
+
 
             if (currentUserProfile.Id != post.UserProfileId)
             {

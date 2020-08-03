@@ -47,9 +47,13 @@ const ReviewPostDetails = () => {
         if (!convertedHours) { convertedHours = 0 }
 
         const time = (convertedHours * 3600) + (convertedMinutes * 60) + (convertedSeconds)
-        debugger
-        // Not implemented yet
-        addTimestamp(time).then(getReviewPost(id).then(setReviewPost));
+        const fullTimestamp =
+        {
+            time: time,
+            notes: "",
+            reviewPostId: reviewPost.id,
+        }
+        addTimestamp(fullTimestamp).then(getReviewPost(reviewPost.id).then(setReviewPost));
     };
 
     // Use this hook to allow us to programatically redirect users
@@ -92,12 +96,12 @@ const ReviewPostDetails = () => {
     const formButtonContainer = () => {
         return (
             <div className="buttonContainer">
-                <Button color="secondary" type="submit">
+                <Button color="secondary" onClick={toggleModal}>
                     Cancel
         </Button>
-                <Button color="primary" onClick={toggleModal}>
+                <Button color="primary" type="submit">
                     Save Changes
-        </Button>{" "}
+        </Button>
             </div>
         );
     };
@@ -152,7 +156,7 @@ const ReviewPostDetails = () => {
                             </div>
                             <div>
                                 <Label for="seconds">Seconds</Label>
-                                <Input id="seconds" name="seconds" type="number" onChange={(e) => setSeconds(e.target.value)} />
+                                <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
                             </div>
                         </div>
                         <Button color="info" type="submit">
