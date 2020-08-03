@@ -88,7 +88,7 @@ export default ({ timestamp, currentReviewPost }) => {
 
                             <div className="timestampNoteContainer">
                                 {
-                                    timestamp.notes === null && noteAdding === false
+                                    timestamp.notes === null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
 
                                         ? <Button color="primary" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
                                         : <div>{timestamp.notes}</div>
