@@ -13,9 +13,8 @@ import {
 import ReactPlayer from "react-player";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
-export default ({ timestamp, currentReviewPost }) => {
+export default ({ timestamp, currentReviewPost, setReviewPost }) => {
 
-    const [reviewPost, setReviewPost] = useState();
     const { editTimestamp, deleteTimestamp, getReviewPost } = useContext(ReviewPostContext);
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
@@ -30,7 +29,7 @@ export default ({ timestamp, currentReviewPost }) => {
         formState.reviewPostId = currentReviewPost.id
         formState.time = timestamp.time
         editTimestamp(formState.id, formState).then(() => {
-            getReviewPost(formState.reviewPostId).then(setReviewPost);
+            getReviewPost(currentReviewPost.id).then(setReviewPost);
         });
     };
 
@@ -45,7 +44,9 @@ export default ({ timestamp, currentReviewPost }) => {
     };
 
     const timestampDelete = () => {
-        deleteTimestamp(timestamp.id).then(getReviewPost(currentReviewPost.id)).then(setReviewPost).then(toggleModal)
+        deleteTimestamp(timestamp.id).then(() => {
+            getReviewPost(currentReviewPost.id).then(setReviewPost(currentReviewPost)).then(toggleModal());
+        });
     };
 
     const inputNotes = () => {

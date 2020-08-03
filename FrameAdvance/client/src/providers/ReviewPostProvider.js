@@ -140,7 +140,7 @@ export const ReviewPostProvider = (props) => {
                 body: JSON.stringify(timestamp),
             }).then(resp => {
                 if (resp.ok) {
-                    return resp.json().then(getReviewPost(timestamp.reviewPostId));
+                    return resp.json();
                 }
                 throw new Error("Unauthorized");
             }));

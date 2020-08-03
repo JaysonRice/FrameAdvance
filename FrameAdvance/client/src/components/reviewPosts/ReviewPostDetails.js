@@ -57,7 +57,9 @@ const ReviewPostDetails = () => {
         if (fullTimestamp.time === 0) {
             alert("Enter a time to create a timestamp!")
         } else {
-            addTimestamp(fullTimestamp).then(getReviewPost(reviewPost.id).then(setReviewPost));
+            addTimestamp(fullTimestamp).then(() => {
+                getReviewPost(reviewPost.id).then(setReviewPost);
+            });
         }
     };
 
@@ -119,6 +121,7 @@ const ReviewPostDetails = () => {
         formatedDate = month + "/" + day + "/" + year;
     }
 
+
     return (
         <div className="postDetailsContainer">
 
@@ -178,7 +181,8 @@ const ReviewPostDetails = () => {
 
                 {
                     reviewPost.timestamps.map(timestamp => {
-                        return <Timestamp key={timestamp.id} timestamp={timestamp} currentReviewPost={reviewPost} />
+                        return <Timestamp key={timestamp.id} timestamp={timestamp}
+                            currentReviewPost={reviewPost} setReviewPost={setReviewPost} />
                     })
                 }
 
