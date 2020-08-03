@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
     Button, CardBody, Form, FormGroup,
-    Input, Label, ListGroup, ListGroupItem,
-    CardImg, Modal, ModalHeader, ModalBody,
+    Input, Label, Modal, ModalHeader, ModalBody,
 } from "reactstrap";
 import "../css/PostDetails.css"
 import "../css/Timestamp.css"
@@ -16,6 +15,7 @@ const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
     const { getReviewPost, deleteReviewPostById, editReviewPost, addTimestamp } = useContext(ReviewPostContext);
     const { games, getAllGames } = useContext(GameContext);
+    const history = useHistory();
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -24,7 +24,7 @@ const ReviewPostDetails = () => {
     const toggleModal = () => setShowModal(!showModal);
 
     // Form state for editing a post
-    const [formState, setformState] = useState({ userProfileId: +userProfileId });
+    const [formState, setformState] = useState();
 
     const handleUserInput = (e) => {
         const updatedState = { ...formState };
@@ -54,11 +54,13 @@ const ReviewPostDetails = () => {
             notes: "",
             reviewPostId: reviewPost.id,
         }
-        addTimestamp(fullTimestamp).then(getReviewPost(reviewPost.id).then(setReviewPost));
+        if (fullTimestamp.time === 0) {
+            alert("Enter a time to create a timestamp!")
+        } else {
+            addTimestamp(fullTimestamp).then(getReviewPost(reviewPost.id).then(setReviewPost));
+        }
     };
 
-    // Use this hook to allow us to programatically redirect users
-    const history = useHistory();
 
     useEffect(() => {
         getReviewPost(id).then(setReviewPost);
@@ -75,7 +77,7 @@ const ReviewPostDetails = () => {
     if (!reviewPost) {
         return null;
     }
-
+    // Not yet implemented
     const deletePost = (e) => {
         e.preventDefault();
 
@@ -89,6 +91,7 @@ const ReviewPostDetails = () => {
         formState.private = false
         formState.gameId = +formState.gameId
         formState.userProfileId = +formState.userProfile.id
+        debugger
         editReviewPost(formState.id, formState).then(() => {
             getReviewPost(formState.id).then(setReviewPost).then(toggleModal);
         });
@@ -106,7 +109,6 @@ const ReviewPostDetails = () => {
             </div>
         );
     };
-
 
     let formatedDate = null;
     let unformatedDate = null;
@@ -138,7 +140,7 @@ const ReviewPostDetails = () => {
                 <div className="embeddedVideo">
                     <ReactPlayer
                         url={reviewPost.videoLocation}
-                        controls="true"
+                        controls={true}
                     />
                 </div>
 
@@ -176,7 +178,7 @@ const ReviewPostDetails = () => {
 
                 {
                     reviewPost.timestamps.map(timestamp => {
-                        return <Timestamp key={timestamp.id} timestamp={timestamp} reviewPost={reviewPost} />
+                        return <Timestamp key={timestamp.id} timestamp={timestamp} currentReviewPost={reviewPost} />
                     })
                 }
 

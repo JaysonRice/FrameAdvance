@@ -1,5 +1,5 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
-import { Card, CardBody, Button, Modal, ModalHeader, ModalBody, Label } from "reactstrap";
+import React, { useState, useContext, useRef } from "react";
+import { Card, CardBody, Modal, ModalHeader, ModalBody, Label } from "reactstrap";
 import { GameContext } from "../../providers/GameProvider";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 

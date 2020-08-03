@@ -15,15 +15,15 @@ export default function ApplicationViews() {
         <main>
             <Switch>
                 <Route path="/" exact>
-                    {isLoggedIn ? <p> <HomePage /> </p> : <Redirect to="/login" />}
+                    {isLoggedIn ? <div> <HomePage /> </div> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/newreview">
-                    {isLoggedIn ? <p> <PostReviewForm /> </p> : <Redirect to="/login" />}
+                    {isLoggedIn ? <div> <PostReviewForm /> </div> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/reviewpost/:id">
-                    {isLoggedIn ? <p> <ReviewPostDetails /> </p> : <Redirect to="/login" />}
+                    {isLoggedIn ? <div> <ReviewPostDetails /> </div> : <Redirect to="/login" />}
                 </Route>
 
 

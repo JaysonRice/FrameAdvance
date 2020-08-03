@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap"
+import React, { useContext, useEffect } from "react"
 import { ReviewPostContext } from "../../providers/ReviewPostProvider"
 import ReviewPost from "./ReviewPost"
 
