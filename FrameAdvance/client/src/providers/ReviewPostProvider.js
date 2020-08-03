@@ -178,11 +178,63 @@ export const ReviewPostProvider = (props) => {
         );
     };
 
+    // Fetch calls for comments
+    const addComment = (comment) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/addcomment`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comment),
+            }).then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                throw new Error("Unauthorized");
+            }));
+
+    const editComment = (id, comment) => {
+        return getToken().then((token) =>
+            fetch(apiUrl + `/updatecomment/${id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comment),
+            }).then(resp => {
+                if (resp.ok) {
+                    return;
+                }
+                throw new Error("Unauthorized");
+            }))
+    };
+
+    const deleteComment = (id) => {
+        return getToken().then((token) =>
+            fetch(apiUrl + `/deletecomment/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((resp) => {
+                if (resp.ok) {
+                    return;
+                }
+                throw new Error("Failed to delete comment.")
+            })
+        );
+    };
+
+
     return (
         <ReviewPostContext.Provider value={{
             reviewPosts, getAllReviewPosts, getAllPostList, addReviewPost,
             getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById,
-            editReviewPost, addTimestamp, editTimestamp, deleteTimestamp
+            editReviewPost, addTimestamp, editTimestamp, deleteTimestamp,
+            addComment, editComment, deleteComment
         }}>
             {props.children}
         </ReviewPostContext.Provider>

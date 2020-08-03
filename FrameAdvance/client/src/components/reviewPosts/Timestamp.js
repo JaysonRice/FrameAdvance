@@ -26,8 +26,6 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
 
     const updateTimestamp = (e) => {
         e.preventDefault();
-        formState.reviewPostId = currentReviewPost.id
-        formState.time = timestamp.time
         setNoteAdding(false)
         editTimestamp(formState.id, formState).then(() => {
             getReviewPost(currentReviewPost.id).then((rp) => setReviewPost(rp));
@@ -76,68 +74,76 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
 
     return (
         <>
+            <Card className="singleTimestamp">
+                <CardBody color="info" className="singleTimestampContainer">
 
-            <div className="timestampContainer">
-                <Card >
-                    <CardBody color="info" className="singleTimestampContainer">
+                    <div className="timestampDetails">
 
-                        <div className="singleTimestamp">
+                        <ReactPlayer className="embeddedTimestamp"
+                            url={`${currentReviewPost.videoLocation}?t=${timestamp.time}`}
+                            controls={true}
+                        />
 
-                            <ReactPlayer className="embeddedTimestamp"
-                                url={`${currentReviewPost.videoLocation}?t=${timestamp.time}`}
-                                controls={true}
-                            />
-
-                            <div className="timestampNoteContainer">
-                                {
-                                    timestamp.notes === null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
-
-                                        ? <Button color="primary" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
-                                        : ""
-                                }
-
-                                {
-                                    timestamp.notes !== null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
-
-                                        ? <div className="timestampNotes">
-                                            <Card >
-                                                <p>{timestamp.notes}</p>
-                                            </Card>
-                                            <Button color="primary" onClick={() => { setNoteAdding(true) }}>Edit Notes</Button>
-                                        </div>
-                                        : ""
-                                }
-
-                                {
-                                    noteAdding === true
-                                        ? inputNotes()
-                                        : ""
-                                }
-
-
-                            </div>
+                        <div className="timestampNoteContainer">
                             {
-                                currentReviewPost.userProfile.id === userProfileId
+                                timestamp.notes === null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
 
-                                    ? <div> <Button color="danger" onClick={toggleModal} outline>X</Button></div>
+                                    ? <Button color="primary" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
                                     : ""
                             }
 
+                            {
+                                timestamp.notes !== null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
+
+                                    ? <div className="timestampNotes">
+                                        <Card >
+                                            <p>{timestamp.notes}</p>
+                                        </Card>
+                                        <Button color="primary" onClick={() => { setNoteAdding(true) }}>Edit Notes</Button>
+                                    </div>
+                                    : ""
+                            }
+
+                            {
+                                timestamp.notes !== null && currentReviewPost.userProfileId !== userProfileId
+
+                                    ? <div className="timestampNotes">
+                                        <Card >
+                                            <p>{timestamp.notes}</p>
+                                        </Card>
+                                    </div>
+                                    : ""
+                            }
+                            {/* Opens input box after you click create or edit notes */}
+                            {
+                                noteAdding === true
+                                    ? inputNotes()
+                                    : ""
+                            }
+
+
                         </div>
-                    </CardBody>
-                </Card>
+                        {
+                            currentReviewPost.userProfile.id === userProfileId
 
-                <Modal isOpen={showModal} toggle={toggleModal}>
-                    <ModalHeader toggle={toggleModal}>
-                        Delete this timestamp and all its notes?
+                                ? <div> <Button color="danger" onClick={toggleModal} outline>X</Button></div>
+                                : ""
+                        }
+
+                    </div>
+                </CardBody>
+            </Card>
+
+            <Modal isOpen={showModal} toggle={toggleModal}>
+                <ModalHeader toggle={toggleModal}>
+                    Delete this timestamp and all its notes?
                     </ModalHeader>
-                    <ModalBody>
-                        <Button color="secondary" onClick={toggleModal}>Cancel</Button>
-                        <Button color="danger" type="submit" onClick={timestampDelete}>Delete</Button>
-                    </ModalBody>
-                </Modal>
+                <ModalBody>
+                    <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+                    <Button color="danger" type="submit" onClick={timestampDelete}>Delete</Button>
+                </ModalBody>
+            </Modal>
 
-            </div>
         </>
     );
 }
