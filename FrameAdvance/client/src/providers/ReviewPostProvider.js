@@ -10,7 +10,7 @@ export const ReviewPostProvider = (props) => {
     const apiUrl = "/api/reviewpost";
     const { getToken } = useContext(UserProfileContext);
 
-
+    // Currently Unused
     const getAllReviewPosts = () =>
         getToken().then((token) =>
             fetch(apiUrl, {
@@ -78,7 +78,7 @@ export const ReviewPostProvider = (props) => {
                 throw new Error("Unauthorized");
             }))
     };
-
+    // Currently Unused
     const getReviewPostsByGame = (gameId) => {
         getToken().then((token) =>
             fetch(apiUrl + `/getbygame/${gameId}`, {
@@ -128,10 +128,62 @@ export const ReviewPostProvider = (props) => {
             }))
     };
 
+    // Fetch calls for timestamps
+    const addTimestamp = (timestamp) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/addtimestamp`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(timestamp),
+            }).then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                throw new Error("Unauthorized");
+            }));
 
+    const editTimestamp = (id, timestamp) => {
+        return getToken().then((token) =>
+            fetch(apiUrl + `/updatetimestamp/${id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(timestamp),
+            }).then(resp => {
+                if (resp.ok) {
+                    return;
+                }
+                throw new Error("Unauthorized");
+            }))
+    };
+
+    const deleteTimestamp = (id) => {
+        return getToken().then((token) =>
+            fetch(apiUrl + `/deletetimestamp/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((resp) => {
+                if (resp.ok) {
+                    return;
+                }
+                throw new Error("Failed to delete timestamp.")
+            })
+        );
+    };
 
     return (
-        <ReviewPostContext.Provider value={{ reviewPosts, getAllReviewPosts, getAllPostList, addReviewPost, getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById, editReviewPost }}>
+        <ReviewPostContext.Provider value={{
+            reviewPosts, getAllReviewPosts, getAllPostList, addReviewPost,
+            getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById,
+            editReviewPost, addTimestamp, editTimestamp, deleteTimestamp
+        }}>
             {props.children}
         </ReviewPostContext.Provider>
     );

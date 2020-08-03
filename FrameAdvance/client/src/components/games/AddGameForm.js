@@ -1,5 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
-import { Card, CardBody, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import React, { useContext, useRef, useEffect } from "react";
 import { GameContext } from "../../providers/GameProvider";
 
 export const AddGameForm = ({ toggler }) => {

@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 import {
     Card, CardBody,
     CardImg
 } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 export default ({ reviewPost }) => {
 
@@ -17,36 +18,39 @@ export default ({ reviewPost }) => {
 
     return (
         <>
-            <div className="reviewPost">
-                <Card >
-                    <CardBody body outline color="info" className="reviewPostBody">
-                        <div className="reviewPostMain">
+            <Link to={`/reviewpost/${reviewPost.id}`} style={{ textDecoration: 'none', color: 'black' }}>
 
-                            <div className="reviewPostInfo">
-                                <h5>{reviewPost.title}</h5>
-                                <div>
-                                    <div>{reviewPost.game.title}</div>
-                                    <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
+                <div className="reviewPost">
+                    <Card >
+                        <CardBody body outline color="info" className="reviewPostBody">
+                            <div className="reviewPostMain">
 
-                                    {!reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id)
-                                        ? (
-                                            ""
-                                        ) : (
-                                            <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
-                                                <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
-                                            </div>
-                                        )}
+                                <div className="reviewPostInfo">
+                                    <h5>{reviewPost.title}</h5>
+                                    <div>
+                                        <div>{reviewPost.game.title}</div>
+                                        <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
+
+                                        {!reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id)
+                                            ? (
+                                                ""
+                                            ) : (
+                                                <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
+                                                    <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
+                                                </div>
+                                            )}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="reviewPostImage">
-                                <CardImg src={reviewPost.game.imageLocation} alt={reviewPost.game.title} />
-                            </div>
+                                <div className="reviewPostImage">
+                                    <CardImg src={reviewPost.game.imageLocation} alt={reviewPost.game.title} />
+                                </div>
 
-                        </div>
-                    </CardBody>
-                </Card>
-            </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+            </Link>
         </>
     );
 }

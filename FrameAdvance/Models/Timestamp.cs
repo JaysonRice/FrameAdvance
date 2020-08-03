@@ -10,7 +10,7 @@ namespace FrameAdvance.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Time { get; set; }
+        public int Time { get; set; }
 
         public string Notes { get; set; }
 

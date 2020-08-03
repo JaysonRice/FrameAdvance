@@ -49,47 +49,69 @@ namespace FrameAdvance.Repositories
                     Title = p.Title,
                     CreateDateTime = p.CreateDateTime,
                     UserProfile = p.UserProfile,
+                    UserProfileId = p.UserProfileId,
                     UserGames = p.Game.UserGames,
                     Game = p.Game,
+                    GameId = p.GameId,
                     ReviewPostCharacters = p.ReviewPostCharacters
                 })
                 .ToList();
         }
 
-        public List<ReviewPost> GetByUserProfileId(int id)
+        public List<ReviewPostView> GetByUserProfileId(int id)
         {
             return _context.ReviewPost
-                           .Include(p => p.UserProfile)
-                           .Include(p => p.Game)
-                           .ThenInclude(g => g.UserGames)
-                           .ThenInclude(ug => ug.SkillLevel)
-                           .Include(p => p.ReviewPostCharacters)
-                           .ThenInclude(pc => pc.Character)
-                           .Where(p => p.UserProfileId == id)
-                           .OrderByDescending(p => p.CreateDateTime)
-                           .ToList();
+                 .Where(p => p.UserProfileId == id)
+                 .Include(p => p.UserProfile)
+                 .Include(p => p.Game)
+                 .ThenInclude(g => g.UserGames)
+                 .ThenInclude(ug => ug.SkillLevel)
+                 .Include(p => p.ReviewPostCharacters)
+                 .ThenInclude(pc => pc.Character)
+                 .Select(p => new ReviewPostView()
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     CreateDateTime = p.CreateDateTime,
+                     UserProfile = p.UserProfile,
+                     UserProfileId = p.UserProfileId,
+                     UserGames = p.Game.UserGames,
+                     Game = p.Game,
+                     GameId = p.GameId,
+                     ReviewPostCharacters = p.ReviewPostCharacters
+                 })
+                .ToList();    
         }
 
-        public ReviewPost GetById(int id)
+        public ReviewPost CheckPost(int id)
+        {
+            return _context.ReviewPost
+                .FirstOrDefault(p => p.Id == id);
+        }
+
+            public ReviewPost GetById(int id)
         {
             return _context.ReviewPost
                            .Include(p => p.Game)
+                           .Include(p => p.Timestamps)
                            .Include(p => p.UserProfile)
                            .ThenInclude(up => up.UserType)
                            .Include(p => p.ReviewPostCharacters)
                            .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
-                           .ThenInclude(c => c.UserProfile)
                            .Select(p => new ReviewPost
                            {
                                Id = p.Id,
                                Title = p.Title,
                                CreateDateTime = p.CreateDateTime,
                                Private = p.Private,
+                               VideoLocation = p.VideoLocation,
                                UserProfileId = p.UserProfileId,
                                UserProfile = p.UserProfile,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
+                               Timestamps = (List<Timestamp>)p.Timestamps.OrderBy(t => t.Time),
                                ReviewPostCharacters = p.ReviewPostCharacters,
+                               GameId = p.GameId,
                                Game = p.Game
                            })
                            .FirstOrDefault(p => p.Id == id);
@@ -125,12 +147,55 @@ namespace FrameAdvance.Repositories
         {
             var post = GetById(id);
             var savedPostRelationships = GetSavedReviewByReviewPostId(id);
+            var timestamps = GetTimestampsByPostId(id);
+
             if (savedPostRelationships != null)
             {
                 _context.SavedReview.RemoveRange(savedPostRelationships);
             }
 
+            if (timestamps != null)
+            {
+                _context.Timestamp.RemoveRange(timestamps);
+            }
+
             _context.ReviewPost.Remove(post);
+            _context.SaveChanges();
+        }
+
+
+        // Timestamp repo methods start here
+
+        public Timestamp GetTimestampById(int id)
+        {
+            return _context.Timestamp
+                 .FirstOrDefault(t => t.Id == id);
+        }
+
+        public List<Timestamp> GetTimestampsByPostId(int id)
+        {
+            return _context.Timestamp
+                 .Where(t => t.ReviewPostId == id)
+                 .OrderByDescending(t => t.Time)
+                 .ToList();
+        }
+
+        public void AddTimestamp(Timestamp timestamp)
+        {
+            _context.Timestamp.Add(timestamp);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTimestamp(Timestamp timestamp)
+        {
+            _context.Entry(timestamp).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void DeleteTimestamp(int id)
+        {
+            var timestamp = GetTimestampById(id);
+            _context.Timestamp.Remove(timestamp);
             _context.SaveChanges();
         }
 
@@ -142,11 +207,11 @@ namespace FrameAdvance.Repositories
                            .FirstOrDefault(sr => sr.Id == id);
         }
 
-        public SavedReview GetSavedReviewByReviewPostId(int id)
+        public List<SavedReview> GetSavedReviewByReviewPostId(int id)
         {
             return _context.SavedReview
-                        .FirstOrDefault(sr => sr.ReviewPostId == id);
-
+                        .Where(sr => sr.ReviewPostId == id)
+                        .ToList();
         }
         public void SaveReview(SavedReview savedReview)
         {
