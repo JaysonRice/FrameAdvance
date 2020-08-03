@@ -200,6 +200,43 @@ namespace FrameAdvance.Repositories
         }
 
 
+        // Comment repo methods start here
+
+        public Comment GetCommentById(int id)
+        {
+            return _context.Comment
+                 .FirstOrDefault(c => c.Id == id);
+        }
+
+        public List<Comment> GetCommentsByPostId(int id)
+        {
+            return _context.Comment
+                 .Where(c => c.ReviewPostId == id)
+                 .OrderByDescending(c => c.CreateDateTime)
+                 .ToList();
+        }
+
+        public void AddComment(Comment comment)
+        {
+            comment.CreateDateTime = DateTime.Now;
+            _context.Comment.Add(comment);
+            _context.SaveChanges();
+        }
+
+        public void UpdateComment(Comment comment)
+        {
+            _context.Entry(comment).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void DeleteComment(int id)
+        {
+            var comment = GetCommentById(id);
+            _context.Comment.Remove(comment);
+            _context.SaveChanges();
+        }
+
+
         //Saving post review repo methods start here
         public SavedReview GetSavedReviewById(int id)
         {

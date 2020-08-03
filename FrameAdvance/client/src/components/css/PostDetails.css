@@ -1,3 +1,8 @@
+.postDetailsContainer{
+    width: 91%;
+    margin: 0 auto
+}
+
 .postDetailsHeader{
     display: flex;
     justify-content: space-around;

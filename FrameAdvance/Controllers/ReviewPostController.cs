@@ -158,6 +158,54 @@ namespace FrameAdvance.Controllers
             return NoContent();
         }
 
+        // Comment controller methods start here
+
+        [HttpPost("addcomment")]
+        public IActionResult Post(Comment comment)
+        {
+            _reviewPostRepository.AddComment(comment);
+            return CreatedAtAction("Get", new { id = comment.Id }, comment);
+        }
+
+        [HttpPut("updatecomment/{id}")]
+        public IActionResult Put(int id, Comment comment)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+
+            if (currentUserProfile.Id != comment.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+
+            _reviewPostRepository.UpdateComment(comment);
+            return NoContent();
+        }
+
+        [HttpDelete("deletecomment/{id}")]
+        public IActionResult DeleteComment(int id)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            var comment = _reviewPostRepository.GetCommentById(id);
+
+            var post = _reviewPostRepository.GetById(comment.ReviewPostId);
+
+            if (currentUserProfile.Id == post.UserProfileId || currentUserProfile.Id == comment.UserProfileId)
+            {
+                _reviewPostRepository.DeleteComment(id);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            
+
+            return NoContent();
+        }
 
         // Saving review controller methods start here
 
