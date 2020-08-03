@@ -8,23 +8,24 @@ import ReactPlayer from "react-player";
 
 export default ({ timestamp, reviewPost }) => {
 
+    const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
+
     return (
         <>
 
             <div className="reviewPost">
                 <Card >
-                    <CardBody body outline color="info" className="reviewPostBody">
-                        <div className="timestampContainer">
+                    <CardBody body outline color="info" className="singleTimestampContainer">
 
-                            <div className="embeddedTimestamp">
-                                <ReactPlayer
-                                    url={`${reviewPost.videoLocation}?t=${timestamp.time}`}
-                                    controls="true"
-                                />
-                            </div>
+                        <div className="singleTimestamp">
+
+                            <ReactPlayer className="embeddedTimestamp"
+                                url={`${reviewPost.videoLocation}?t=${timestamp.time}`}
+                                controls="true"
+                            />
+
 
                             <div className="timestampNoteContainer">
-
                                 {
                                     timestamp.notes === null
 
@@ -33,6 +34,12 @@ export default ({ timestamp, reviewPost }) => {
                                 }
 
                             </div>
+                            {
+                                reviewPost.userProfile.id === userProfileId
+
+                                    ? <div> <Button color="danger" outline>X</Button></div>
+                                    : ""
+                            }
 
                             {/* <Modal isOpen={editModal} toggle={toggleEdit}>
                                 <ModalHeader toggle={toggleEdit}>

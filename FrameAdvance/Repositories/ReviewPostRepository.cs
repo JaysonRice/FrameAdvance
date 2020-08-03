@@ -170,7 +170,7 @@ namespace FrameAdvance.Repositories
         {
             return _context.Timestamp
                  .Where(t => t.ReviewPostId == id)
-                 .OrderBy(t => t.Time)
+                 .OrderByDescending(t => t.Time)
                  .ToList();
         }
 

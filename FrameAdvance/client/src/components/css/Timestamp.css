@@ -1,0 +1,18 @@
+.timestampContainer{
+    margin: 1.5rem;
+}
+
+.timestampNoteContainer{
+    align-self: center;
+    text-align: center;
+    flex-basis: 40%;
+}
+
+.singleTimestamp{
+    display: flex;
+    justify-content: space-between;
+}
+
+.embeddedTimestamp{
+    flex-basis: 54.5%;
+}

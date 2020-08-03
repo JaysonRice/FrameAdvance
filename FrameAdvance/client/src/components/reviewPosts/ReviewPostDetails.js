@@ -5,6 +5,7 @@ import {
     CardImg, Modal, ModalHeader, ModalBody,
 } from "reactstrap";
 import "../css/PostDetails.css"
+import "../css/Timestamp.css"
 import { useParams, useHistory, Link } from "react-router-dom";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 import { GameContext } from "../../providers/GameProvider";
