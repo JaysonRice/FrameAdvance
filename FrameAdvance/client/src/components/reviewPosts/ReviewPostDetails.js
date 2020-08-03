@@ -23,6 +23,9 @@ const ReviewPostDetails = () => {
     const [showModal, setShowModal] = useState(false);
     const toggleModal = () => setShowModal(!showModal);
 
+    const [showDeleteModal, setDeleteShowModal] = useState(false);
+    const toggleDelete = () => setDeleteShowModal(!showDeleteModal);
+
     // Form state for editing a post
     const [formState, setformState] = useState();
 
@@ -82,8 +85,7 @@ const ReviewPostDetails = () => {
     // Not yet implemented
     const deletePost = (e) => {
         e.preventDefault();
-
-        deleteReviewPostById(reviewPost.id).then((p) => {
+        deleteReviewPostById(reviewPost.id).then(() => {
             history.push("/");
         });
     };
@@ -172,8 +174,13 @@ const ReviewPostDetails = () => {
                     {reviewPost.userProfile.id === userProfileId
                         ? <Button onClick={toggleModal} color="secondary">Edit Post</Button>
                         : ""}
-                </div>
 
+
+                    {reviewPost.userProfile.id === userProfileId
+                        ? <Button onClick={toggleDelete} color="danger">Delete Post</Button>
+                        : ""}
+
+                </div>
             </div>
 
             {/* Timestamps appear here */}
@@ -235,6 +242,17 @@ const ReviewPostDetails = () => {
                         </CardBody>
                     </ModalBody>
                 </Modal>
+
+                <Modal isOpen={showDeleteModal} toggle={toggleDelete}>
+                    <ModalHeader toggle={toggleDelete}>
+                        Delete this post and all its notes?
+                    </ModalHeader>
+                    <ModalBody>
+                        <Button color="secondary" onClick={toggleDelete}>Cancel</Button>
+                        <Button color="danger" type="submit" onClick={deletePost}>Delete</Button>
+                    </ModalBody>
+                </Modal>
+
             </div >
         </div >
     );
