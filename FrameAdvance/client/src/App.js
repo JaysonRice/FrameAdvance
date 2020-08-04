@@ -5,6 +5,7 @@ import ApplicationViews from './components/ApplicationViews';
 import Header from './components/Header';
 import { ReviewPostProvider } from './providers/ReviewPostProvider';
 import { GameProvider } from './providers/GameProvider';
+import { CharacterProvider } from './providers/CharacterProvider';
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
         <UserProfileProvider>
           <ReviewPostProvider>
             <GameProvider>
-              <Header />
-              <ApplicationViews />
+              <CharacterProvider>
+                <Header />
+                <ApplicationViews />
+              </ CharacterProvider>
             </ GameProvider>
           </ReviewPostProvider>
         </UserProfileProvider>
