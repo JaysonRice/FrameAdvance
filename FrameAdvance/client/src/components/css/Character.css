@@ -1,0 +1,15 @@
+.addCharacterContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.characterCard{
+    flex-basis: 45%;
+    margin: .3rem 0 .2rem;
+}
+
+.characterCardBody{
+    display: flex; 
+    justify-content: space-between;  
+}

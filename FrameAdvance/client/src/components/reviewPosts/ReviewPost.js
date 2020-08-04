@@ -35,6 +35,13 @@ export default ({ reviewPost }) => {
                                         <div>{reviewPost.game.title}</div>
                                         <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
 
+                                        {!!reviewPost.reviewPostCharacters.find(c => c)
+                                            ? <small> Characters: {reviewPost.reviewPostCharacters.map(char => {
+                                                return (char.character.name);
+                                            })}
+                                            </small>
+                                            : ""
+                                        }
                                         {!reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id)
                                             ? (
                                                 ""
@@ -42,7 +49,8 @@ export default ({ reviewPost }) => {
                                                 <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
                                                     <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
                                                 </div>
-                                            )}
+                                            )
+                                        }
                                     </div>
                                 </div>
 

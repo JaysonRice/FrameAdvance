@@ -28,16 +28,16 @@ export const Character = ({ character, reviewPost, setReviewPost }) => {
         });
     }
     return (
-        <Card className="CharacterCard">
+        <Card className="characterCard">
             <CardBody>
-                <div className="CharacterCardBody">
-                    <h4>{character.name}</h4>
-                    <div className="CharacterButtonContainer">
+                <div className="characterCardBody">
+                    <h6>{character.name}</h6>
+                    <div className="characterButtonContainer">
                         {/* <Button color="primary" >Add</Button> */}
                         {!reviewPost.reviewPostCharacters.find(char => char.characterId === character.id)
 
-                            ? <Button color="primary" onClick={addCharacter} >Add</Button>
-                            : <Button color="danger" onClick={removeCharacter} >X</Button>
+                            ? <Button color="primary" outline onClick={addCharacter} >+</Button>
+                            : <Button color="danger" outline onClick={removeCharacter} >X</Button>
                         }
                     </div>
                 </div>

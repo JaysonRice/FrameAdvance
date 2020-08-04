@@ -6,6 +6,7 @@ import {
 import "../css/PostDetails.css"
 import "../css/Timestamp.css"
 import "../css/Comments.css"
+import "../css/Character.css"
 import { useParams, useHistory, Link } from "react-router-dom";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 import { GameContext } from "../../providers/GameProvider";
@@ -21,7 +22,7 @@ const ReviewPostDetails = () => {
     const { getReviewPost, deleteReviewPostById, editReviewPost,
         addTimestamp, addComment, getSavedReviewsByUserId,
         addSavedReview, deleteSavedReview, savedReviewPosts } = useContext(ReviewPostContext);
-    const { postCharacters, characters, getAllCharactersByGame, getAllPostCharactersByPostId } = useContext(CharacterContext);
+    const { characters, getAllCharactersByGame, getAllPostCharactersByPostId } = useContext(CharacterContext);
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -331,33 +332,27 @@ const ReviewPostDetails = () => {
                                     </FormGroup>
 
                                     <FormGroup>
-                                        <Label>Game:</Label>
-                                        <select id="gameId" required defaultValue={reviewPost.game.id} onChange={handleUserInput}>
-                                            <option value=""> Choose Game</option>
-                                            {games.map((g) => {
-                                                return (
-                                                    <option key={g.id} value={g.id}>
-                                                        {g.title}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </FormGroup>
-
-                                    <FormGroup>
-                                        <Button color="secondary" onClick={() => { setCharacterAdding(true) }}>
-                                            Add Characters
-        </Button>
                                         {
-                                            characterAdding === true
-                                                ? characters.map(character => {
-                                                    return <Character key={character.id} character={character}
-                                                        reviewPost={reviewPost} setReviewPost={setReviewPost} />
-                                                })
-
+                                            !!characters
+                                                ? <Button color="secondary" onClick={() => { setCharacterAdding(true) }}>
+                                                    Edit Characters
+        </Button>
                                                 : ""
-
                                         }
+                                        <div className="addCharacterContainer">
+                                            {
+                                                characterAdding === true
+                                                    ?
+
+                                                    characters.map(character => {
+                                                        return <Character key={character.id} character={character}
+                                                            reviewPost={reviewPost} setReviewPost={setReviewPost} />
+
+                                                    })
+                                                    : ""
+                                            }
+                                        </div>
+
                                     </FormGroup>
 
                                     <div className="buttonContainer">
