@@ -3,6 +3,7 @@ import ReviewPostList from './ReviewPostList';
 import "../css/ReviewPost.css"
 import "../css/MyGames.css"
 import { MyGameList } from '../games/MyGameList';
+import MySavedPostList from '../savedPosts/MySavedPostList';
 
 function HomePage() {
     return (
@@ -12,6 +13,7 @@ function HomePage() {
             </div>
             <div className="myGamesContainer">
                 <MyGameList />
+                <MySavedPostList />
             </div>
         </div>
     );

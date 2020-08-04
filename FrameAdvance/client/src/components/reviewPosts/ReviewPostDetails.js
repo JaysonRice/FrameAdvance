@@ -15,8 +15,10 @@ import Comment from "./Comment"
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
-    const { getReviewPost, deleteReviewPostById, editReviewPost, addTimestamp, addComment } = useContext(ReviewPostContext);
     const { games, getAllGames } = useContext(GameContext);
+    const { getReviewPost, deleteReviewPostById, editReviewPost,
+        addTimestamp, addComment, getSavedReviewsByUserId,
+        addSavedReview, deleteSavedReview, savedReviewPosts } = useContext(ReviewPostContext);
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -42,6 +44,10 @@ const ReviewPostDetails = () => {
 
     useEffect(() => {
         getReviewPost(id).then(setReviewPost);
+    }, []);
+
+    useEffect(() => {
+        getSavedReviewsByUserId(userProfileId);
     }, []);
 
     useEffect(() => {
@@ -143,6 +149,27 @@ const ReviewPostDetails = () => {
             });
         }
     };
+    // Function that builds the review bookmark relationship and posts to the database
+    const bookmarkPost = (e) => {
+        e.preventDefault();
+
+        const savedReview =
+        {
+            userProfileId: userProfileId,
+            reviewPostId: reviewPost.id
+        }
+
+        addSavedReview(savedReview).then(() => {
+            getSavedReviewsByUserId(userProfileId);
+        });
+    };
+
+    const bookmarkDelete = () => {
+        const currentSaved = savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
+        deleteSavedReview(currentSaved.id).then(() => {
+            getSavedReviewsByUserId(userProfileId);
+        });
+    };
 
     if (!reviewPost) {
         return null;
@@ -184,39 +211,48 @@ const ReviewPostDetails = () => {
                             controls={true}
                         />
                     </div>
-
-                    <div className="timestampCreation">
-                        <Form onSubmit={saveTimestamp}>
-                            <div className="timestampInput">
-                                <div>
-                                    <Label for="hours">Hours</Label>
-                                    <Input id="hours" name="hours" type="number" onChange={(e) => setHours(e.target.value)} />
-                                </div>
-                                <div>
-                                    <fieldset>
-                                        <Label for="minutes">Minutes</Label>
-                                        <Input id="minutes" name="minutes" type="number" max="59" onChange={(e) => setMinutes(e.target.value)} />
-                                    </fieldset>
-                                </div>
-                                <div>
-                                    <Label for="seconds">Seconds</Label>
-                                    <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
-                                </div>
-                            </div>
-                            <Button color="info" type="submit">
-                                Create Timestamp
+                    {
+                        reviewPost.userProfile.id === userProfileId
+                            ? <div className="timestampCreation">
+                                <Form onSubmit={saveTimestamp}>
+                                    <div className="timestampInput">
+                                        <div>
+                                            <Label for="hours">Hours</Label>
+                                            <Input id="hours" name="hours" type="number" onChange={(e) => setHours(e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <fieldset>
+                                                <Label for="minutes">Minutes</Label>
+                                                <Input id="minutes" name="minutes" type="number" max="59" onChange={(e) => setMinutes(e.target.value)} />
+                                            </fieldset>
+                                        </div>
+                                        <div>
+                                            <Label for="seconds">Seconds</Label>
+                                            <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <Button color="info" type="submit">
+                                        Create Timestamp
                 </Button>
-                        </Form>
-                        {reviewPost.userProfile.id === userProfileId
-                            ? <Button onClick={toggleModal} color="secondary">Edit Post</Button>
-                            : ""}
+                                </Form>
 
 
-                        {reviewPost.userProfile.id === userProfileId
-                            ? <Button onClick={toggleDelete} color="danger">Delete Post</Button>
-                            : ""}
+                                {reviewPost.userProfile.id === userProfileId
+                                    ? <Button onClick={toggleModal} color="secondary">Edit Review</Button>
+                                    : ""}
 
-                    </div>
+
+                                {reviewPost.userProfile.id === userProfileId
+                                    ? <Button onClick={toggleDelete} color="danger">Delete Review</Button>
+                                    : ""}
+                            </div>
+                            : ""
+                    }
+
+                    {!savedReviewPosts || !savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
+                        ? <Button onClick={bookmarkPost} color="warning">Bookmark Review</Button>
+                        : <Button onClick={bookmarkDelete} color="danger"> Remove Bookmark</Button>}
+
                 </div>
 
                 {/* Timestamps display here */}

@@ -6,6 +6,7 @@ export const ReviewPostContext = React.createContext();
 
 export const ReviewPostProvider = (props) => {
     const [reviewPosts, setReviewPosts] = useState([]);
+    const [savedReviewPosts, setSavedReviewPosts] = useState([]);
 
     const apiUrl = "/api/reviewpost";
     const { getToken } = useContext(UserProfileContext);
@@ -228,13 +229,55 @@ export const ReviewPostProvider = (props) => {
         );
     };
 
+    const getSavedReviewsByUserId = (id) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/savedreviews/${id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((res) => res.json())
+                .then(setSavedReviewPosts));
+
+
+    const addSavedReview = (savedReview) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/savereview`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(savedReview),
+            }).then(resp => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                throw new Error("Unauthorized");
+            }));
+
+    const deleteSavedReview = (id) => {
+        return getToken().then((token) =>
+            fetch(apiUrl + `/deletereview/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((resp) => {
+                if (resp.ok) {
+                    return;
+                }
+                throw new Error("Failed to delete bookmarked review.")
+            })
+        );
+    };
 
     return (
         <ReviewPostContext.Provider value={{
-            reviewPosts, getAllReviewPosts, getAllPostList, addReviewPost,
+            reviewPosts, savedReviewPosts, getAllReviewPosts, getAllPostList, addReviewPost,
             getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById,
             editReviewPost, addTimestamp, editTimestamp, deleteTimestamp,
-            addComment, editComment, deleteComment
+            addComment, editComment, deleteComment, getSavedReviewsByUserId, addSavedReview, deleteSavedReview
         }}>
             {props.children}
         </ReviewPostContext.Provider>
