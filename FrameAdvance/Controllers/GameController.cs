@@ -28,18 +28,10 @@ namespace FrameAdvance.Controllers
             return Ok(_gameRepository.GetAll());
         }
 
-        [HttpGet("gamesiplay")]
-        public IActionResult GetGamesIPlay()
+        [HttpGet("usergames/{id}")]
+        public IActionResult GetUserGames(int id)
         {
-            var currentUserProfile = GetCurrentUserProfile();
-            return Ok(_gameRepository.GamesIPlay(currentUserProfile.Id));
-        }
-
-        [HttpGet("gamesidontplay")]
-        public IActionResult GetGamesIDontPlay()
-        {
-            var currentUserProfile = GetCurrentUserProfile();
-            return Ok(_gameRepository.GamesIDontPlay(currentUserProfile.Id));
+            return Ok(_gameRepository.GetUserGames(id));
         }
 
         [HttpGet("skills")]

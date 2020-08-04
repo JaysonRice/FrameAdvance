@@ -6,7 +6,8 @@ import { Modal, Button, ModalHeader, ModalBody } from "reactstrap";
 
 export const MyGameList = () => {
 
-    const { gamesIPlay, getAllGamesIPlay, getAllSkillLevels, getAllGames, } = useContext(GameContext)
+    const { userGames, getAllUserGames, getAllSkillLevels, getAllGames, } = useContext(GameContext)
+    const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
 
@@ -15,14 +16,14 @@ export const MyGameList = () => {
     }, []);
 
     useEffect(() => {
-        getAllGamesIPlay();
+        getAllUserGames(userProfileId);
     }, []);
 
     useEffect(() => {
         getAllSkillLevels();
     }, []);
 
-    if (!gamesIPlay) {
+    if (!userGames) {
         return null
     }
 
@@ -33,7 +34,7 @@ export const MyGameList = () => {
                 <Button color="primary" outline onClick={toggle}>+</Button>
             </div>
             <div className="gamesContainer">
-                {gamesIPlay.map(g =>
+                {userGames.map(g =>
                     <MyGame key={g.id} myGame={g} />)}
             </div>
 

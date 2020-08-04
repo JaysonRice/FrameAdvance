@@ -2,7 +2,7 @@ import React, { useContext, useRef, useEffect } from "react";
 import { GameContext } from "../../providers/GameProvider";
 
 export const AddGameForm = ({ toggler }) => {
-    const { games, skillLevels, getAllSkillLevels, addGameToUser, gamesIPlay } = useContext(GameContext)
+    const { games, skillLevels, getAllSkillLevels, addGameToUser, getAllUserGames } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
     const game = useRef()
@@ -13,7 +13,7 @@ export const AddGameForm = ({ toggler }) => {
     }, []);
 
     // Why don't this work?
-    // const gamesIDontPlay = games.filter(oneGame => oneGame.id !== gamesIPlay.forEach(singleGame => {
+    // const gamesIDontPlay = games.filter(oneGame => oneGame.id !== getAllUserGames.forEach(singleGame => {
     //     return singleGame.game.id
     // }))
 

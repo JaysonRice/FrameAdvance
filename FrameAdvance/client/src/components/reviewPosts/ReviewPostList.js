@@ -16,6 +16,7 @@ const ReviewPostList = () => {
 
     return (
         <>
+            <h3>My Reviews</h3>
             {
                 reviewPosts.map(post => {
                     return <ReviewPost key={post.id} reviewPost={post} />
