@@ -245,10 +245,18 @@ namespace FrameAdvance.Repositories
                            .FirstOrDefault(sr => sr.Id == id);
         }
 
-        public List<SavedReview> GetSavedReviewByReviewPostId(int id)
+        private List<SavedReview> GetSavedReviewByReviewPostId(int id)
         {
             return _context.SavedReview
                         .Where(sr => sr.ReviewPostId == id)
+                        .ToList();
+        }
+
+        public List<SavedReview> GetSavedReviewByUserId(int id)
+        {
+            return _context.SavedReview
+                        .Include(sr => sr.ReviewPost)
+                        .OrderBy(sr => sr.ReviewPost.Title)
                         .ToList();
         }
         public void SaveReview(SavedReview savedReview)

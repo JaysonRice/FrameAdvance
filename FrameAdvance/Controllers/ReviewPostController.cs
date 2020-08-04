@@ -209,13 +209,18 @@ namespace FrameAdvance.Controllers
 
         // Saving review controller methods start here
 
+        [HttpGet("savedreviews/{id}")]
+        public IActionResult GetSavedReviews(int id)
+        {
+            return Ok(_reviewPostRepository.GetSavedReviewByUserId(id)); 
+        }
+
         [HttpPost("savereview")]
         public IActionResult Post(SavedReview savedReview)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            var chosenpPost = _reviewPostRepository.GetById(savedReview.ReviewPostId);
-
-            if (currentUserProfile.Id == chosenpPost.UserProfileId)
+ 
+            if (currentUserProfile.Id != savedReview.UserProfileId)
             {
                 return Unauthorized();
             }
@@ -223,15 +228,13 @@ namespace FrameAdvance.Controllers
             return CreatedAtAction("Get", new { id = savedReview.Id }, savedReview);
         }
 
-        [HttpDelete("savereview/{id}")]
+        [HttpDelete("deletereview/{id}")]
         public IActionResult DeleteSavedReview(int id)
         {
             var currentUserProfile = GetCurrentUserProfile();
             var savedReview = _reviewPostRepository.GetSavedReviewById(id);
 
-            var chosenPost = _reviewPostRepository.GetById(savedReview.ReviewPostId);
-
-            if (currentUserProfile.Id != chosenPost.UserProfileId)
+            if (currentUserProfile.Id != savedReview.UserProfileId)
             {
                 return Unauthorized();
             }

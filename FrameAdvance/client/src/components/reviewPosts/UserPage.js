@@ -2,7 +2,7 @@ import React from 'react';
 import UserPostList from './UserPostList';
 import "../css/ReviewPost.css"
 import "../css/MyGames.css"
-import { MyGameList } from '../games/MyGameList';
+import { UserGameList } from '../games/UserGameList';
 
 function UserPage() {
     return (
@@ -11,7 +11,7 @@ function UserPage() {
                 <UserPostList />
             </div>
             <div className="myGamesContainer">
-                <MyGameList />
+                <UserGameList />
             </div>
         </div>
     );

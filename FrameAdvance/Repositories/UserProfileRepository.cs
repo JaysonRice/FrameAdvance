@@ -29,5 +29,13 @@ namespace FrameAdvance.Repositories
             _context.Add(userProfile);
             _context.SaveChanges();
         }
+
+        public UserProfile GetByUserId(int id)
+        {
+            return _context.UserProfile
+                .FirstOrDefault(up => up.Id == id);
+        }
+
+
     }
 }

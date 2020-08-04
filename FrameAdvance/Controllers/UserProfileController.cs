@@ -37,5 +37,11 @@ namespace FrameAdvance.Controllers
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseUserId }, userProfile);
         }
+
+        [HttpGet("getuserprofile/{id}")]
+        public IActionResult GetUserProfileById(int id)
+        {
+            return Ok(_userProfileRepository.GetByUserId(id));
+        }
     }
 }

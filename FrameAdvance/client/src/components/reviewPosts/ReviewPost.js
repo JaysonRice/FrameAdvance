@@ -16,6 +16,10 @@ export default ({ reviewPost }) => {
         formatedDate = month + "/" + day + "/" + year;
     }
 
+    if (!reviewPost) {
+        return null
+    }
+
     return (
         <>
             <Link to={`/reviewpost/${reviewPost.id}`} style={{ textDecoration: 'none', color: 'black' }}>
