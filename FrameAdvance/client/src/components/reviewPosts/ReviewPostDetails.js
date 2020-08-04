@@ -17,12 +17,11 @@ import { CharacterContext } from "../../providers/CharacterProvider";
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
-    const [postGame, setPostGame] = useState();
     const { games, getAllGames } = useContext(GameContext);
     const { getReviewPost, deleteReviewPostById, editReviewPost,
         addTimestamp, addComment, getSavedReviewsByUserId,
         addSavedReview, deleteSavedReview, savedReviewPosts } = useContext(ReviewPostContext);
-    const { characters, getAllCharactersByGame, getAllPostCharactersByPostId } = useContext(CharacterContext);
+    const { postCharacters, characters, getAllCharactersByGame, getAllPostCharactersByPostId } = useContext(CharacterContext);
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -200,7 +199,6 @@ const ReviewPostDetails = () => {
         formatedDate = month + "/" + day + "/" + year;
     }
 
-
     return (
         <div>
             <div className="postDetailsContainer">
@@ -353,7 +351,8 @@ const ReviewPostDetails = () => {
                                         {
                                             characterAdding === true
                                                 ? characters.map(character => {
-                                                    return <Character key={character.id} character={character} reviewPost={reviewPost} />
+                                                    return <Character key={character.id} character={character}
+                                                        reviewPost={reviewPost} setReviewPost={setReviewPost} />
                                                 })
 
                                                 : ""

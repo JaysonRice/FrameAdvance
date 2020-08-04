@@ -8,7 +8,7 @@ import { UserProfileContext } from "../../providers/UserProfileProvider";
 
 export const UserGameList = () => {
 
-    const { userGames, getAllUserGames, getAllSkillLevels } = useContext(GameContext)
+    const { userGames, getAllUserGames } = useContext(GameContext)
     const { getUserProfileById } = useContext(UserProfileContext)
     const [userProfile, setUserProfile] = useState();
     const { id } = useParams();

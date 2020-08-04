@@ -1,11 +1,12 @@
 import React, { useState, useContext, useRef } from "react";
 import { Card, CardBody, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { CharacterContext } from "../../providers/CharacterProvider";
+import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
-
-export const Character = ({ character, reviewPost }) => {
+export const Character = ({ character, reviewPost, setReviewPost }) => {
 
     const { postCharacters, addCharacterToPost, deleteCharacterFromPost } = useContext(CharacterContext)
+    const { getReviewPost } = useContext(ReviewPostContext);
 
     const addCharacter = (e) => {
         e.preventDefault();
@@ -14,16 +15,18 @@ export const Character = ({ character, reviewPost }) => {
             characterId: character.id,
             reviewPostId: reviewPost.id,
         }
-        addCharacterToPost(chosenCharacter)
+        addCharacterToPost(chosenCharacter).then(() => {
+            getReviewPost(reviewPost.id).then((rp) => setReviewPost(rp))
+        });
     };
 
     const removeCharacter = () => {
-        debugger
+
         const characterToRemove = postCharacters.find(char => char.characterId === character.id)
-        deleteCharacterFromPost(characterToRemove)
-    };
-
-
+        deleteCharacterFromPost(characterToRemove.id).then(() => {
+            getReviewPost(reviewPost.id).then((rp) => setReviewPost(rp))
+        });
+    }
     return (
         <Card className="CharacterCard">
             <CardBody>

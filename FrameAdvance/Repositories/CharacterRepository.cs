@@ -61,9 +61,9 @@ namespace FrameAdvance.Repositories
                            .FirstOrDefault(c => c.Id == id);
         }
 
-        public List<SavedReview> GetPostCharacterByReviewPostId(int id)
+        public List<ReviewPostCharacter> GetPostCharacterByReviewPostId(int id)
         {
-            return _context.SavedReview
+            return _context.ReviewPostCharacter
                         .Where(c => c.ReviewPostId == id)
                         .ToList();
         }
