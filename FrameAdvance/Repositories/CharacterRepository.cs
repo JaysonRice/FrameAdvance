@@ -16,12 +16,19 @@ namespace FrameAdvance.Repositories
             _context = context;
         }
 
-        private Character GetById(int id)
+        public List<Character> GetAll()
+        {
+            return _context.Character
+                .OrderBy(c => c.Name)
+                .ToList();
+        }
+
+        public Character GetById(int id)
         {
             return _context.Character.FirstOrDefault(c => c.Id == id);
         }
 
-        private List<Character> GetByGameId(int gameId)
+        public List<Character> GetByGameId(int gameId)
         {
             return _context.Character
                 .Where(c => c.GameId == gameId)
@@ -45,6 +52,32 @@ namespace FrameAdvance.Repositories
         {
             var character = GetById(id);
             _context.Character.Remove(character);
+            _context.SaveChanges();
+        }
+
+        public ReviewPostCharacter GetPostCharaterById(int id)
+        {
+            return _context.ReviewPostCharacter
+                           .FirstOrDefault(c => c.Id == id);
+        }
+
+        public List<ReviewPostCharacter> GetPostCharacterByReviewPostId(int id)
+        {
+            return _context.ReviewPostCharacter
+                        .Where(c => c.ReviewPostId == id)
+                        .ToList();
+        }
+
+        public void AddCharacterToPost(ReviewPostCharacter reviewPostCharacter)
+        {
+            _context.ReviewPostCharacter.Add(reviewPostCharacter);
+            _context.SaveChanges();
+        }
+
+        public void RemoveCharacterFromPost(int id)
+        {
+            var reviewPostCharacter = GetPostCharaterById(id);
+            _context.ReviewPostCharacter.Remove(reviewPostCharacter);
             _context.SaveChanges();
         }
     }

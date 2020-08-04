@@ -209,14 +209,6 @@ namespace FrameAdvance.Repositories
                  .FirstOrDefault(c => c.Id == id);
         }
 
-        public List<Comment> GetCommentsByPostId(int id)
-        {
-            return _context.Comment
-                 .Where(c => c.ReviewPostId == id)
-                 .OrderByDescending(c => c.CreateDateTime)
-                 .ToList();
-        }
-
         public void AddComment(Comment comment)
         {
             comment.CreateDateTime = DateTime.Now;
@@ -255,6 +247,7 @@ namespace FrameAdvance.Repositories
         public List<SavedReview> GetSavedReviewByUserId(int id)
         {
             return _context.SavedReview
+                        .Where(sr => sr.UserProfileId == id)
                         .Include(sr => sr.ReviewPost)
                         .OrderBy(sr => sr.ReviewPost.Title)
                         .ToList();

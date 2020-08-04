@@ -17,6 +17,7 @@ namespace FrameAdvance.Data
         public DbSet<UserGame> UserGame { get; set; }
         public DbSet<UserProfile> UserProfile { get; set; }
         public DbSet<UserType> UserType { get; set; }
+        public DbSet<ReviewPostCharacter> ReviewPostCharacter { get; set; }
 
     }
 }

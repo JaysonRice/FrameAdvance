@@ -4,7 +4,8 @@ import {
     CardImg
 } from 'reactstrap';
 import { Link } from "react-router-dom";
-
+import { CharactersOnPost } from "./CharactersOnPost";
+import "../css/Character.css"
 export default ({ reviewPost }) => {
 
     let formatedDate = null;
@@ -35,6 +36,16 @@ export default ({ reviewPost }) => {
                                         <div>{reviewPost.game.title}</div>
                                         <small>Posted By: {reviewPost.userProfile.username} {formatedDate}</small>
 
+                                        {!!reviewPost.reviewPostCharacters.find(c => c)
+                                            ? <div className="postCharacters">
+                                                <small> Characters: </small>
+                                                {reviewPost.reviewPostCharacters.map(char => (
+                                                    <CharactersOnPost key={char.id} postCharacter={char} />
+                                                ))}
+                                            </div>
+                                            : ""
+                                        }
+
                                         {!reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id)
                                             ? (
                                                 ""
@@ -42,7 +53,8 @@ export default ({ reviewPost }) => {
                                                 <div className={reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}>
                                                     <div>{reviewPost.game.userGames.find(ug => ug.userProfileId === reviewPost.userProfile.id).skillLevel.name}</div>
                                                 </div>
-                                            )}
+                                            )
+                                        }
                                     </div>
                                 </div>
 

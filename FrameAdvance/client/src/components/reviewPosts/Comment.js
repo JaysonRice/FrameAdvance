@@ -4,7 +4,6 @@ import {
     Button,
     Form,
     FormGroup,
-    Label,
     Input,
     Modal,
     ModalHeader,
@@ -18,14 +17,14 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
     const [formState, setformState] = useState();
-    const [noteAdding, setNoteAdding] = useState(false);
+    const [commentAdding, setCommentAdding] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
     const toggleModal = () => setShowModal(!showModal);
 
     const updateComment = (e) => {
         e.preventDefault();
-        setNoteAdding(false)
+        setCommentAdding(false)
         editComment(formState.id, formState).then(() => {
             getReviewPost(currentReviewPost.id).then((rp) => setReviewPost(rp));
         });
@@ -61,7 +60,7 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
                         />
                     </FormGroup>
                     <Button color="primary" type="submit">
-                        Save Note
+                        Save comment
                 </Button>
                 </Form>
             </div>
@@ -87,7 +86,7 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
 
                     {/* If the user owns the post, they should be able to delete comments, but not edit them. */}
                     {
-                        noteAdding === false && currentReviewPost.userProfileId === userProfileId && comment.userProfileId !== userProfileId
+                        commentAdding === false && currentReviewPost.userProfileId === userProfileId && comment.userProfileId !== userProfileId
 
                             ? <div className="commentButtonContainer">
                                 <Button className="commentButton" outline color="danger" onClick={toggleModal}>X</Button>
@@ -101,14 +100,14 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
                             ?
                             <div className="commentButtonContainer">
 
-                                <Button className="commentButton" color="info" outline onClick={() => { setNoteAdding(true) }}>Edit</Button>
+                                <Button className="commentButton" color="info" outline onClick={() => { setCommentAdding(true) }}>Edit</Button>
                                 <Button className="commentButton" color="danger" outline onClick={toggleModal}>X</Button>
 
                             </div>
                             : ""
                     }
                     {
-                        noteAdding === false
+                        commentAdding === false
                             ? < div className="singleCommentDetails">
                                 <div>{comment.content}</div>
                                 <small>Posted by: {comment.userProfile.username} on {formatedDate}</small>
@@ -116,7 +115,7 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
                             : ""
                     }
                     {
-                        noteAdding === true
+                        commentAdding === true
                             ? inputContent()
                             : ""
                     }
