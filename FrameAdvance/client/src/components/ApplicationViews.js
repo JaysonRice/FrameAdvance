@@ -7,6 +7,7 @@ import Register from "./Register";
 import HomePage from "./reviewPosts/HomePage";
 import { PostReviewForm } from "./reviewPosts/AddReviewForm";
 import ReviewPostDetails from "./reviewPosts/ReviewPostDetails";
+import UserPage from "./reviewPosts/UserPage";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
@@ -16,6 +17,10 @@ export default function ApplicationViews() {
             <Switch>
                 <Route path="/" exact>
                     {isLoggedIn ? <div> <HomePage /> </div> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/user/:id">
+                    {isLoggedIn ? <div> <UserPage /> </div> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/newreview">

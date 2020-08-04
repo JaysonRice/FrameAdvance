@@ -82,6 +82,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                         <ReactPlayer className="embeddedTimestamp"
                             url={`${currentReviewPost.videoLocation}?t=${timestamp.time}`}
                             controls={true}
+                            volume={0}
                         />
 
                         <div className="timestampNoteContainer">
