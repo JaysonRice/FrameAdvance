@@ -12,13 +12,17 @@ import { GameContext } from "../../providers/GameProvider";
 import ReactPlayer from "react-player";
 import Timestamp from "./Timestamp"
 import Comment from "./Comment"
+import { Character } from "./Character";
+import { CharacterContext } from "../../providers/CharacterProvider";
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
+    const [postGame, setPostGame] = useState();
     const { games, getAllGames } = useContext(GameContext);
     const { getReviewPost, deleteReviewPostById, editReviewPost,
         addTimestamp, addComment, getSavedReviewsByUserId,
         addSavedReview, deleteSavedReview, savedReviewPosts } = useContext(ReviewPostContext);
+    const { characters, getAllCharactersByGame, getAllPostCharactersByPostId } = useContext(CharacterContext);
 
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const { id } = useParams();
@@ -30,6 +34,7 @@ const ReviewPostDetails = () => {
     const [showDeleteModal, setDeleteShowModal] = useState(false);
     const toggleDelete = () => setDeleteShowModal(!showDeleteModal);
 
+    const [characterAdding, setCharacterAdding] = useState(false);
     const [commentAdding, setCommentAdding] = useState(false);
     const [content, setContent] = useState("");
 
@@ -43,11 +48,21 @@ const ReviewPostDetails = () => {
     };
 
     useEffect(() => {
-        getReviewPost(id).then(setReviewPost);
+        getReviewPost(id).then(setReviewPost)
     }, []);
 
     useEffect(() => {
         getSavedReviewsByUserId(userProfileId);
+    }, []);
+
+    useEffect(() => {
+        if (!!reviewPost) {
+            getAllCharactersByGame(reviewPost.gameId)
+        }
+    }, [reviewPost]);
+
+    useEffect(() => {
+        getAllPostCharactersByPostId(id);
     }, []);
 
     useEffect(() => {
@@ -330,6 +345,22 @@ const ReviewPostDetails = () => {
                                             })}
                                         </select>
                                     </FormGroup>
+
+                                    <FormGroup>
+                                        <Button color="secondary" onClick={() => { setCharacterAdding(true) }}>
+                                            Add Characters
+        </Button>
+                                        {
+                                            characterAdding === true
+                                                ? characters.map(character => {
+                                                    return <Character key={character.id} character={character} reviewPost={reviewPost} />
+                                                })
+
+                                                : ""
+
+                                        }
+                                    </FormGroup>
+
                                     <div className="buttonContainer">
                                         <Button color="secondary" onClick={toggleModal}>
                                             Cancel

@@ -247,6 +247,7 @@ namespace FrameAdvance.Repositories
         public List<SavedReview> GetSavedReviewByUserId(int id)
         {
             return _context.SavedReview
+                        .Where(sr => sr.UserProfileId == id)
                         .Include(sr => sr.ReviewPost)
                         .OrderBy(sr => sr.ReviewPost.Title)
                         .ToList();

@@ -58,7 +58,14 @@ namespace FrameAdvance.Repositories
         public ReviewPostCharacter GetPostCharaterById(int id)
         {
             return _context.ReviewPostCharacter
-                           .FirstOrDefault(rpc => rpc.Id == id);
+                           .FirstOrDefault(c => c.Id == id);
+        }
+
+        public List<SavedReview> GetPostCharacterByReviewPostId(int id)
+        {
+            return _context.SavedReview
+                        .Where(c => c.ReviewPostId == id)
+                        .ToList();
         }
 
         public void AddCharacterToPost(ReviewPostCharacter reviewPostCharacter)

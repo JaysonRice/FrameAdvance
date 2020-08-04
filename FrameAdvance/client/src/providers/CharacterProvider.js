@@ -9,6 +9,7 @@ export const CharacterProvider = (props) => {
 
     const { getToken } = useContext(UserProfileContext);
     const [characters, setCharacters] = useState([]);
+    const [postCharacters, setPostCharacters] = useState([]);
 
     const getAllCharacters = () =>
         getToken().then((token) =>
@@ -20,15 +21,25 @@ export const CharacterProvider = (props) => {
             }).then(resp => resp.json())
                 .then(setCharacters));
 
-    const getAllCharactersByGame = (gameid) =>
+    const getAllCharactersByGame = (gameId) =>
         getToken().then((token) =>
-            fetch(`${apiUrl}/${gameid}`, {
+            fetch(`${apiUrl}/${gameId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json())
                 .then(setCharacters));
+
+    const getAllPostCharactersByPostId = (postId) =>
+        getToken().then((token) =>
+            fetch(`${apiUrl}/postcharacters/${postId}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(resp => resp.json())
+                .then(setPostCharacters));
 
     const addCharacterToPost = (postCharacter) =>
         getToken().then((token) =>
@@ -64,7 +75,8 @@ export const CharacterProvider = (props) => {
 
     return (
         <CharacterContext.Provider value={{
-            characters, getAllCharacters, getAllCharactersByGame, addCharacterToPost, deleteCharacterFromPost
+            characters, postCharacters, getAllCharacters, getAllCharactersByGame,
+            getAllPostCharactersByPostId, addCharacterToPost, deleteCharacterFromPost
         }}>
             {props.children}
         </CharacterContext.Provider>

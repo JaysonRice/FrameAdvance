@@ -35,6 +35,11 @@ namespace FrameAdvance.Controllers
             return Ok(_characterRepository.GetByGameId(id));
         }
 
+        [HttpGet("postcharacters/{id}")]
+        public IActionResult GetPostCharacters(int id)
+        {
+            return Ok(_characterRepository.GetPostCharacterByReviewPostId(id));
+        }
 
         [HttpPost("addcharacter")]
         public IActionResult Post(ReviewPostCharacter reviewPostCharacter)
