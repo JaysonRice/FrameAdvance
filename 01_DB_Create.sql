@@ -100,7 +100,7 @@ CREATE TABLE [SavedReview] (
 GO
 
 CREATE TABLE [ReviewPostCharacter] (
-  [Id] integer PRIMARY KEY NOT NULL,
+  [Id] integer IDENTITY PRIMARY KEY NOT NULL,
   [CharacterId] integer NOT NULL,
   [ReviewPostId] integer NOT NULL
 )
