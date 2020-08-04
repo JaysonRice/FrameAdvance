@@ -1,19 +1,21 @@
 import React, { useContext, useEffect } from 'react'
 import { GameContext } from '../../providers/GameProvider'
+import { CharacterContext } from '../../providers/CharacterProvider'
 
-export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId }) => {
+export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId, setFilteredCharacterId }) => {
 
-    const { games, getAllGames } = useContext(GameContext)
+    const { games, getAllGames, } = useContext(GameContext)
+    const { characters, getAllCharactersByGame } = useContext(CharacterContext);
 
     useEffect(() => {
         getAllGames();
     }, []);
 
-    // useEffect(() => {
-    //     if (!!reviewPost) {
-    //         getAllCharactersByGame(reviewPost.gameId)
-    //     }
-    // }, [reviewPost]);
+    useEffect(() => {
+        if (filteredGameId !== "0") {
+            getAllCharactersByGame(+filteredGameId)
+        }
+    }, [filteredGameId]);
 
     return (
         <div className="mainFeedTopItem">
@@ -32,7 +34,7 @@ export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId }) => {
                 ))}
             </select>
 
-            {/* {
+            {
                 filteredGameId !== "0"
                     ? <div>
                         <label className="selectItself" htmlFor="character"></label>
@@ -45,13 +47,13 @@ export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId }) => {
                             <option value="0">All Characters</option>
                             {characters.map(c => (
                                 <option key={c.id} value={c.id}>
-                                    {c.title}
+                                    {c.name}
                                 </option>
                             ))}
                         </select>
                     </div>
                     : ""
-            } */}
+            }
         </div>
 
 
