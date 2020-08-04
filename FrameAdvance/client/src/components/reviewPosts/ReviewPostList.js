@@ -1,14 +1,27 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { ReviewPostContext } from "../../providers/ReviewPostProvider"
 import ReviewPost from "./ReviewPost"
+import { FilterReviewPosts } from './FilterReviewPostList';
 
 const ReviewPostList = () => {
 
     const { reviewPosts, getAllPostList } = useContext(ReviewPostContext);
+    const [filteredGameId, setFilteredGameId] = useState("0");
+    const [filteredCharacterId, setFilteredCharacterId] = useState("0");
 
     useEffect(() => {
         getAllPostList()
     }, []);
+
+    let postsToDisplay = []
+
+    if (filteredGameId === "0") {
+        postsToDisplay = reviewPosts
+
+    } else if (filteredGameId !== "0") {
+
+        postsToDisplay = reviewPosts.filter(post => post.gameId === parseInt(filteredGameId))
+    }
 
     if (!reviewPosts) {
         return null;
@@ -17,8 +30,11 @@ const ReviewPostList = () => {
     return (
         <>
             <h3>My Reviews</h3>
+
+            <FilterReviewPosts filteredGameId={filteredGameId} setFilteredGameId={setFilteredGameId}
+                setFilteredCharacterId={setFilteredCharacterId} />
             {
-                reviewPosts.map(post => {
+                postsToDisplay.map(post => {
                     return <ReviewPost key={post.id} reviewPost={post} />
                 })
             }
