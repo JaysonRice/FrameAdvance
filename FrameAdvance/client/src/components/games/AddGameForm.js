@@ -1,10 +1,11 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { GameContext } from "../../providers/GameProvider";
+import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
 export const AddGameForm = ({ toggler }) => {
-    const { games, userGames, skillLevels, getAllSkillLevels, addGameToUser, getAllGames, getAllUserGames } = useContext(GameContext)
+    const { games, userGames, skillLevels, getAllSkillLevels, addGameToUser, getAllUserGames } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
-
+    const { getAllPostList } = useContext(ReviewPostContext);
     const game = useRef()
     const skillLevel = useRef()
 
@@ -22,7 +23,7 @@ export const AddGameForm = ({ toggler }) => {
                 userProfileId: +userProfileId,
                 gameId: +game.current.value,
                 skillLevelId: +skillLevel.current.value
-            }).then(getAllUserGames(userProfileId)).then(toggler)
+            }).then(getAllPostList).then(toggler)
         }
         else (toggler())
     }

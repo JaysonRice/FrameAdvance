@@ -3,17 +3,19 @@ import { GameContext } from "../../providers/GameProvider"
 import { MyGame } from "./MyGame";
 import { AddGameForm } from "./AddGameForm";
 import { Modal, Button, ModalHeader, ModalBody } from "reactstrap";
+import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
 export const MyGameList = () => {
 
     const { userGames, getAllUserGames, getAllSkillLevels, } = useContext(GameContext)
+    const { reviewPosts } = useContext(ReviewPostContext);
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
 
     useEffect(() => {
         getAllUserGames(userProfileId);
-    }, []);
+    }, [reviewPosts]);
 
     useEffect(() => {
         getAllSkillLevels();

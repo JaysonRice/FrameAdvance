@@ -9,7 +9,6 @@ import "../css/Comments.css"
 import "../css/Character.css"
 import { useParams, useHistory, Link } from "react-router-dom";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
-import { GameContext } from "../../providers/GameProvider";
 import ReactPlayer from "react-player";
 import Timestamp from "./Timestamp"
 import Comment from "./Comment"

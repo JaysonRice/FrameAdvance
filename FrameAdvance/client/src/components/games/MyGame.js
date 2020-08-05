@@ -26,7 +26,7 @@ export const MyGame = ({ myGame }) => {
             userProfileId: +userProfileId,
             skillLevelId: +skillLevel.current.value,
             gameId: +myGame.game.id
-        }).then(getAllUserGames(userProfileId).then(getAllPostList)).then(toggleEdit)
+        }).then(getAllPostList).then(toggleEdit)
     }
 
     return (
@@ -67,8 +67,7 @@ export const MyGame = ({ myGame }) => {
                                     onClick={
                                         evt => {
                                             evt.preventDefault() // Prevent browser from submitting the form
-                                            removeGameFromUser(myGame.id).then(() => getAllUserGames(userProfileId))
-                                                .then(() => getAllPostList).then(toggleEdit)
+                                            removeGameFromUser(myGame.id).then(getAllPostList).then(toggleEdit)
                                         }
                                     }
                                     className="btn btn-danger">
