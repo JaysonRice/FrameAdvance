@@ -34,7 +34,7 @@ const ReviewPostList = () => {
 
     return (
         <>
-            <h3>My Reviews</h3>
+            <h3>All Reviews</h3>
 
             <FilterReviewPosts filteredGameId={filteredGameId} setFilteredGameId={setFilteredGameId}
                 setFilteredCharacterId={setFilteredCharacterId} />

@@ -20,12 +20,6 @@ namespace FrameAdvance.Controllers
             _userProfileRepository = new UserProfileRepository(context);
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_reviewPostRepository.GetAll());
-        }
-
         [HttpGet("postlist")]
         public IActionResult GetPostList()
         {

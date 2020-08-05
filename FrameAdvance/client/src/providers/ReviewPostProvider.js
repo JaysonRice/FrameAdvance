@@ -11,17 +11,6 @@ export const ReviewPostProvider = (props) => {
     const apiUrl = "/api/reviewpost";
     const { getToken } = useContext(UserProfileContext);
 
-    // Currently Unused
-    const getAllReviewPosts = () =>
-        getToken().then((token) =>
-            fetch(apiUrl, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then((res) => res.json())
-                .then(setReviewPosts));
-
     const getAllPostList = () =>
         getToken().then((token) =>
             fetch(`${apiUrl}/postlist`, {
@@ -274,7 +263,7 @@ export const ReviewPostProvider = (props) => {
 
     return (
         <ReviewPostContext.Provider value={{
-            reviewPosts, savedReviewPosts, getAllReviewPosts, getAllPostList, addReviewPost,
+            reviewPosts, savedReviewPosts, getAllPostList, addReviewPost,
             getReviewPost, getUserReviewPosts, getReviewPostsByGame, deleteReviewPostById,
             editReviewPost, addTimestamp, editTimestamp, deleteTimestamp,
             addComment, editComment, deleteComment, getSavedReviewsByUserId, addSavedReview, deleteSavedReview
