@@ -19,11 +19,10 @@ const ReviewPostList = () => {
         postsToDisplay = reviewPosts
 
     } else if (filteredGameId !== "0") {
-
         postsToDisplay = reviewPosts.filter(post => post.gameId === parseInt(filteredGameId))
     }
 
-    if (filteredCharacterId !== "0") {
+    if (filteredCharacterId !== "0" && filteredGameId !== "0") {
         postsToDisplay = reviewPosts.filter(post => post.reviewPostCharacters.some(char =>
             char.characterId === parseInt(filteredCharacterId)))
     }

@@ -14,6 +14,8 @@ export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId, setFilter
     useEffect(() => {
         if (filteredGameId !== "0") {
             getAllCharactersByGame(+filteredGameId)
+        } else {
+            setFilteredCharacterId("0")
         }
     }, [filteredGameId]);
 

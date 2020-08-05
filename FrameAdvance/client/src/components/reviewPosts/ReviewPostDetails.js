@@ -212,6 +212,24 @@ const ReviewPostDetails = () => {
 
                 </div>
 
+                <div >
+
+                    {!savedReviewPosts || !savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
+                        ? <Button onClick={bookmarkPost} color="warning">Bookmark Review</Button>
+                        : <Button onClick={bookmarkDelete} color="danger"> Remove Bookmark</Button>}
+                    <div className="editButtonContainer">
+
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button onClick={toggleDelete} color="danger">Delete Review</Button>
+                            : ""}
+
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button onClick={toggleModal} color="secondary">Edit Review</Button>
+                            : ""}
+
+                    </div>
+                </div>
+
                 <div className="postDetailsYoutubeLink">
                     <div className="embeddedVideo">
                         <ReactPlayer
@@ -243,23 +261,10 @@ const ReviewPostDetails = () => {
                                         Create Timestamp
                 </Button>
                                 </Form>
-
-
-                                {reviewPost.userProfile.id === userProfileId
-                                    ? <Button onClick={toggleModal} color="secondary">Edit Review</Button>
-                                    : ""}
-
-
-                                {reviewPost.userProfile.id === userProfileId
-                                    ? <Button onClick={toggleDelete} color="danger">Delete Review</Button>
-                                    : ""}
                             </div>
                             : ""
                     }
 
-                    {!savedReviewPosts || !savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
-                        ? <Button onClick={bookmarkPost} color="warning">Bookmark Review</Button>
-                        : <Button onClick={bookmarkDelete} color="danger"> Remove Bookmark</Button>}
 
                 </div>
 
