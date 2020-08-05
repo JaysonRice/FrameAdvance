@@ -18,11 +18,13 @@ const MySavedPostList = () => {
     return (
         <>
             <h4>Bookmarked Reviews</h4>
-            {
-                savedReviewPosts.map(savedReview => {
-                    return <MySavedPost key={savedReview.id} savedReview={savedReview} />
-                })
-            }
+            <div className="savedReviewCardContainer">
+                {
+                    savedReviewPosts.map(savedReview => {
+                        return <MySavedPost key={savedReview.id} savedReview={savedReview} />
+                    })
+                }
+            </div>
         </>
     )
 }

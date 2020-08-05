@@ -1,3 +1,18 @@
+/* Buttons at the top of post details page */
+.detailsButtonContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.postDetailsButton{
+    margin: 0rem 0.3rem 0rem 0.3rem;
+}
+
 .postDetailsContainer{
     width: 91%;
     margin: 0 auto
@@ -17,13 +32,31 @@
 
 .postDetailsYoutubeLink{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+}
+
+.embeddedVideo{
+   flex-basis: 55%;
+}
+
+.timestampCreation{
+    flex-basis: 40%;
+    align-self: center;
 }
 
 .timestampInput{
     display: flex;
 }
+/* Filling space for posts that you own */
+.postImageAndCharactersContainer{
+    align-self: center;
+    background-color: whitesmoke;
+    border: 1px gray solid;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
 
+/* Footer */
 .postFooter{
     background-color: darkslategray;
     color: floralwhite;

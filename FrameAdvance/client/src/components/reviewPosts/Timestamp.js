@@ -50,7 +50,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
 
     const inputNotes = () => {
         return (
-            <div className="buttonContainer">
+            <div >
                 <Form onSubmit={updateTimestamp}>
                     <FormGroup>
                         <Label for="notes">Notes:</Label>
@@ -70,8 +70,6 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
         );
     };
 
-
-
     return (
         <>
             <Card className="singleTimestamp">
@@ -89,7 +87,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                             {
                                 timestamp.notes === null && noteAdding === false && currentReviewPost.userProfileId === userProfileId
 
-                                    ? <Button color="primary" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
+                                    ? <Button color="info" onClick={() => { setNoteAdding(true) }}>Add Notes</Button>
                                     : ""
                             }
 
@@ -100,7 +98,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                                         <Card >
                                             <p>{timestamp.notes}</p>
                                         </Card>
-                                        <Button color="primary" onClick={() => { setNoteAdding(true) }}>Edit Notes</Button>
+                                        <Button color="info" onClick={() => { setNoteAdding(true) }}>Edit Notes</Button>
                                     </div>
                                     : ""
                             }

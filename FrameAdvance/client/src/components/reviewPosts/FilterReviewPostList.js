@@ -37,7 +37,7 @@ export const FilterReviewPosts = ({ filteredGameId, setFilteredGameId, setFilter
             </select>
 
             {
-                filteredGameId !== "0"
+                filteredGameId !== "0" && !!characters.find(c => c)
                     ? <div>
                         <label className="selectItself" htmlFor="character"></label>
                         <select onChange={e => setFilteredCharacterId(e.target.value)}
