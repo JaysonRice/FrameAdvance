@@ -27,7 +27,7 @@ export default ({ reviewPost }) => {
 
                 <div className="reviewPost">
                     <Card >
-                        <CardBody body outline color="info" className="reviewPostBody">
+                        <CardBody color="info" className="reviewPostBody">
                             <div className="reviewPostMain">
 
                                 <div className="reviewPostInfo">

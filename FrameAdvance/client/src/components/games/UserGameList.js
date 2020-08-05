@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../providers/GameProvider"
 import { MyGame } from "./MyGame";
-import { AddGameForm } from "./AddGameForm";
-import { Modal, Button, ModalHeader, ModalBody } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 

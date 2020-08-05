@@ -5,7 +5,7 @@ import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
 export const MyGame = ({ myGame }) => {
 
-    const { removeGameFromUser, skillLevels, updateUserGame, } = useContext(GameContext)
+    const { removeGameFromUser, skillLevels, updateUserGame, getAllUserGames } = useContext(GameContext)
     const { getAllPostList } = useContext(ReviewPostContext);
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
     const skillLevel = useRef()
@@ -26,7 +26,7 @@ export const MyGame = ({ myGame }) => {
             userProfileId: +userProfileId,
             skillLevelId: +skillLevel.current.value,
             gameId: +myGame.game.id
-        }).then(getAllPostList()).then(toggleEdit)
+        }).then(getAllUserGames(userProfileId).then(getAllPostList)).then(toggleEdit)
     }
 
     return (
@@ -67,7 +67,8 @@ export const MyGame = ({ myGame }) => {
                                     onClick={
                                         evt => {
                                             evt.preventDefault() // Prevent browser from submitting the form
-                                            removeGameFromUser(myGame.id).then(toggleEdit)
+                                            removeGameFromUser(myGame.id).then(() => getAllUserGames(userProfileId))
+                                                .then(() => getAllPostList).then(toggleEdit)
                                         }
                                     }
                                     className="btn btn-danger">

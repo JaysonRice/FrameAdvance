@@ -54,7 +54,7 @@ export const GameProvider = (props) => {
                 body: JSON.stringify(game)
             }).then(resp => {
                 if (resp.ok) {
-                    return resp.json().then(getAllGames);
+                    return resp.json();
                 }
                 throw new Error("Unauthorized");
             }));
@@ -68,7 +68,7 @@ export const GameProvider = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(game)
-            }).then(getAllGames));
+            }));
 
     const deleteGame = (id) => {
         return getToken().then((token) =>
@@ -83,7 +83,7 @@ export const GameProvider = (props) => {
                 }
                 throw new Error("Failed to delete Game.")
             })
-        ).then(getAllGames);;
+        );
     };
 
     const getGameById = (id) => {
@@ -111,7 +111,7 @@ export const GameProvider = (props) => {
                     return resp.json();
                 }
                 else { throw new Error("Unauthorized"); }
-            }).then(getAllUserGames)
+            })
         );
 
     const updateUserGame = (userGame) =>
@@ -123,7 +123,7 @@ export const GameProvider = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(userGame)
-            }).then(getAllUserGames));
+            }));
 
     const removeGameFromUser = (id) => {
         return getToken().then((token) =>
