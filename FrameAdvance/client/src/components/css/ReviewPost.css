@@ -33,3 +33,13 @@
     flex-basis: 25%;
 }
 
+/* Saved review sidebar */
+.savedReviewCardContainer{
+    background-color: whitesmoke;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.savedReviewCard{
+    margin-bottom: 0.5rem;
+}

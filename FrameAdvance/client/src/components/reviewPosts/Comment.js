@@ -48,7 +48,7 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
 
     const inputContent = () => {
         return (
-            <div className="buttonContainer">
+            <div>
                 <Form onSubmit={updateComment}>
                     <FormGroup>
                         <Input
@@ -59,7 +59,7 @@ export default ({ comment, currentReviewPost, setReviewPost }) => {
                             onChange={handleUserInput}
                         />
                     </FormGroup>
-                    <Button color="primary" type="submit">
+                    <Button color="info" type="submit">
                         Save comment
                 </Button>
                 </Form>

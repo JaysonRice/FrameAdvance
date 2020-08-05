@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import {
     Button, CardBody, Form, FormGroup,
-    Input, Label, Modal, ModalHeader, ModalBody,
+    Input, Label, Modal, ModalHeader, ModalBody, CardImg,
 } from "reactstrap";
 import "../css/PostDetails.css"
 import "../css/Timestamp.css"
@@ -14,6 +14,7 @@ import Timestamp from "./Timestamp"
 import Comment from "./Comment"
 import { Character } from "./Character";
 import { CharacterContext } from "../../providers/CharacterProvider";
+import { CharactersOnPost } from "./CharactersOnPost";
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
@@ -33,6 +34,8 @@ const ReviewPostDetails = () => {
     const toggleDelete = () => setDeleteShowModal(!showDeleteModal);
 
     const [characterAdding, setCharacterAdding] = useState(false);
+    const toggleCharacter = () => setCharacterAdding(!characterAdding);
+
     const [commentAdding, setCommentAdding] = useState(false);
     const [content, setContent] = useState("");
 
@@ -120,7 +123,7 @@ const ReviewPostDetails = () => {
     // Form to render when adding a comment
     const inputContent = () => {
         return (
-            <div className="buttonContainer">
+            <div>
                 <Form onSubmit={saveComment}>
                     <FormGroup>
                         <Label for="content">Content:</Label>
@@ -132,7 +135,7 @@ const ReviewPostDetails = () => {
                             onChange={(e) => setContent(e.target.value)}
                         />
                     </FormGroup>
-                    <Button color="primary" type="submit">
+                    <Button color="info" type="submit">
                         Save Comment
                 </Button>
                 </Form>
@@ -212,13 +215,32 @@ const ReviewPostDetails = () => {
 
                 </div>
 
-                <div className="postDetailsYoutubeLink">
-                    <div className="embeddedVideo">
-                        <ReactPlayer
-                            url={reviewPost.videoLocation}
-                            controls={true}
-                        />
+                <div className="detailsButtonContainer">
+
+                    <div className="buttonContainer">
+
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button className="postDetailsButton" onClick={toggleDelete} color="danger">Delete Review</Button>
+                            : ""}
+
+                        {reviewPost.userProfile.id === userProfileId
+                            ? <Button className="postDetailsButton" onClick={toggleModal} color="info">Edit Review</Button>
+                            : ""}
+
                     </div>
+
+                    {!savedReviewPosts || !savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
+                        ? <Button onClick={bookmarkPost} color="warning">Bookmark Review</Button>
+                        : <Button onClick={bookmarkDelete} color="danger"> Remove Bookmark</Button>}
+                </div>
+
+                <div className="postDetailsYoutubeLink">
+
+                    <ReactPlayer className="embeddedVideo"
+                        url={reviewPost.videoLocation}
+                        controls={true}
+                    />
+
                     {
                         reviewPost.userProfile.id === userProfileId
                             ? <div className="timestampCreation">
@@ -239,27 +261,27 @@ const ReviewPostDetails = () => {
                                             <Input id="seconds" name="seconds" type="number" max="59" onChange={(e) => setSeconds(e.target.value)} />
                                         </div>
                                     </div>
-                                    <Button color="info" type="submit">
+                                    <Button block color="info" type="submit">
                                         Create Timestamp
                 </Button>
                                 </Form>
-
-
-                                {reviewPost.userProfile.id === userProfileId
-                                    ? <Button onClick={toggleModal} color="secondary">Edit Review</Button>
-                                    : ""}
-
-
-                                {reviewPost.userProfile.id === userProfileId
-                                    ? <Button onClick={toggleDelete} color="danger">Delete Review</Button>
-                                    : ""}
                             </div>
-                            : ""
-                    }
+                            : <div className="postImageAndCharactersContainer">
+                                <div className="reviewPostImage">
+                                    <CardImg src={reviewPost.game.imageLocation} alt={reviewPost.game.title} />
+                                </div>
+                                {!!reviewPost.reviewPostCharacters.find(c => c)
+                                    ? <div className="postCharacters">
+                                        <small> Characters: </small>
+                                        {reviewPost.reviewPostCharacters.map(char => (
+                                            <CharactersOnPost key={char.id} postCharacter={char} />
+                                        ))}
+                                    </div>
+                                    : ""
+                                }
+                            </div>
 
-                    {!savedReviewPosts || !savedReviewPosts.find(savedPost => savedPost.reviewPostId === reviewPost.id)
-                        ? <Button onClick={bookmarkPost} color="warning">Bookmark Review</Button>
-                        : <Button onClick={bookmarkDelete} color="danger"> Remove Bookmark</Button>}
+                    }
 
                 </div>
 
@@ -284,7 +306,7 @@ const ReviewPostDetails = () => {
                 <div className="commentContainer">
                     {
                         commentAdding === false
-                            ? <Button color="primary" onClick={() => { setCommentAdding(true) }}>Add a Comment</Button>
+                            ? <Button color="info" onClick={() => { setCommentAdding(true) }}>Add a Comment</Button>
                             : ""
                     }
 
@@ -295,16 +317,6 @@ const ReviewPostDetails = () => {
                         })
                     }
                 </div>
-                {/* 
-            {reviewPost.userProfile.id === userProfileId ? (
-                    <ListGroupItem>
-                        <Link to={`/AddCharacter/post/${reviewPost.id}`}>
-                            <h6>Add Character</h6>
-                        </Link>
-                    </ListGroupItem>
-                ) : (
-                        ""
-                    )} */}
 
                 <div>
 
@@ -327,8 +339,8 @@ const ReviewPostDetails = () => {
 
                                     <FormGroup>
                                         {
-                                            !!characters
-                                                ? <Button color="secondary" onClick={() => { setCharacterAdding(true) }}>
+                                            !!characters && !!characters.find(c => c)
+                                                ? <Button color="secondary" onClick={toggleCharacter}>
                                                     Edit Characters
         </Button>
                                                 : ""
@@ -341,7 +353,6 @@ const ReviewPostDetails = () => {
                                                     characters.map(character => {
                                                         return <Character key={character.id} character={character}
                                                             reviewPost={reviewPost} setReviewPost={setReviewPost} />
-
                                                     })
                                                     : ""
                                             }
@@ -353,7 +364,7 @@ const ReviewPostDetails = () => {
                                         <Button color="secondary" onClick={toggleModal}>
                                             Cancel
         </Button>
-                                        <Button color="primary" type="submit">
+                                        <Button color="info" type="submit">
                                             Save Changes
         </Button>
                                     </div>
@@ -367,8 +378,10 @@ const ReviewPostDetails = () => {
                             Delete this post and all its notes?
                     </ModalHeader>
                         <ModalBody>
-                            <Button color="secondary" onClick={toggleDelete}>Cancel</Button>
-                            <Button color="danger" type="submit" onClick={deletePost}>Delete</Button>
+                            <div className="buttonContainer">
+                                <Button color="secondary" onClick={toggleDelete}>Cancel</Button>
+                                <Button color="danger" type="submit" onClick={deletePost}>Delete</Button>
+                            </div>
                         </ModalBody>
                     </Modal>
 
