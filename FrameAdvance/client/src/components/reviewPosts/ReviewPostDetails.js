@@ -9,7 +9,6 @@ import "../css/Comments.css"
 import "../css/Character.css"
 import { useParams, useHistory, Link } from "react-router-dom";
 import { ReviewPostContext } from "../../providers/ReviewPostProvider";
-import { GameContext } from "../../providers/GameProvider";
 import ReactPlayer from "react-player";
 import Timestamp from "./Timestamp"
 import Comment from "./Comment"
@@ -18,7 +17,6 @@ import { CharacterContext } from "../../providers/CharacterProvider";
 
 const ReviewPostDetails = () => {
     const [reviewPost, setReviewPost] = useState();
-    const { games, getAllGames } = useContext(GameContext);
     const { getReviewPost, deleteReviewPostById, editReviewPost,
         addTimestamp, addComment, getSavedReviewsByUserId,
         addSavedReview, deleteSavedReview, savedReviewPosts } = useContext(ReviewPostContext);
@@ -63,10 +61,6 @@ const ReviewPostDetails = () => {
 
     useEffect(() => {
         getAllPostCharactersByPostId(id);
-    }, []);
-
-    useEffect(() => {
-        getAllGames();
     }, []);
 
     useEffect(() => {

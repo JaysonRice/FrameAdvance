@@ -1,10 +1,11 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { GameContext } from "../../providers/GameProvider";
+import { ReviewPostContext } from "../../providers/ReviewPostProvider";
 
 export const AddGameForm = ({ toggler }) => {
-    const { games, skillLevels, getAllSkillLevels, addGameToUser, getAllUserGames } = useContext(GameContext)
+    const { games, userGames, skillLevels, getAllSkillLevels, addGameToUser, getAllUserGames } = useContext(GameContext)
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
-
+    const { getAllPostList } = useContext(ReviewPostContext);
     const game = useRef()
     const skillLevel = useRef()
 
@@ -12,10 +13,9 @@ export const AddGameForm = ({ toggler }) => {
         getAllSkillLevels();
     }, []);
 
-    // Why don't this work?
-    // const gamesIDontPlay = games.filter(oneGame => oneGame.id !== getAllUserGames.forEach(singleGame => {
-    //     return singleGame.game.id
-    // }))
+    const gamesIDontPlay = games.filter(oneGame => {
+        return !userGames.some(singlegame => singlegame.game.id === oneGame.id)
+    })
 
     const constructNewGame = () => {
         if (game.current.value !== "0" && skillLevel.current.value !== "0") {
@@ -23,11 +23,10 @@ export const AddGameForm = ({ toggler }) => {
                 userProfileId: +userProfileId,
                 gameId: +game.current.value,
                 skillLevelId: +skillLevel.current.value
-            }).then(toggler)
+            }).then(getAllPostList).then(toggler)
         }
         else (toggler())
     }
-
 
     if (!games) {
         return null
@@ -46,7 +45,7 @@ export const AddGameForm = ({ toggler }) => {
                         className="form-control"
                     >
                         <option value="0">Select a game</option>
-                        {games.map(e => (
+                        {gamesIDontPlay.map(e => (
                             <option key={e.id} value={e.id}>
                                 {e.title}
                             </option>
