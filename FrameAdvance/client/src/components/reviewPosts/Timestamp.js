@@ -62,7 +62,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
                             onChange={handleUserInput}
                         />
                     </FormGroup>
-                    <Button color="primary" type="submit">
+                    <Button color="info" type="submit">
                         Save Note
                 </Button>
                 </Form>

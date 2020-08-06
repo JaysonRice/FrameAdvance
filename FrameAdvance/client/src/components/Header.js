@@ -26,7 +26,7 @@ export default function Header() {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={RRNavLink} to="/">Frame Advance</NavbarBrand>
+                <NavbarBrand tag={RRNavLink} to="/"><img src="https://i.imgur.com/bO91q2g.png" width="200" height="50"></img></NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
