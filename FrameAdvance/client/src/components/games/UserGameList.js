@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../providers/GameProvider"
-import { MyGame } from "./MyGame";
 import { useParams } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
+import { UserGame } from "./UserGame";
 
 export const UserGameList = () => {
 
@@ -34,7 +34,7 @@ export const UserGameList = () => {
             </div>
             <div className="gamesContainer">
                 {userGames.map(g =>
-                    <MyGame key={g.id} myGame={g} />)}
+                    <UserGame key={g.id} userGame={g} />)}
             </div>
 
         </section>

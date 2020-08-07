@@ -81,7 +81,7 @@ export const AddGameForm = ({ toggler }) => {
                         constructNewGame()
                     }
                 }
-                className="btn btn-primary">
+                className="btn btn-info">
                 Save Game
             </button>
         </form>

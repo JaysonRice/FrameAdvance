@@ -80,7 +80,7 @@ export const MyGame = ({ myGame }) => {
                                             skillUpdate()
                                         }
                                     }
-                                    className="btn btn-primary">
+                                    className="btn btn-info">
                                     Save Changes
             </button>
                             </div>
