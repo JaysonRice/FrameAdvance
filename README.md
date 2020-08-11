@@ -38,9 +38,9 @@ succeed in their game of choice.
 
 ## Technology Utilized
 
-1. Micorosoft SQL Server Express
-1. Microsoft Visual C#
-1. Entity Framework
-1. Google Firebase Authentication
-1. React.JS
-1. React Routing
+- Micorosoft SQL Server Express
+- Microsoft Visual C#
+- Entity Framework
+- Google Firebase Authentication
+- React.JS
+- React Routing
