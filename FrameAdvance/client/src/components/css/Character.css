@@ -1,35 +1,34 @@
-.addCharacterContainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+.addCharacterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-.characterCard{
-    flex-basis: 45%;
-    margin: .3rem 0 .2rem;
+.characterCard {
+  width: 10em;
+  margin: 0.3rem 0 0.2rem;
 }
 
-.characterCardBody{
-    display: flex; 
-    justify-content: space-between;  
+.characterCardBody {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Characters displayed on reviewPostList */
-.postCharacters{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: .5rem;
-    align-items: baseline;
+.postCharacters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  align-items: baseline;
 }
 
-.individualCharacterContainer{
-    border: 1px rgb(207, 207, 207) solid;
-    background-color: whitesmoke;
-    border-radius: 1rem;
-    margin:0.2rem 0.5rem;
-    padding: 0rem 0.5rem;
-    min-width: 3rem;
-    text-align: center;
+.individualCharacterContainer {
+  border: 1px rgb(207, 207, 207) solid;
+  background-color: whitesmoke;
+  border-radius: 1rem;
+  margin: 0.2rem 0.5rem;
+  padding: 0rem 0.5rem;
+  min-width: 3rem;
+  text-align: center;
 }
-
