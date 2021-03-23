@@ -51,7 +51,7 @@ export default ({ reviewPost }) => {
                   <div>
                     <div>Game: {reviewPost.game.title}</div>
                     <small>
-                      Posted By: {reviewPost.userProfile.username} on
+                      Posted By: {reviewPost.userProfile.username} {"on "}
                       {formatedDate}
                     </small>
 
