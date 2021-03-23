@@ -1,22 +1,22 @@
-.timestampContainer{
-    margin: 1.5rem 0;
+.timestampContainer {
+  margin: 1.5rem 0;
 }
 
-.singleTimestamp{
-    margin: 1.5rem;
+.singleTimestamp {
+  margin: 1.5rem;
 }
 
-.timestampDetails{
-    display: flex;
-    justify-content: space-between;
+.timestampDetails {
+  display: flex;
+  justify-content: space-between;
 }
 
-.timestampNoteContainer{
-    align-self: center;
-    text-align: center;
-    flex-basis: 35%;
+.timestampNoteContainer {
+  align-self: center;
+  text-align: center;
+  flex-basis: 35%;
 }
 
-.embeddedTimestamp{
-    flex-basis: 60%;
+.embeddedTimestamp {
+  flex-basis: 60%;
 }

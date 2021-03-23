@@ -1,45 +1,45 @@
-.homeContainer{
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 1rem;
+.homeContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
 }
 
-.reviewPostContainer{
-    flex-basis: 67%;
+.reviewPostContainer {
+  flex-basis: 67%;
 }
 
-.myGamesContainer{
-    flex-basis: 18%; 
+.myGamesContainer {
+  flex-basis: 18%;
 }
 
 /* Each individual post in the list */
 .reviewPost {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Body of the post in a list */
 .reviewPostMain {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .reviewPostInfo {
-    text-align: center;
-    flex-basis: 66%;
-    align-self: center;
+  text-align: center;
+  flex-basis: 66%;
+  align-self: center;
 }
 
 .reviewPostImage {
-    flex-basis: 25%;
+  flex-basis: 25%;
 }
 
 /* Saved review sidebar */
-.savedReviewCardContainer{
-    background-color: whitesmoke;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+.savedReviewCardContainer {
+  background-color: whitesmoke;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
-.savedReviewCard{
-    margin-bottom: 0.5rem;
+.savedReviewCard {
+  margin-bottom: 0.5rem;
 }
