@@ -23,7 +23,7 @@ namespace FrameAdvance.Models.ViewModels
 
         public List<UserGame> UserGames { get; set; }
 
-        public List<ReviewPostCharacter>? ReviewPostCharacters { get; set; }
+        public List<Character>? Characters { get; set; }
 
     }
 }

@@ -39,7 +39,7 @@ export const Character = ({ character, reviewPost, setReviewPost }) => {
         <div className="characterCardBody">
           <h6>{character.name}</h6>
           <div className="characterButtonContainer">
-            {!reviewPost.reviewPostCharacters.find(
+            {!reviewPost.characters.find(
               (char) => char.characterId === character.id
             ) ? (
               <Button color="primary" outline onClick={addCharacter}>

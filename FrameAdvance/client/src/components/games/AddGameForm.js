@@ -9,7 +9,6 @@ export const AddGameForm = ({ toggler }) => {
     skillLevels,
     getAllSkillLevels,
     addGameToUser,
-    getAllUserGames,
   } = useContext(GameContext);
   const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
   const { getAllPostList } = useContext(ReviewPostContext);

@@ -14,10 +14,10 @@ export default ({ reviewPost }) => {
   }
 
   const renderCharactersOnPost = () => {
-    return reviewPost.reviewPostCharacters.length > 0 ? (
+    return reviewPost.characters.length > 0 ? (
       <div className="postCharacters">
         <b> Characters: </b>
-        {reviewPost.reviewPostCharacters.map((char) => (
+        {reviewPost.characters.map((char) => (
           <CharactersOnPost key={char.id} postCharacter={char} />
         ))}
       </div>
@@ -28,7 +28,7 @@ export default ({ reviewPost }) => {
 
   const skillName = () => {
     return reviewPost.game.userGames.find(
-      (ug) => ug.userProfileId === reviewPost.userProfile.id
+      (ug) => ug.userProfileId === reviewPost.userProfileId
     ).skillLevel.name;
   };
 
@@ -51,14 +51,14 @@ export default ({ reviewPost }) => {
                   <div>
                     <div>Game: {reviewPost.game.title}</div>
                     <small>
-                      Posted By: {reviewPost.userProfile.username} {"on "}
+                      Posted By: {reviewPost.username} {"on "}
                       {formatedDate}
                     </small>
 
                     {renderCharactersOnPost()}
 
                     {!reviewPost.game.userGames.find(
-                      (ug) => ug.userProfileId === reviewPost.userProfile.id
+                      (ug) => ug.userProfileId === reviewPost.userProfileId
                     ) ? (
                       ""
                     ) : (

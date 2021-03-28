@@ -140,7 +140,7 @@ export default ({ timestamp, currentReviewPost, setReviewPost }) => {
               {/* Opens input box after you click create or edit notes */}
               {noteAdding === true ? inputNotes() : ""}
             </div>
-            {currentReviewPost.userProfile.id === userProfileId ? (
+            {currentReviewPost.userProfileId === userProfileId ? (
               <div>
                 <Button color="danger" onClick={toggleModal} outline>
                   X

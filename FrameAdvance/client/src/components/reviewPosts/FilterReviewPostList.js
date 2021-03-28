@@ -40,7 +40,7 @@ export const FilterReviewPosts = ({
         ))}
       </select>
 
-      {filteredGameId !== "0" && !!characters.find((c) => c) ? (
+      {filteredGameId !== "0" && characters.length > 0 ? (
         <div>
           <label className="selectItself" htmlFor="character"></label>
           <select

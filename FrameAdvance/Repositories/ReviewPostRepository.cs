@@ -39,7 +39,7 @@ namespace FrameAdvance.Repositories
                     UserGames = p.Game.UserGames,
                     Game = p.Game,
                     GameId = p.GameId,
-                    ReviewPostCharacters = p.ReviewPostCharacters
+                    Characters = p.ReviewPostCharacters.Select(c => c.Character).ToList(),
                 })
                 .ToList();
         }
@@ -64,7 +64,8 @@ namespace FrameAdvance.Repositories
                      UserGames = p.Game.UserGames,
                      Game = p.Game,
                      GameId = p.GameId,
-                     ReviewPostCharacters = p.ReviewPostCharacters
+                     Characters = p.ReviewPostCharacters.Select(c => c.Character).ToList(),
+
                  })
                 .ToList();    
         }
@@ -75,7 +76,7 @@ namespace FrameAdvance.Repositories
                 .FirstOrDefault(p => p.Id == id);
         }
 
-            public ReviewPost GetById(int id)
+        public ReviewPostDetailsView GetById(int id)
         {
             return _context.ReviewPost
                            .Include(p => p.Game)
@@ -86,7 +87,7 @@ namespace FrameAdvance.Repositories
                            .ThenInclude(pc => pc.Character)
                            .Include(p => p.Comments)
                            .ThenInclude(c => c.UserProfile)
-                           .Select(p => new ReviewPost
+                           .Select(p => new ReviewPostDetailsView
                            {
                                Id = p.Id,
                                Title = p.Title,
@@ -94,13 +95,19 @@ namespace FrameAdvance.Repositories
                                Private = p.Private,
                                VideoLocation = p.VideoLocation,
                                UserProfileId = p.UserProfileId,
-                               UserProfile = p.UserProfile,
+                               Username = p.UserProfile.Username,
                                Comments = (List<Comment>)p.Comments.OrderByDescending(c => c.CreateDateTime),
                                Timestamps = (List<Timestamp>)p.Timestamps.OrderBy(t => t.Time),
-                               ReviewPostCharacters = p.ReviewPostCharacters,
+                               Characters = p.ReviewPostCharacters.Select(c => c.Character).ToList(),
                                GameId = p.GameId,
                                Game = p.Game
                            })
+                           .FirstOrDefault(p => p.Id == id);
+        }
+
+        public ReviewPost GetPostById(int id)
+        {
+            return _context.ReviewPost
                            .FirstOrDefault(p => p.Id == id);
         }
 
@@ -132,7 +139,7 @@ namespace FrameAdvance.Repositories
 
         public void Delete(int id)
         {
-            var post = GetById(id);
+            var post = GetPostById(id);
             var savedPostRelationships = GetSavedReviewByReviewPostId(id);
             var timestamps = GetTimestampsByPostId(id);
 

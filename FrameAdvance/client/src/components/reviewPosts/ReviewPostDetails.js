@@ -170,10 +170,10 @@ const ReviewPostDetails = () => {
   };
 
   const renderCharactersOnPost = () => {
-    return reviewPost.reviewPostCharacters.length > 0 ? (
+    return reviewPost.characters.length > 0 ? (
       <div className="postCharacters">
         <b> Characters: </b>
-        {reviewPost.reviewPostCharacters.map((char) => (
+        {reviewPost.characters.map((char) => (
           <CharactersOnPost key={char.id} postCharacter={char} />
         ))}
       </div>
@@ -242,8 +242,8 @@ const ReviewPostDetails = () => {
         <div className="postDetailsHeader">
           <strong>
             Posted By:
-            <Link to={`/user/${reviewPost.userProfile.id}`}>
-              {reviewPost.userProfile.username}
+            <Link to={`/user/${reviewPost.userProfileId}`}>
+              {reviewPost.username}
             </Link>
           </strong>
 
@@ -254,7 +254,7 @@ const ReviewPostDetails = () => {
 
         <div className="detailsButtonContainer">
           <div className="buttonContainer">
-            {reviewPost.userProfile.id === userProfileId ? (
+            {reviewPost.userProfileId === userProfileId ? (
               <Button
                 className="postDetailsButton"
                 onClick={toggleDelete}
@@ -266,7 +266,7 @@ const ReviewPostDetails = () => {
               ""
             )}
 
-            {reviewPost.userProfile.id === userProfileId ? (
+            {reviewPost.userProfileId === userProfileId ? (
               <Button
                 className="postDetailsButton"
                 onClick={toggleModal}
@@ -302,7 +302,7 @@ const ReviewPostDetails = () => {
 
           {/* Section for rendering based on if the post belongs to the current user */}
           {/* Owners get timestamp input, non owners get a game banner */}
-          {reviewPost.userProfile.id === userProfileId ? (
+          {reviewPost.userProfileId === userProfileId ? (
             <div className="timestampCreation">
               {renderCharactersOnPost()}
               <Form onSubmit={saveTimestamp}>
